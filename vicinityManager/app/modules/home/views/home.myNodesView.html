@@ -1,0 +1,136 @@
+<section class="content-header">
+    <h1>Organisation Access Points</h1>
+</section>
+
+<div class="coll-md-1" ng-hide="loadedPage" style="margin: auto; width:60%">
+  <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+</div>
+
+  <!-- /.box-header -->
+<section class="content" ng-show="loadedPage && !imMobile">
+  <span class="col-xs-2 pull-right">
+  <div>
+    <button class="btn btn-default" ng-click="goToEdit(0)"><span class="glyphicon glyphicon-plus"></span>Create Access Point</button>
+  </div>
+  <!-- <div class="col-xs-6">
+    <button class="btn btn-default btn-block" ng-click="createGroup()" ng-disabled="true"><span class="glyphicon glyphicon-plus"></span>Create group</button>
+  </div> -->
+  </span>
+  <hr>
+<div class="box">
+  <div class="box-body">
+    <table id="RegTable" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Name<i ng-click="orderByMe('name')" class="fa fa-fw fa-sort"/></th>
+          <th>AGID<i ng-click="orderByMe('adid')" class="fa fa-fw fa-sort"/></th>
+          <th>Types<i ng-click="orderByMe('types')" class="fa fa-fw fa-sort"/></th>
+          <th># Items<i ng-click="orderByMe('# Items')" class="fa fa-fw fa-sort"/></th>
+          <th>Key</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="nod in nodes | orderBy:myOrderBy:rev">
+          <td class="col-sm-2">
+            <a ui-sref="root.main.nodeDetail({nodeId: nod.agid})"><span>{{nod.name}}</span></a>
+          </td>
+          <td class="col-sm-3">
+            <span>{{nod.agid}}</span>
+          </td>
+          <td class="col-sm-3">
+            <div class="row">
+              <div class="col-sm-6">
+                <span>{{nod.type}}</span>
+              </div>
+              <div class="col-sm-6">
+                <img ng-show="nod.type === 'Sharq'" class="pull-right node-logo" src="img/logos/shqlogo.png"/>
+                <img ng-show="nod.type === 'Vicinity'" class="pull-right node-logo" src="img/logos/vcntlogo.png"/>
+              </div>
+            </div>
+          </td>
+          <td class="col-sm-1">
+            <span>{{nod.itemsCount}}</span>
+          </td>
+          <td class="col-sm-1">
+            <div align="center"><i ng-show="nod.hasKey" style="color: green" class="fa fa-shield fa-lg"></i></div>
+            <div align="center"><i ng-show="!nod.hasKey" style="color: red" class="fa fa-close fa-lg"></i></div>
+          </td>
+          <td class="col-sm-2">
+              <div align="center">
+                <button type="button" ng-click="goToEdit(nod.agid)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-pencil fa-lg col-sm-4"></i></button>
+                <button type="button" ng-click="deleteNode(nod.agid)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
+                <button type="button" ng-click="showModal(nod.agid)" class="btn btn-default"><i style="color: blue; padding-left:10%" class="fa fa-key fa-lg col-sm-4"></i></button>
+              </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- /.box-body -->
+
+<!-- MODAL -->
+<div id="keymodal" class="modal">
+  <div class="modal-dialog" style="width: 40%; height: 40%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="closeModal()" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Edit your public key</h4>
+      </div>
+      <div class="modal-body">
+        <textarea placeholder="gatewayKey" style="display: block; width: 100%; height: 100%; margin-top: 5px; margin-left: 0px; resize: none" type="text" ng-model="gatewayKey"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger pull-left" ng-click="removeModal()">Remove key</button>
+        <button type="button" class="btn btn-primary" ng-click="saveModal()">Save key</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+</section>
+<!-- /.box -->
+
+<!-- MOBILE VERSION -->
+<section ng-show="loadedPage && imMobile" style="margin: auto; width:80%">
+  <hr>
+  <span>
+    <div>
+      <button class="btn btn-default btn-block" ng-click="goToEdit(0)"><span class="glyphicon glyphicon-plus"></span>Create Access Point</button>
+    </div>
+  </span>
+  <hr>
+  <span>
+    <i ng-click="onSort(false)"  class="fa fa-sort-alpha-asc btn btn-default" aria-hidden="true"></i>
+    <i ng-click="onSort(true)"  class="fa fa-sort-alpha-desc btn btn-default" aria-hidden="true"></i>
+  </span>
+  <hr>
+  <div class="box-body box" ng-repeat="nod in nodes | orderBy:'name':rev">
+      <div class="col-sm-2">
+        <label>Name: </label>
+        <a ui-sref="root.main.nodeDetail({nodeId: nod.agid})"><span>{{nod.name}}</span></a>
+      </div>
+      <div class="col-sm-4">
+        <label>AGID: </label>
+        <span>{{nod.agid}}</span>
+      </div>
+      <div class="col-sm-3">
+        <label>Type: </label>
+        <span>{{nod.type}}</span>
+      </div>
+      <div class="col-sm-3">
+        <div class="col-sm-6">
+          <button class="btn btn-info btn-block pull-right" ng-click="goToEdit(nod.agid)">Edit</button>
+        </div>
+        <hr>
+        <div class="col-sm-6">
+          <button class="btn btn-danger btn-block pull-right" ng-click="deleteNode(nod.agid)">Delete</button>
+        </div>
+    </div>
+  </div>
+  <hr>
+
+</section>

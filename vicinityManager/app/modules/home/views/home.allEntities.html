@@ -1,0 +1,109 @@
+<section class="content-header">
+  <h1>{{ entitiesCaption }}</h1>
+</section>
+
+
+<section class="content" >
+
+  <!-- Filter -->
+<div class="row">
+  <div class="col-sm-9">
+      <div class="dropdown" style="margin: 10px">
+        <a ui-sref="root.main.allEntities" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-filter"></i> Organisation selection
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+           <li><a ng-click="filterOrganisations(0)" ui-sref="root.main.allEntities">All organisations</a></li>
+           <li><a ng-click="filterOrganisations(1)" ui-sref="root.main.allEntities">My partners</a></li>
+           <li><a ng-click="filterOrganisations(2)" ui-sref="root.main.allEntities">Other organisations</a></li>
+        </ul>
+       </div>
+    </div>
+    <div align="right" class="col-sm-3" ng-if="!imMobile">
+      <button class="btn-xs btn-primary" ng-click="changeView()" ng-disabled="!listView"><i class="fa fa-th-large fa-lg"></i></button>
+      <button class="btn-xs btn-primary" ng-click="changeView()" ng-disabled="listView"><i class="fa fa-list fa-lg"></i></button>
+    </div>
+  </div>
+  <br>
+
+<!-- VIEW BLOCK -->
+
+
+<!-- WIDGET VIEW-->
+<div class="row" ng-if="!listView || imMobile">
+    <div class="col-md-4" ng-repeat="result in resultsList" >
+      <!-- Widget: user widget style 1 -->
+      <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-gold">
+          <div class="widget-user-image">
+            <img ng-show="activeCompanyID === result.cid" style="cursor: pointer" onmouseover="" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})" class="img-circle" ng-src="{{result.avatar}}" alt="Comapany Avatar">
+            <img ng-show="!(activeCompanyID === result.cid)" style="cursor: pointer" onmouseover="" ui-sref="root.main.companyProfile.devices({companyAccountId: result.cid})" class="img-circle" ng-src="{{result.avatar}}" alt="Comapany Avatar">
+          </div>
+
+          <i ng-if="myFriends.indexOf(result.cid) !== -1" class="tooltip2 fa fa-users push-right" aria-hidden="true"></i>
+
+          <!-- /.widget-user-image -->
+          <h3 ng-show="activeCompanyID === result.cid" class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">{{result.name}}</a></h3>
+          <h3 ng-show="!(activeCompanyID === result.cid)" class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.devices({companyAccountId: result.cid})">{{result.name}}</a></h3>
+          <h5 class="widget-user-desc"><i class="fa fa-map-marker margin-r-5"></i> {{result.location}}</h5>
+        </div>
+        <a ng-show="activeCompanyID === result.cid" href="" class="widget-user-footer-moreinfo" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a ng-show="!(activeCompanyID === result.cid)" href="" class="widget-user-footer-moreinfo" ui-sref="root.main.companyProfile.devices({companyAccountId: result.cid})">More info <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div class="box" ng-if="listView && !imMobile">
+
+
+      <div class="box-body">
+        <table id="RegTable" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Name<i ng-click="orderByMe('name')" class="fa fa-fw fa-sort"/></th>
+              <th>Location<i ng-click="orderByMe('location')" class="fa fa-fw fa-sort"/></th>
+              <th>Friend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="result in resultsList | orderBy:myOrderBy:rev">
+              <td class="col-sm-4">
+                <a ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">{{result.name}}</a>
+              </td>
+              <td class="col-sm-4">
+                <span>{{result.location}}</span>
+              </td>
+              <td class="col-sm-2">
+                <span ng-if="myFriends.indexOf(result.cid) !== -1">YES</span>
+                <span ng-if="myFriends.indexOf(result.cid) === -1">NO</span>
+              </td>
+              <td class="col-sm-2">
+                <div align="center">
+                  <a class="padded" href="" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">
+                     <i class="fa fa-search fa-lg"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  <!--END VIEW BLOCK -->
+
+
+  <div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+    <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+  </div>
+
+  <div class="centered" ng-show="!allItemsLoaded && loaded">
+    <h3 ng-click="loadMore()" class="well" style="cursor: pointer">Load more items</h3>
+  </div>
+
+  <div class="centered" ng-show="allItemsLoaded">
+    <h3 class="well">All items loaded!</h3>
+  </div>
+</section>

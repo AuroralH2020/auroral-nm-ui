@@ -1,0 +1,153 @@
+<section class="content-header">
+  <h1>Service profile</h1>
+</section>
+
+
+<section class="content">
+      <div class="row" >
+        <div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+          <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+        </div>
+
+        <div class="col-md-3" ng-show="loaded">
+
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+
+              <!-- Profile Image -->
+              <!--  IMAGE -->
+              <div ng-show="!isMyItem" style="width: 200px; text-align: center; margin: 0 auto">                 <!--      class="profile-user-img img-responsive img-circle" -->
+                <img ng-src="{{item.avatar}}" class="img-circle" alt="Service profile picture" style="height:120px; width:120px; text-align: center; border: 3px solid; border-color: #d2d6de">
+              </div>
+
+              <div ng-show="isMyItem" id="changeAvatar" style="width: 200px; text-align: center; margin: 0 auto">
+                <span style="position: absolute">+ Change avatar</span>
+                <a href="" ng-click="showLoadPic()">
+                  <img id="pic" class="img-circle" ng-src="{{item.avatar}}" alt="Service profile picture" style="height:120px; width:120px;  text-align: center; border: 3px solid; border-color: #d2d6de">
+                </a>
+              </div>
+
+              <input id="input1" ng-show="showInput" style="margin-left: 10%; margin-right: 10%; margin-top: 10px; margin-bottom: 10px" type="file" />
+              <a id="editCancel1" ng-show="showInput" ng-click="cancelLoadPic()" style="margin-left: 35%" class=" btn-sm btn-primary-bvr edit_profile"><i style="color: red" class="fa fa-times"></i>Cancel</a>
+              <a id="editUpload2" ng-show="showInput" ng-click="uploadPic()" class=" btn-sm btn-primary-bvr edit_profile"><i style="color: green" class="fa fa-check"></i>Upload</a>
+
+              <!-- Item Name -->
+              <h3 class="profile-username text-center" style="margin-top: 15px">{{item.name}}</h3>
+
+              <!-- Enable/Disable item -->
+              <div style="margin-left: 10%; margin-right: 10%; margin-top: 10px; margin-bottom: 10px" ng-show="imServiceProvider">
+              <a ng-click="changeStatus()" class="btn btn-primary btn-block" ng-show="!itemEnabled && isMyOrgItem"><i class="fa fa-plus-square"></i><b> Enable service</b></a>
+              <a ng-click="changeStatus()" class="btn btn-default btn-block" ng-show="itemEnabled && isMyItem"><i class="fa fa-minus-square"></i><b> Disable service</b></a>
+              </div>
+
+              <!-- Requesting service -->
+              <div ng-show="itemEnabled && canRequestService && !isMyOrgItem" style="margin-left: 10%; margin-right: 10%; margin-top: 10px; margin-bottom: 10px">
+                <div class="btn btn-success btn-block" href="" ui-sref="root.main.requestService({companyAccountId: item.cid.id._id, serviceId: item._id})">
+                   <i class="fa fa-plus"></i>&nbsp;<b>Request service</b>
+                </div>
+              </div>
+              <div class="well centered" ng-show="!isMyItem && contracted">
+                 <i class="fa fa-bar-chart"></i>&nbsp;<p class="text-muted">You have {{nContracts}} active contract(s) with this sevice</p>
+              </div>
+
+              <!-- Item info -->
+              <ul class="list-group list-group-unbordered">
+
+                <!-- Access Level -->
+                <li class="list-group-item">
+                  <i class="fa fa-eye margin-r-5"></i>
+                  <strong>Access level</strong>
+                  <br>
+                  <span ng-show="!isMyItem">{{ALcaption}}</span>
+                    <div class="dropdown" ng-show="isMyItem">
+                      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ALcaption}}
+                      <span class="caret"></span></button>
+                      <ul class="dropdown-menu">
+                        <li ng-click="accessLevelNew=1; saveNewAccess()"><a href="#">Private</a></li>
+                        <li ng-click="accessLevelNew=2; saveNewAccess()"><a href="#">Partners with Data Under Request</a></li>
+                        <li ng-click="accessLevelNew=3; saveNewAccess()"><a href="#">Public with Data Under Request</a></li>
+                      </ul>
+                    </div>
+                </li>
+
+                  <!-- Ownership -->
+                  <li class="list-group-item">
+                    <i class="fa fa-briefcase margin-r-5"></i>
+                    <strong>Owner</strong>
+                    <br>
+                    <a ui-sref="root.main.companyProfile.devices({companyAccountId: item.cid.id._id})">{{name}}</a>
+                    <br>
+                    <a ng-show="itemEnabled" ui-sref="root.main.userProfile.devices({companyAccountId: item.cid.id._id, userAccountId: item.uid.id})">{{owner}}</a>
+                    <a class="text-muted" ng-show="!itemEnabled">Unassigned</a>
+                  </li>
+
+                  <!-- Infrastructure -->
+                  <li class="list-group-item" ng-show="isMyOrgItem">
+                    <i class="fa fa-sitemap margin-r-5"></i>
+                    <strong>Gateway</strong>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-9">
+                        <span><b>{{gateway.name}}</b></span>
+                        <span>{{gateway.adid}}</span>
+                      </div>
+                      <div class="col-md-3">
+                        <img class="pull-right node-logo" src="{{gateway.logo}}" />
+                    </div>
+                  </div>
+                  </li>
+
+                  <!-- Shift item -->
+                  <li class="list-group-item" ng-show="isMyItem || imAdmin && isMyOrgItem">
+                    <i class="fa fa-exchange margin-r-5"></i>
+                    <strong>Move item</strong>
+                    <div id="moveEdit" class="row">
+                      <div class="col-md-6">
+                        <button ng-click="changeOwner()" ng-disabled="!itemEnabled" class="btn btn-info btn-block"><i class="fa fa-user"></i><b> Change Owner</b></button>
+                      </div>
+                      <div class="col-md-6">
+                        <button ng-click="changeGateway()" class="btn btn-info btn-block"><i class="fa fa-sitemap"></i><b> Change Gateway</b></button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <select id="editMoveName" name="menu">
+                          <option value="{{thing}}" ng-repeat="thing in moveThings">{{thing.name}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-8">
+                       <a ng-click="saveNewAccessMove()" id="moveSave" class="pull-right btn-sm btn-info edit_profile" style="margin-left: 5px"><i style="color: green" class="fa fa-check"></i>Save</a>
+                       <a ng-click="backToEditMove()" style="margin-left: 35%" id="moveCancel" class="pull-right btn-sm btn-info edit_profile"><i style="color: red" class="fa fa-times"></i>Cancel</a>
+                     </div>
+                   </div>
+                  </li>
+
+                  <!-- Delete button -->
+                  <li class="list-group-item" ng-show="(isMyOrgItem && !itemEnabled) || isMyItem">
+                    <i class="fa fa-times margin-r-5"></i>
+                    <b>Remove service</b>
+                    <a ng-click="deleteItem()" class="pull-right btn-sm btn-danger" style="margin-left: 5px"> Delete</a>
+                  </li>
+
+              </ul>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-9" ng-show="loaded">
+          <div class="nav-tabs-custom">
+          <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+              <li ui-sref-active="active"><a ui-sref="root.main.serviceProfile.whoSee"><i class="fa fa-eye"></i>&nbsp;Who see</a></li>
+              <li ui-sref-active="active" ng-show="isMyOrgItem"><a ui-sref="root.main.serviceProfile.history"><i class="fa fa-clock-o"></i>&nbsp;History</a></li>
+              <li ui-sref-active="active"><a ui-sref="root.main.serviceProfile.description"><i class="fa fa-cube"></i>&nbsp;Description</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" ui-view="tabPanel">
+            </div>
+          </div>
+        </div>
+      </div>
+</section>

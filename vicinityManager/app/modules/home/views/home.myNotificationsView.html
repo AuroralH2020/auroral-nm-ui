@@ -1,0 +1,168 @@
+<section class="content-header">
+    <h1>Organisation notifications</h1>
+</section>
+
+  <!-- /.box-header -->
+<section class="content">
+
+  <div class="box-body">
+
+    <div class="box-group" id="accordion" style="max-width:800px">
+      <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+      <div class="panel box-bg-dark-grey box-warning">
+        <div class="box-header with-border">
+          <div class="box-tools">
+            <div class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown">Select notification type
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                 <li><a ng-click="notifType(false)">Show all notifications</a></li>
+                 <li><a ng-click="notifType(true)">Only pending notifications</a></li>
+              </ul>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ </div>
+
+  <!-- row -->
+  <div class="centered" ng-show="notifs.length === 0 && loadedPage" style="max-width:700px; margin:auto">
+    <h3 class="well">There are no notifications...</h3>
+  </div>
+
+  <div class="row" ng-hide="notifs.length === 0">
+    <div class="col-md-12">
+      <!-- The time line -->
+      <ul class="timeline">
+        <!-- timeline time label -->
+        <li class="time-label" ng-repeat="d in dates">
+              <span class="bg-gray">
+                {{ d }}
+              </span>
+
+              <!-- <i class="fa fa-envelope bg-blue"></i> -->
+
+              <div class="timeline-item" style="max-width:700px; margin-top:10px" ng-repeat="notif in notifs" ng-if="notif.dateCaption === d">
+
+                <!-- Clock -->
+                <span class="time" > <i class="fa fa-clock-o"></i> {{notif.timeCaption}}</span>
+
+                  <h3 class="timeline-header">
+
+                    <div class="inline">
+                      <!-- Label type -->
+                      <span ng-show="notif.type===1"><span class="label label-default paddedSides">Registration request</span></span>
+                      <span ng-show="notif.type===11"><span class="label label-default paddedSides">Item enabled</span></span>
+                      <span ng-show="notif.type===12"><span class="label label-default paddedSides">Item disabled</span></span>
+                      <span ng-show="notif.type===13"><span class="label label-default paddedSides">Item discovered</span></span>
+                      <span ng-show="notif.type===14"><span class="label label-default paddedSides">Item updated</span></span>
+                      <span ng-show="notif.type===21"><span class="label label-default paddedSides">Contract request</span></span>
+                      <span ng-show="notif.type===22"><span class="label label-default paddedSides">Contract accepted</span></span>
+                      <span ng-show="notif.type===23"><span class="label label-default paddedSides">Contract cancelled</span></span>
+                      <span ng-show="notif.type===24"><span class="label label-default paddedSides">Contract joined</span></span>
+                      <span ng-show="notif.type===25"><span class="label label-default paddedSides">Contract abandoned</span></span>
+                      <span ng-show="notif.type===26"><span class="label label-default paddedSides">Contract updated</span></span>
+                      <span ng-show="notif.type===31"><span class="label label-default paddedSides">Partnership request</span></span>
+                      <span ng-show="notif.type===32"><span class="label label-default paddedSides">Partnership cancelled</span></span>
+                      <span ng-show="notif.type===33"><span class="label label-default paddedSides">Partnership rejected</span></span>
+                      <span ng-show="notif.type===34"><span class="label label-default paddedSides">Partnership accepted</span></span>
+                      <span ng-show="notif.type===35"><span class="label label-default paddedSides">Partnership request</span></span>
+                      <span ng-show="notif.type===36"><span class="label label-default paddedSides">Partnership request cancelled</span></span>
+
+                      <!-- Label status -->
+                      <span ng-show="notif.status==='waiting'"><span class="label label-warning paddedSides">Waiting</span></span>
+                      <span ng-show="notif.status==='responded'"><span class="label label-primary paddedSides">Responded</span></span>
+                      <span ng-show="notif.status==='info'"><span class="label label-primary paddedSides">Info</span></span>
+                      <span ng-show="notif.status==='rejected'"><span class="label label-danger paddedSides">Declined</span></span>
+                      <span ng-show="notif.status==='accepted'"><span class="label label-success paddedSides">Accepted</span></span>
+                    </div>
+
+                  </h3>
+
+                  <!-- Description -->
+                  <span class="padded" ng-show="notif.type === 1"><b>{{notif.actor.item.companyName}}</b> wants to register in Vicinity</span>
+                  <span class="padded" ng-show="notif.type === 13">New item(s) have been discovered</span>
+                  <span class="padded" ng-show="notif.type === 14">Item(s) have been updated</span>
+                  <span class="padded" ng-show="notif.type === 11"><b>{{notif.object.item.name}}</b> has been enabled.</span>
+                  <span class="padded" ng-show="notif.type === 12"><b>{{notif.object.item.name}}</b> has been disabled.</span>
+
+                  <span class="padded" ng-show="notif.type === 21">There is a contract request from the user <b>{{notif.actor.item.name}}</b>.</span>
+                  <span class="padded" ng-show="notif.type === 22">The contract admin <b>{{notif.actor.item.name}}</b> has accepted the contract <b>{{notif.object.extid}}</b>.</span>
+                  <span class="padded" ng-show="notif.type === 23">The contract admin <b>{{notif.actor.item.name}}</b> has cancelled the contract <b>{{notif.object.extid}}</b>.</span>
+                  <span class="padded" ng-show="notif.type === 24">The user <b>{{notif.actor.item.name}}</b> has joined the contract <b>{{notif.object.extid}}</b>.</span>
+                  <span class="padded" ng-show="notif.type === 25">The user <b>{{notif.actor.item.name}}</b> has abandoned the contract <b>{{notif.object.extid}}</b>.</span>
+                  <span class="padded" ng-show="notif.type === 26">The contract <b>{{notif.object.extid}}</b> has been updated, might have inactive items.</span>
+                  <span class="padded" ng-show="notif.type === 31 && (notif.status === 'responded' || notif.status=== 'waiting')"><b>{{notif.object.item.name}}</b> wants to partner with you.</span>
+                  <span class="padded" ng-show="notif.type === 32">The partnership between <b>{{notif.target.item.name}}</b> and <b>{{notif.object.item.name}}</b> was cancelled by <b>{{notif.actor.item.name}}</b>.</span>
+                  <span class="padded" ng-show="[33, 34].lastIndexOf(notif.type) >= 0 && !(notif.status=== 'waiting')"><b>{{notif.object.item.name}}</b> responded our partnership request.</span>
+                  <span class="padded" ng-show="notif.type === 35">You have sent a partnership request to <b>{{notif.object.item.name}}</b>.</span>
+                  <span class="padded" ng-show="notif.type === 36">Partnership request cancelled.</span>
+
+                  <span class="ciara" ng-class="bckColor"></span>
+
+                  <div class="centered" ng-show="notif.type === 31">
+                    <span ng-if="notif.status === 'waiting'" >
+                      <i ng-click="acceptNeighbourRequest(notif._id, notif.object.item._id)" class="fa fa-check fa-lg fontGreen paddedSides"></i>
+                      <i ng-click="rejectNeighbourRequest(notif._id, notif.object.item._id)" class="fa fa-close fa-lg fontRed paddedSides"></i>
+                      <a ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.item._id})"><i class="fa fa-search fa-lg paddedSides"></i></a>
+                    </span>
+                    <span ng-if="notif.status !== 'waiting'" >
+                      <a ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.item._id})"><i class="fa fa-search fa-lg"></i></a>
+                    </span>
+                  </div>
+
+                  <div class="centered" ng-show="notif.type === 1">
+                    <span ng-if="notif.status === 'waiting'" >
+                      <i ng-click="acceptRegistration(notif._id, notif.actor.item._id)" class="fa fa-check fa-lg  fontGreen paddedSides"></i>
+                      <i ng-click="rejectRegistration(notif._id, notif.actor.item._id)" class="fa fa-close fa-lg  fontRed paddedSides"></i>
+                      <a ui-sref="root.main.registrationProfile.regAdmin({registrationId: reg.actor.item._id})"><i class="fa fa-search fa-lg paddedSides"></i></a>
+                    </span>
+                    <span ng-if="notif.status !== 'waiting'" >
+                      <a ui-sref="root.main.registrationProfile.regAdmin({registrationId: reg.actor.item._id})"><i class="fa fa-search fa-lg"></i></a>
+                    </span>
+                  </div>
+
+                  <div class="centered" ng-show="[11, 12].indexOf(notif.type) !== -1">
+                    <span>
+                      <a ui-sref="root.main.deviceProfile.whoSee({deviceId: notif.object.item._id})"><i class="fa fa-search fa-lg "></i></a>
+                    </span>
+                  </div>
+
+                  <div class="centered" ng-show="[21, 22, 23, 24, 25, 26].indexOf(notif.type) !== -1">
+                    <span>
+                      <a ui-sref="root.main.contracts({contractId: notif.object.item._id})"><i class="fa fa-search fa-lg"></i></a>
+                    </span>
+                  </div>
+
+                  <div class="centered" ng-show="[32, 33, 34, 35, 36].indexOf(notif.type) !== -1">
+                    <span>
+                      <a ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.item._id})"><i class="fa fa-search fa-lg "></i></a>
+                    </span>
+                  </div>
+
+                <br>
+
+              </div>
+        </li>
+        <li>
+          <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="centered" ng-hide="loadedPage" style="max-width:700px; margin:auto">
+    <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+  </div>
+
+  <div class="centered" ng-show="!allItemsLoaded && loadedPage" style="max-width:700px; margin:auto">
+    <h3 ng-click="loadMore()" class="well" style="cursor: pointer">Load more notifications</h3>
+  </div>
+
+  <div class="centered" ng-show="allItemsLoaded && notifs.length > 0" style="max-width:700px; margin:auto">
+    <h3 class="well">All notifications loaded!</h3>
+  </div>
+
+</section>

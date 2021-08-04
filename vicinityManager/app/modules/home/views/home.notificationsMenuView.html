@@ -1,0 +1,122 @@
+ <!-- Menu toggle button -->
+
+<a href="" ng-click="init()" class="dropdown-toggle" data-toggle="dropdown">
+  <i class="fa fa-bell"></i>
+  <span ng-show="!zeroNotif" class="label label-warning">{{notifCount}}</span>
+</a>
+
+  <ul class="dropdown-menu animated-dropdown-menu outerMenu" ng-class="bckColor">
+    <li ng-show="!loaded" class="header">Loading ...</li>
+    <li ng-show="loaded" class="header">Most recent notifications</li>
+
+      <!-- Inner Menu: contains the notifications -->
+      <ul class="menu">
+
+        <!-- Unread notifications -->
+
+        <li ng-repeat="notif in notifs">
+
+          <span class="ciara" ng-class="bckColor"></span>
+
+          <div class="row" ng-class="{'readNot' : notif.isUnread === false}">
+
+            <!-- Avatar -->
+            <div class="notification-avatar">
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 1" ui-sref="root.main.registrationProfile.regAdmin({registrationId: notif.actor.id})">
+                <img ng-src="./img/icons/data_request.png" alt="Registration Request"/>
+              </a>
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[11, 12].lastIndexOf(notif.type) !== -1" ui-sref="root.main.deviceProfile.whoSee({deviceId: notif.id})">
+               <img ng-src="{{notif.object.item.avatar}}" alt="Device Avatar">
+              </a>
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[21, 22, 24].lastIndexOf(notif.type) !== -1" ui-sref="root.main.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">
+               <img ng-src="{{notif.actor.item.avatar}}" alt="Contract Avatar">
+              </a>
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[31, 33, 34].lastIndexOf(notif.type) !== -1" ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">
+                <img ng-src="./img/icons/data_request.png" alt="Company Avatar">
+              </a>
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[32, 35, 36].lastIndexOf(notif.type) !== -1" ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">
+                <img ng-src="./img/icons/data_request.png" alt="Company Avatar">
+              </a>
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[13, 14, 26].lastIndexOf(notif.type) !== -1">
+                <img ng-src="./img/icons/data_request.png" alt="Company Avatar"/>
+              </a>
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[23, 25].lastIndexOf(notif.type) !== -1" ui-sref="root.main.contracts({companyAccountId: orgId,userAccountId: userId})">
+                <img ng-src="{{notif.actor.item.avatar}}" alt="Contract Avatar">
+              </a>
+            </div>
+
+            <!-- Date -->
+            <p class="text-muted">{{notif.date}}</p>
+
+            <!-- Descriptions -->
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 1">You have received a registration request from:<a ui-sref="root.main.registrationProfile.regAdmin({registrationId: notif.actor.id})">{{notif.actor.name}}</a></p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 11">An item has been activated:  <a ui-sref="root.main.deviceProfile.whoSee({deviceId: notif.object.id})">{{notif.object.name}}</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 12">An item has been deactivated:  <a ui-sref="root.main.deviceProfile.whoSee({deviceId: notif.object.id})">{{notif.object.name}}</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 13">You have discovered new item(s)</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 14">You have updated item(s)</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 21">There is a <a ui-sref="root.main.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a> request from <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">{{notif.actor.name}}</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 22">The <a ui-sref="root.main.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a> with <a ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has been accepted.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 23">The <a ui-sref="root.main.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a> with <a ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has been removed.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 24">The user <a ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has joined the <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 25">The user <a ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has abandoned the <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 26">The <a ui-sref="root.main.contracts({contractId: notif.object.id})">contract</a> has been updated and might have inactive items.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 31">You have a partnership request from <a  ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">{{notif.object.name}}</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 32">The partnership between {{notif.target.name}} and {{notif.object.name}} was cancelled by <a  ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 33">Your partnership with <a  ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">{{notif.object.name}}</a> was rejected.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 34">Your partnership with <a  ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">{{notif.object.name}}</a> was accepted.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 35"><a ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has requested a partnership with <a  ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">{{notif.object.name}}</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 36">The partnership request from <a ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">{{notif.object.name}}</a> was cancelled.</p>            
+            </div>
+
+          <!-- Actions -->
+          <div class="notification-actions" ng-class="{'readNot' : notif.isUnread === false}">
+            <button  ng-show="notif.type === 1 && notif.status === 'waiting'" ng-click="acceptRegistration(notif.notificationId, notif.actor.id)" type="button" class="btn btn-default btn-xs">Approve</button>
+            <button  ng-show="notif.type === 1 && notif.status === 'waiting'" ng-click="rejectRegistration(notif.notificationId, notif.actor.id)" type="button" class="btn btn-default btn-xs">Reject</button>
+
+            <button  ng-show="notif.type === 31 && notif.status === 'waiting'" ng-click="acceptNeighbourRequest(notif.notificationId, notif.object.id)" type="button" class="btn btn-default btn-xs">Accept</button>
+            <button  ng-show="notif.type === 31 && notif.status === 'waiting'" ng-click="rejectNeighbourRequest(notif.notificationId, notif.object.id)" type="button" class="btn btn-default btn-xs">Decline</button>
+          </div>
+
+        </li>
+
+
+  <!-- Read notifications -->
+
+        <!-- <li ng-repeat="notif in notifs" ng-show="[1, 21, 31].indexOf(notif.type) !== -1 && (notif.status== 'waiting') && !(notif.isUnread)">
+
+          <span class="ciara" ng-class="bckColor"></span>
+
+          <div class="row readNot"> -->
+          <!-- Avatar -->
+          <!-- <div class="notification-avatar" ng-click="changeIsUnread(notif.notificationId)">
+            <a ng-show="notif.type === 1" ui-sref="root.main.registrationProfile.regAdmin({registrationId: notif.actor.id})">
+              <img ng-src="../../../../img/icons/data_request.png" alt="Company Avatar"/>
+            </a>
+            <a ng-show="notif.type === 31" ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">
+              <img ng-src="{{notif.object.item.avatar}}" alt="Company Avatar">
+            </a>
+          </div> -->
+
+          <!-- Description -->
+            <!-- <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 1"> You have received a registration request from: </p><a ui-sref="root.main.registrationProfile.regAdmin({registrationId: notif.actor.id})"><p> {{notif.actor.item.companyName}} </p></a>
+            <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 31"> You have partnership request from <a  ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">{{notif.object.name}}</a>.</p>
+          </div> -->
+
+          <!-- Actions -->
+          <!-- <div class="notification-actions readNot">
+
+            <button  ng-show="notif.type === 1" ng-click="acceptRegistration(notif.actor.id, notif.notificationId)" type="button" class="btn btn-default btn-xs">Approve</button>
+            <button  ng-show="notif.type === 1" ng-click="rejectRegistration(notif.actor.id, notif.notificationId)" type="button" class="btn btn-default btn-xs">Reject</button>
+
+            <button  ng-show="notif.type === 31" ng-click="acceptNeighbourRequest(notif.notificationId, notif.object.id)" type="button" class="btn btn-default btn-xs">Accept</button>
+            <button  ng-show="notif.type === 31" ng-click="rejectNeighbourRequest(notif.notificationId, notif.object.id)" type="button" class="btn btn-default btn-xs">Decline</button>
+
+          </div>
+
+        </li> -->
+        <!-- end notification -->
+      </ul>
+
+      <li class="footNotif" ng-class="bckColor"><a ng-click="seeAll()"><b>View all</b></a></li>
+
+  </ul>

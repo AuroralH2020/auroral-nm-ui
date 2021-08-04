@@ -1,0 +1,27 @@
+<a class="fa fa-refresh fa-spin fa-2x" style="color: #ECF0F1" ng-hide="loaded"></a>
+<!-- Menu Toggle Button -->
+<a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="loaded">
+  <!-- The user image in the navbar-->
+  <img ng-src="{{avatar}}" class="user-image" alt="User Image">
+  <!-- hidden-xs hides the username on small devices so only the image appears. -->
+  <span class="hidden-xs">{{name}}</span>
+</a>
+<ul class="dropdown-menu" ng-show="loaded">
+  <!-- The user image in the menu -->
+  <li class="user-header">
+    <img ng-src="{{avatar}}" class="img-circle" alt="User Image">
+    <p>{{name}}</p>
+    <p>{{occupation}}</p>
+  </li>
+  <!-- Menu Body -->
+  <!-- Menu Footer-->
+  <li class="user-footer">
+    <div class="pull-left">
+      <!--<a href="" class="btn btn-default btn-flat" ui-sref="root.main.profile({id: userAccountId})">Profile</a>-->
+      <a class="btn btn-default btn-flat" ui-sref="root.main.userProfile.devices({companyAccountId: companyAccountId, userAccountId: userAccountId})">Profile</a>
+    </div>
+    <div class="pull-right">
+      <a href="" class="btn btn-default btn-flat" ng-click="signout()">Log out</a>
+    </div>
+  </li>
+</ul>

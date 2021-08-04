@@ -1,0 +1,1 @@
+docker run -p 80:80 auroral_nm_ui

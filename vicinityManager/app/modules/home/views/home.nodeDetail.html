@@ -1,0 +1,146 @@
+<section class="content-header">
+    <h1>Access Point detail</h1>
+</section>
+
+<!-- MODIFY TEMPLATE -->
+<section class="content">
+<div ng-show="modify" class="box box-primary" style="width:70%">
+  <div class="box-header with-border">
+    <h3 class="box-title">{{myNode}}</h3>
+  </div>
+
+  <form name="form" role="form" ng-submit="submitNode()">
+    <div class="box-body">
+      <div class="form-group">
+        <label>Access Point name</label>
+        <input class="form-control" ng-model="nName" placeholder="Enter name" required>
+      </div>
+
+      <div class="form-group" ng-show="nodeId === '0'">
+        <label>Access Point type</label>
+        <div class="form-group">
+          <div class="row radio">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/vcntlogo.png"/>
+            </div>
+            <div class="col-sm-11">
+              <label>
+                <input name="optionsRadios" ng-model="nAgentType" value="Vicinity" type="radio">
+                Vicinity agent
+              </label>
+            </div>
+          </div>
+          <div class="row radio">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/shqlogo.png"/>
+            </div>
+            <div class="col-sm-11">
+              <label>
+                <input name="optionsRadios" ng-model="nAgentType" value="Sharq" type="radio">
+                Sharq adapter
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="nodeId !== '0'">
+        <label>Gateway type</label>
+          <div ng-show="nAgentType === 'Vicinity' ">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/vcntlogo.png"/>
+            </div>
+            <div class="col-sm-11">
+              <label>
+                Vicinity agent
+              </label>
+            </div>
+          </div>
+          <div ng-show="nAgentType === 'Sharq' ">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/shqlogo.png"/>
+            </div>
+            <div class="col-sm-11">
+              <label>
+                Sharq adapter
+              </label>
+            </div>
+          </div>
+        </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" ng-model="nPass" placeholder="Enter password" required>
+      </div>
+
+      <div class="form-group">
+        <label>Repeat Password</label>
+        <input type="password" class="form-control" ng-model="nPass2" placeholder="Repeat password" required/>
+        <span class="help-block" style="color: green" ng-show="nPass===nPass2 && nPass2"><i class="fa fa-check"></i> Passwords match!</span>
+        <span class="help-block" style="color: red" ng-show="nPass!==nPass2 && nPass2"><i class="fa fa-times"></i> Passwords do not match</span>
+      </div>
+
+      </div>
+
+  <div class="box-footer">
+    <div class="col-xs-6">
+      <button type="submit" ng-disabled="nPass!==nPass2 || !nPass2 || !nPass" class="btn btn-primary">Submit</button>
+    </div>
+    <div class="col-xs-6">
+      <a href="" ng-click="backToList()" class="pull-right">Cancel</a>
+    </div>
+  </div>
+  </form>
+</div>
+
+<!-- READ ONLY TEMPLATE-->
+
+<div ng-show="!modify" class="box box-primary" style="width:70%">
+  <div class="box-header with-border">
+    <h3 class="box-title">{{myNode}}</h3>
+  </div>
+
+    <div class="box-body">
+      <div class="form-group">
+        <label>Access Point name</label>
+        <p>{{nName}}</p>
+      </div>
+      <div class="form-group">
+        <label>ADID</label>
+        <p>{{nId}}</p>
+      </div>
+      <div class="form-group">
+        <label>Access Point type</label>
+          <div ng-show="nAgentType === 'Vicinity' ">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/vcntlogo.png"/>
+            </div>
+            <div class="col-sm-11">
+              <label>
+                Vicinity agent
+              </label>
+            </div>
+          </div>
+          <div ng-show="nAgentType === 'Sharq' ">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/shqlogo.png"/>
+            </div>
+            <div class="col-sm-11">
+              <label>
+                Sharq adapter
+              </label>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  <div class="box-footer">
+    <div class="col-xs-6">
+      <button ng-click="toModify()" class="btn btn-primary">Modify</button>
+    </div>
+    <div class="col-xs-6">
+      <a href="" ng-click="backToList()" class="pull-right">Cancel</a>
+    </div>
+  </div>
+</div>
+</section>
