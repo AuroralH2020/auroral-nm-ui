@@ -1,6 +1,6 @@
 this._env = {};
-this._env.apiUrl = "https://api.vicinity.dev.bavenir.eu";
-this._env.baseHref = "https://vicinity.dev.bavenir.eu";
+this._env.apiUrl = "https://auroral.dev.bavenir.eu/api/ui/v1";
+this._env.baseHref = "https://auroral.dev.bavenir.eu";
 this._env.notificationTimeout = 30000;
 
 // Avatar Defaults
