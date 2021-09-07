@@ -75,7 +75,7 @@
             <h5 class="widget-user-desc" ng-if="dev.status === 'Disabled'">{{dev.status}}</h5>
             <h5 class="widget-user-desc" ng-if="dev.status !== 'Disabled'">{{dev.privacyCaption}}</h5>
           </div>
-          <a href="" class="widget-user-footer-moreinfo" ui-sref="root.main.deviceProfile.whoSee({deviceId: dev.oid})">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="" class="widget-user-footer-moreinfo" ui-sref="root.main.deviceProfile.description({deviceId: dev.oid})">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
   </div>
@@ -96,7 +96,7 @@
             <tbody>
               <tr ng-repeat="it in items | orderBy:myOrderBy:rev">
                 <td class="col-sm-5">
-                  <a style="color: #000; z-index: -1" href="" ui-sref="root.main.deviceProfile.whoSee({deviceId: it._id})">{{it.name}}</a>
+                  <a style="color: #000; z-index: -1" href="" ui-sref="root.main.deviceProfile.description({deviceId: it._id})">{{it.name}}</a>
                 </td>
                 <td class="col-sm-2">
                   <a style="text-decoration: underline" href="" ui-sref="root.main.companyProfile.services({companyAccountId: it.cid.id._id})">{{it.companyName}}</a>

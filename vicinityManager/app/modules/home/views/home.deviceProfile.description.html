@@ -2,10 +2,13 @@
   <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
 </div>
 
-<!-- <section id="rootElem" ng-show="loaded">
-  <pre>{{devInfo | json : 4}}</pre>
-</section> -->
-
 <section>
-  <div class="rootElem"></div>
+  <div>
+    <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+    <a ng-if="imItemOwner" ng-click="descriptionEdit()" id="not2" class="pull-right btn-sm btn-info edit_profile">Edit</a>
+    <a id="not4" ng-click="descriptionSave()" style="display: block; margin-top: 5px; margin-left: 2px" class="pull-right btn-sm btn-info edit_profile"><i style="color: green" class="fa fa-check"></i>Save</a>
+    <a id="not5" ng-click="descriptionCancel()" style="display: block; margin-top: 5px; margin-left: 2px" class="pull-right btn-sm btn-info edit_profile"><i style="color: red" class="fa fa-times"></i>Cancel</a>
+    <textarea id="not3" rows="4" cols="80" style="display: block; margin-top: 5px; margin-left: 0px" class="style-1" type="text" ng-model="descriptionNew"></textarea>
+    <p id="not1">{{item.description}}</p>
+  </div>
 </section>

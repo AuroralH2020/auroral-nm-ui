@@ -19,12 +19,12 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
     return $http.get(configuration.apiUrl + '/items/' + id);
   };
 
-  itemsAPI.putOne = function(data) {
-    return $http.put(configuration.apiUrl +'/items', data);
+  itemsAPI.putOne = function(oid, data) {
+    return $http.put(configuration.apiUrl +'/items/' + oid, data);
   };
 
   itemsAPI.deleteItem = function(id) {
-    return $http.delete(configuration.apiUrl + '/items/delete/' + id);
+    return $http.delete(configuration.apiUrl + '/items/' + id);
   };
 
   itemsAPI.getMyItems = function(id, filter, offset, cid) {
