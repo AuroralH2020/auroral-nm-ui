@@ -13,7 +13,7 @@ factory('registrationsAPIService', ['$http', 'configuration', function($http, co
   };
 
   registrationsAPI.postOne = function(data) {
-    return $http.post(configuration.apiUrl +'/registration/', { data: data });
+    return $http.post(configuration.apiUrl +'/registration/', data);
   };
 
   registrationsAPI.putOne = function(id, data) {
