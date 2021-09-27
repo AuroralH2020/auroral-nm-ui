@@ -200,16 +200,16 @@ angular.module('VicinityManagerApp', [
             }
         })
 
-        .state('root.main.companyProfile.services', {
-            url: '/services',
-            views: {
-                'tabPanel@root.main.companyProfile':
-                    {
-                        templateUrl: 'modules/home/views/home.companyProfile.servicesView.html',
-                        controller: 'cPservicesController'
-                    }
-            }
-        })
+        // .state('root.main.companyProfile.services', {
+        //     url: '/services',
+        //     views: {
+        //         'tabPanel@root.main.companyProfile':
+        //             {
+        //                 templateUrl: 'modules/home/views/home.companyProfile.servicesView.html',
+        //                 controller: 'cPservicesController'
+        //             }
+        //     }
+        // })
 
         .state('root.main.companyProfile.friends', {
             url: '/partners',
@@ -256,49 +256,49 @@ angular.module('VicinityManagerApp', [
 
         // TODO add services
 
-        .state('root.main.serviceProfile', {
-          url: '/profile/service/:serviceId',
-          views: {
-            'mainContentView@root':
-            {
-              templateUrl: 'modules/home/views/home.serviceProfileView.html',
-              controller:  'serviceProfileController'
-            }
-          }
-        })
+        // .state('root.main.serviceProfile', {
+        //   url: '/profile/service/:serviceId',
+        //   views: {
+        //     'mainContentView@root':
+        //     {
+        //       templateUrl: 'modules/home/views/home.serviceProfileView.html',
+        //       controller:  'serviceProfileController'
+        //     }
+        //   }
+        // })
 
-        .state('root.main.serviceProfile.history', {
-          url: '/history',
-          views: {
-            'tabPanel@root.main.serviceProfile':
-            {
-              templateUrl: 'modules/home/views/home.serviceProfile.historyView.html',
-              controller:  'sPhistoryController'
-            }
-          }
-        })
+        // .state('root.main.serviceProfile.history', {
+        //   url: '/history',
+        //   views: {
+        //     'tabPanel@root.main.serviceProfile':
+        //     {
+        //       templateUrl: 'modules/home/views/home.serviceProfile.historyView.html',
+        //       controller:  'sPhistoryController'
+        //     }
+        //   }
+        // })
 
-        .state('root.main.serviceProfile.whoSee', {
-          url: '/whoSee',
-          views: {
-            'tabPanel@root.main.serviceProfile':
-            {
-              templateUrl: 'modules/home/views/home.serviceProfile.whoSeeView.html',
-              controller:  'sPwhoSeeController'
-            }
-          }
-        })
+        // .state('root.main.serviceProfile.whoSee', {
+        //   url: '/whoSee',
+        //   views: {
+        //     'tabPanel@root.main.serviceProfile':
+        //     {
+        //       templateUrl: 'modules/home/views/home.serviceProfile.whoSeeView.html',
+        //       controller:  'sPwhoSeeController'
+        //     }
+        //   }
+        // })
 
-        .state('root.main.serviceProfile.description', {
-          url: '/description',
-          views: {
-            'tabPanel@root.main.serviceProfile':
-            {
-              templateUrl: 'modules/home/views/home.serviceProfile.description.html',
-              controller:  'sPdescriptionController'
-            }
-          }
-        })
+        // .state('root.main.serviceProfile.description', {
+        //   url: '/description',
+        //   views: {
+        //     'tabPanel@root.main.serviceProfile':
+        //     {
+        //       templateUrl: 'modules/home/views/home.serviceProfile.description.html',
+        //       controller:  'sPdescriptionController'
+        //     }
+        //   }
+        // })
 
         .state('root.main.deviceProfile', {
           url: '/profile/device/:deviceId',
@@ -322,16 +322,16 @@ angular.module('VicinityManagerApp', [
           }
         })
 
-        .state('root.main.deviceProfile.whoSee', {
-          url: '/whoSee',
-          views: {
-            'tabPanel@root.main.deviceProfile':
-            {
-              templateUrl: 'modules/home/views/home.deviceProfile.whoSeeView.html',
-              controller:  'dPwhoSeeController'
-            }
-          }
-        })
+        // .state('root.main.deviceProfile.whoSee', {
+        //   url: '/whoSee',
+        //   views: {
+        //     'tabPanel@root.main.deviceProfile':
+        //     {
+        //       templateUrl: 'modules/home/views/home.deviceProfile.whoSeeView.html',
+        //       controller:  'dPwhoSeeController'
+        //     }
+        //   }
+        // })
 
         .state('root.main.deviceProfile.description', {
           url: '/description',

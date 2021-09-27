@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('VicinityManagerApp.controllers').controller('allDevicesController',
-   function ($scope, $window, itemsAPIService, searchAPIService, commonHelpers, itemsHelpers, Notification, $q){
+   function ($scope, $window, itemsAPIService, commonHelpers, Notification, configuration){
 
 // ====== Triggers window resize to avoid bug =======
     commonHelpers.triggerResize();
@@ -16,8 +16,7 @@ angular.module('VicinityManagerApp.controllers').controller('allDevicesControlle
 
 // Initialize variables and get initial data =============
 
-   $scope.devs=[];
-   $scope.onlyPrivateDevices = false;
+   $scope.items=[];
    $scope.noItems = true;
    $scope.loaded = false;
    $scope.loadedPage = false;
@@ -26,17 +25,6 @@ angular.module('VicinityManagerApp.controllers').controller('allDevicesControlle
    $scope.allItemsLoaded = false;
    $scope.typeOfItem = "devices";
    $scope.header = "My Devices";
-   $scope.isCollapsed = true;
-   // Ontology search
-   $scope.ontology = {};
-   $scope.ontology.selected = {};
-   $scope.ontology.typeSubclasses = [];
-   $scope.ontology.selected.type = "core:Device";
-   $scope.ontology.selected.label = "- ALL TYPES -";
-   $scope.ontology.reset = {};
-   $scope.ontology.reset.type = "core:Device";
-   $scope.ontology.reset.label = "- ALL TYPES -";
-
    $scope.listView = false;
    $scope.myOrderBy = 'name';
    $scope.accessFilterData = [
@@ -45,67 +33,51 @@ angular.module('VicinityManagerApp.controllers').controller('allDevicesControlle
      {id: 2, name: "My devices for friends"},
      {id: 3, name: "My public devices"},
      {id: 4, name: "My devices"},
-     {id: 8, name: "Contracted devices"},
-     {id: 9, name: "Mine & Contracted devices"},
+    //  {id: 8, name: "Contracted devices"},
+    //  {id: 9, name: "Mine & Contracted devices"},
      {id: 5, name: "Friend's devices"},
      {id: 6, name: "All public devices"},
-     {id: 7, name: "All devices"}
+    //  {id: 7, name: "All devices"}
    ];
    $scope.selectedAccessFilter = $scope.accessFilterData[4];
    $scope.filterNumber = $scope.selectedAccessFilter.id;
 
    init();
 
-   function init(){
+   async function init(){
      $scope.loaded = false;
-      itemsAPIService.getAllItems($scope.myId, "device", $scope.offset, $scope.filterNumber, $scope.ontology.selected.type)
-      .then(function(response){
-        for(var i = 0; i < response.data.message.length; i++){
-            $scope.devs.push(addCaption(response.data.message[i]));
-        }
-        $scope.noItems = ($scope.devs.length === 0);
+     try {
+        const response = await itemsAPIService.getAllItems("Device", $scope.offset, $scope.filterNumber)
+        response.data.message.forEach(it => {
+          $scope.items.push(addCaptionAndAvatar(it))
+        })
+        $scope.noItems = ($scope.items.length === 0);
         $scope.allItemsLoaded = response.data.message.length < 12;
-        return searchAPIService.getOntologyTypes($scope.ontology.selected.type);
-      })
-      .then(function(response){
-        $scope.ontology.typeSubclasses = response.data.message;
-        $scope.ontology.typeSubclasses.push($scope.ontology.reset)
         $scope.loaded = true;
         $scope.loadedPage = true;
-      })
-      .catch(function(err){
+      } catch (err) {
         console.log(err);
         Notification.error("Server error");
-      });
+      }
   }
 
-  $scope.refresh = function(){
-    $scope.devs=[];
+  $scope.refresh = async function(){
+    $scope.items=[];
     $scope.loaded = false;
-     itemsAPIService.getAllItems($scope.myId, "device", $scope.offset, $scope.filterNumber, $scope.ontology.selected.type)
-     .then(function(response){
-       for(var i = 0; i < response.data.message.length; i++){
-           $scope.devs.push(addCaption(response.data.message[i]));
-       }
-       $scope.noItems = ($scope.devs.length === 0);
-       $scope.allItemsLoaded = response.data.message.length < 12;
-         return searchAPIService.getOntologyTypes($scope.ontology.selected.type);
-       })
-       .then(function(response){
-       $scope.ontology.typeSubclasses = response.data.message;
-       $scope.ontology.typeSubclasses.push($scope.ontology.reset)
-       $scope.loaded = true;
-       $scope.loadedPage = true;
-       if($scope.ontology.selected.type !== "core:Device") {
-         $scope.header = $scope.header + "  with type: < " + $scope.ontology.selected.type + " >";
-       } else {
-         changeHeader($scope.filterNumber);
-       }
-      })
-     .catch(function(err){
-       console.log(err);
-       Notification.error("Server error");
-     });
+    try {
+        const response = await itemsAPIService.getAllItems("Device", $scope.offset, $scope.filterNumber)
+        $scope.items = response.data.message.map(it => {
+          return addCaptionAndAvatar(it)
+        })
+        $scope.noItems = ($scope.items.length === 0);
+        $scope.allItemsLoaded = response.data.message.length < 12;
+        $scope.loaded = true;
+        $scope.loadedPage = true;
+        changeHeader($scope.filterNumber);
+      } catch (error) {
+        console.log(error);
+        Notification.error("Server error");
+     };
  };
 
  /* FILTERS ACCESSED BY DOM */
@@ -122,20 +94,18 @@ $scope.onAccessFilterSelected = function(item){
   $scope.filterItems(item.id);
 };
 
-$scope.onAccessFilterOntology = function(item){
-  $scope.ontology.selected.type = item.type;
-  $scope.ontology.selected.label = item.label;
-  $scope.refresh();
-};
-
 /* OTHER PRIVATE FUNCTIONS */
 
   // Add caption based on item status and privacy
- function addCaption(item){
-   item.statusCaption = item.status === 'enabled' ? "Enabled" : "Disabled";
-   if(item.isPublic){ item.privacyCaption = 'Public';}
-   else if(item.isFriendData){ item.privacyCaption = 'For Friends'; }
-   else{ item.privacyCaption = 'Private'; }
+ function addCaptionAndAvatar(item){
+    if(item.accessLevel === 2) { 
+      item.privacyCaption = 'Public';
+    } else if(item.accessLevel === 1) { 
+      item.privacyCaption = 'For Friends'; 
+    } else { 
+      item.privacyCaption = 'Private'; 
+    }
+    item.avatar = item.avatar || configuration.avatarItem
    return item;
  }
 
@@ -165,12 +135,12 @@ $scope.onAccessFilterOntology = function(item){
        case 7:
            $scope.header = "All " + $scope.typeOfItem;
            break;
-       case 8:
-           $scope.header = "Contracted " + $scope.typeOfItem;
-           break;
-       case 9:
-           $scope.header = "Mine & Contracted " + $scope.typeOfItem;
-           break;
+      //  case 8:
+      //      $scope.header = "Contracted " + $scope.typeOfItem;
+      //      break;
+      //  case 9:
+      //      $scope.header = "Mine & Contracted " + $scope.typeOfItem;
+      //      break;
        default:
            $scope.header = "All " + $scope.typeOfItem;
            break;

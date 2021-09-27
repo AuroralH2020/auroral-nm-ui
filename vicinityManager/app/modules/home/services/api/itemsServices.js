@@ -11,16 +11,20 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
   Get my items (Organisation items) - Offline filter in org profile to remove what I should not see
   Get all items I can see, based on restrictive filter (0 most to 7 less restrictive)
   */
-  itemsAPI.putOne = function(data) {
-    return $http.put(configuration.apiUrl +'/items', data);
-  };
-
-  itemsAPI.deleteItem = function(id) {
-    return $http.delete(configuration.apiUrl + '/items/delete/' + id);
+  itemsAPI.getAllItems = function(type, offset, filter) {
+    return $http.get(configuration.apiUrl + '/items?type=' + type + '&offset=' + offset + '&filter=' + filter);
   };
 
   itemsAPI.getItemWithAdd = function(id){
     return $http.get(configuration.apiUrl + '/items/' + id);
+  };
+
+  itemsAPI.putOne = function(oid, data) {
+    return $http.put(configuration.apiUrl +'/items/' + oid, data);
+  };
+
+  itemsAPI.deleteItem = function(id) {
+    return $http.delete(configuration.apiUrl + '/items/' + id);
   };
 
   itemsAPI.getMyItems = function(id, filter, offset, cid) {
@@ -29,11 +33,6 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
 
   itemsAPI.getArrayOfItems = function(items){
     return $http.post(configuration.apiUrl + '/items/array', items);
-  };
-
-  itemsAPI.getAllItems = function(id, filter, offset, filterNumber, filterOntology) {
-    var payload = { type: filter, offset: offset, filterNumber: filterNumber, filterOntology: filterOntology};
-    return $http.post(configuration.apiUrl + '/items/' + id + '/organisation/allItems', payload);
   };
 
   itemsAPI.getUserItems = function(reqId, reqCid, type){

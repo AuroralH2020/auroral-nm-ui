@@ -1,5 +1,5 @@
 this._env = {};
-this._env.apiUrl = "http://localhost:4000/ui/v1";
+this._env.apiUrl = "http://localhost:4000/api/ui/v1";
 this._env.baseHref = "http://localhost";
 this._env.notificationTimeout = 30000;
 

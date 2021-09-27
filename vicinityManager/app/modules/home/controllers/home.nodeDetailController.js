@@ -50,7 +50,7 @@ angular.module('VicinityManagerApp.controllers').
         var query = {
           name: $scope.nName,
           type: $scope.nAgentType,
-          pass: $scope.nPass
+          password: $scope.nPass
         };
         // Create new node
         if ($scope.nodeId === '0') {
