@@ -104,6 +104,13 @@ $scope.login = function() {
 };
 
 /*
+  Test password complexity
+*/
+$scope.testPassword = function(pass){
+  return  new RegExp('(?=^.{8,}$)(?=.*[0-9])(?=.*[!@#$%^&*]*)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$').test(pass)
+}
+
+/*
 Function for registering new company
 */
 $scope.registerCompany = function () {
@@ -132,8 +139,14 @@ $scope.registerCompany = function () {
       .catch(function(err){
         $scope.isRegistering = false;
         if(err !== "DUPLICATES"){
-          console.log(err);
-          Notification.error("There was an issue in the registration process");
+          //ValidationError processing
+          if('error' in err.data && err.data.error.includes("ValidationError")){
+            Notification.error(unescape(err.data.error));
+          }
+          //Undefined error processing
+          else{
+            Notification.error("There was an issue in the registration process");
+          }
         } else {
           if($scope.emailReg === "" && $scope.companynameReg === ""){
             Notification.warning('The mail and company name are duplicated!!!');
@@ -163,6 +176,10 @@ $scope.registerCompany = function () {
      }, 2000);
   }
 };
+
+
+
+
 
 /*
   Recover password
@@ -336,6 +353,10 @@ TODO Check company BID
    $scope.password2 = "";
    $scope.baseHref = configuration.baseHref + '/#/login';
 
+   $scope.testPassword = function(pass){
+    return  new RegExp('(?=^.{8,}$)(?=.*[0-9])(?=.*[!@#$%^&*]*)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$').test(pass)
+  }
+
    $scope.resetMyPwd = function(){
       if($scope.password1 === $scope.password2){
         if($scope.password1.length > 7){
@@ -369,3 +390,4 @@ TODO Check company BID
         $location.path('/login')
       }
 }]);
+
