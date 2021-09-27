@@ -13,7 +13,7 @@ factory('invitationsAPIService', ['$http', 'configuration', function($http, conf
   // };
 
   invitationsAPI.postOne = function(data) {
-    return $http.post(configuration.apiUrl + '/invitation/', { data } );
+    return $http.post(configuration.apiUrl + '/invitation/', data);
   };
 
   return invitationsAPI;
