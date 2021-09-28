@@ -49,13 +49,13 @@ angular.module('VicinityManagerApp.controllers')
             try {
               $scope.item = response.data.message;
               $scope.item.uid = $scope.item.uid === undefined ? {} : $scope.item.uid; // Case device disabled
-              $scope.itemEnabled = ($scope.item.status === 'Enabled');
+              $scope.itemEnabled = $scope.item.status === 'Enabled';
               $scope.ALcaption = $scope.visibilityCaption[$scope.item.accessLevel];
               $scope.item.avatar = $scope.item.avatar || configuration.avatarItem
-              if ($scope.itemEnabled) $scope.isMyItem = ($window.sessionStorage.userAccountId.toString() === $scope.item.uid.toString());
-              $scope.isMyOrgItem = ($window.sessionStorage.companyAccountId.toString() === $scope.item.cid.toString());
-              $scope.loaded = true;
+              $scope.isMyItem = $window.sessionStorage.userAccountId === $scope.item.uid;
+              $scope.isMyOrgItem = $window.sessionStorage.companyAccountId === $scope.item.cid;
               getToken();
+              $scope.loaded = true;
             } catch (err) {
               console.log(err);
               Notification.error("Problem initializing data");
@@ -74,12 +74,13 @@ angular.module('VicinityManagerApp.controllers')
       }
 
       function getToken() {
-        var payload = tokenDecoder.deToken();
-        for (var i in payload.roles) {
-          if ($scope.item.uid === $window.sessionStorage.userAccountId) {
+        const payload = tokenDecoder.deToken()
+        const rolesArr = payload.roles.split(',')
+        for (var i in rolesArr) {
+          if (rolesArr[i] === 'device owner') {
             $scope.imDeviceOwner = true;
           }
-          if (payload.roles[i] === 'administrator') {
+          if (rolesArr[i] === 'administrator') {
             $scope.imAdmin = true;
           }
         }
@@ -91,7 +92,7 @@ angular.module('VicinityManagerApp.controllers')
       
       $scope.changeStatus = async function() {
         try {
-          const query = $scope.item.status === 'enabled' ?
+          const query = $scope.item.status === 'Enabled' ?
                         { "status": 'Disabled' } :
                         { "status": 'Enabled' }
           await itemsAPIService.putOne($scope.item.oid, query)
