@@ -56,12 +56,16 @@ angular.module('VicinityManagerApp.controllers').
     var newNotifs = response.data.message;
     // Add timestamp and date strings to the new notifications
     for(var i = 0, l = newNotifs.length; i<l ; i++){
-      date = new Date(newNotifs[i].date);
+      date = new Date(newNotifs[i].created);
       newNotifs[i].timestamp = date;
       newNotifs[i].dateCaption = date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
       hours = date.getHours();
       minutes = date.getMinutes() / 10 < 1 ? "0" + date.getMinutes() : date.getMinutes();
       newNotifs[i].timeCaption = hours + ":" + minutes;
+      if(newNotifs[i].isUnread){
+        // Mark notification unReaded=false
+        readNotification(newNotifs[i].notificationId)
+      }
       if ($scope.dates.indexOf(newNotifs[i].dateCaption) === -1){
         $scope.dates.push(newNotifs[i].dateCaption);
       }
@@ -84,6 +88,11 @@ angular.module('VicinityManagerApp.controllers').
     $scope.dates = [];
     // Reload notifications with the new settings
     init();
+  }
+  
+  // Mark notification unReaded=false
+  async function readNotification(id) {
+    await notificationsAPIService.setRead(id)
   }
 
 // ==== Functions accessed by DOM =====
