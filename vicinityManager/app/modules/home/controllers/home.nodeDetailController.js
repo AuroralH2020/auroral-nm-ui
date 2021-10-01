@@ -40,7 +40,7 @@ angular.module('VicinityManagerApp.controllers').
           Notification.error("Server error");
         });
     } else {
-      $scope.nAgentType = "Vicinity";
+      $scope.nAgentType = "Auroral";
     }
 
 // ======== Main functions =========
