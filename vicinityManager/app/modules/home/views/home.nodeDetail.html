@@ -19,6 +19,17 @@
       <div class="form-group" ng-show="nodeId === '0'">
         <label>Access Point type</label>
         <div class="form-group">
+          <div class="row radio bg-dark">
+            <div class="col-sm-1 ">
+              <img class="pull-left node-logo" src="img/logos/aurorallogo.png"/>
+            </div>
+            <div class="col-sm-11 ">
+              <label>
+                <input name="optionsRadios" ng-model="nAgentType" value="Auroral" type="radio">
+                Auroral agent
+              </label>
+            </div>
+          </div>
           <div class="row radio">
             <div class="col-sm-1">
               <img class="pull-left node-logo" src="img/logos/vcntlogo.png"/>
@@ -53,6 +64,16 @@
             <div class="col-sm-11">
               <label>
                 Vicinity agent
+              </label>
+            </div>
+          </div>
+          <div ng-show="nAgentType === 'Auroral' ">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/aurorallogo.png"/>
+            </div>
+            <div class="col-sm-11">
+              <label>
+                Auroral agent
               </label>
             </div>
           </div>
