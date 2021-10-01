@@ -20,7 +20,8 @@ function ($scope, $window, commonHelpers, $stateParams, itemsAPIService,  Notifi
   $scope.loaded = false;
 
   function init(){
-    itemsAPIService.getUserItems($stateParams.userAccountId, $stateParams.companyAccountId, 'service')
+    itemsAPIService.getMyItems('Service', $scope.offset)
+    // itemsAPIService.getUserItems($stateParams.userAccountId, $stateParams.companyAccountId, 'service')
     .then(successCallback)
     .catch(function(err){
       console.log(err);
@@ -33,15 +34,13 @@ function ($scope, $window, commonHelpers, $stateParams, itemsAPIService,  Notifi
   // Callbacks
 
   function successCallback(response) {
-    if(response.data.error){
-      Notification.error('Error retrieving devices');
-      $scope.loaded = true;
-      $scope.noItems = true;
-    } else {
-      $scope.cid = response.data.message.cid;
-      $scope.things = response.data.message.items;
-      $scope.noItems = ($scope.things.length === 0);
-      $scope.loaded = true;
+    for(var i = 0; i < response.data.message.length; i++){
+      response.data.message[i].avatar = response.data.message[i].avatar || configuration.avatarItem
+      $scope.things.push(response.data.message[i]);
     }
+    $scope.noItems = ($scope.things.length === 0);
+    $scope.allItemsLoaded = response.data.message.length < 12;
+    $scope.loaded = true;
+    $scope.loadedPage = true;
   }
 });
