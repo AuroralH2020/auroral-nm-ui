@@ -200,16 +200,16 @@ angular.module('VicinityManagerApp', [
             }
         })
 
-        // .state('root.main.companyProfile.services', {
-        //     url: '/services',
-        //     views: {
-        //         'tabPanel@root.main.companyProfile':
-        //             {
-        //                 templateUrl: 'modules/home/views/home.companyProfile.servicesView.html',
-        //                 controller: 'cPservicesController'
-        //             }
-        //     }
-        // })
+        .state('root.main.companyProfile.services', {
+            url: '/services',
+            views: {
+                'tabPanel@root.main.companyProfile':
+                    {
+                        templateUrl: 'modules/home/views/home.companyProfile.servicesView.html',
+                        controller: 'cPservicesController'
+                    }
+            }
+        })
 
         .state('root.main.companyProfile.friends', {
             url: '/partners',
