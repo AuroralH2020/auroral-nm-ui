@@ -12,64 +12,68 @@ function ($scope, $stateParams, commonHelpers, auditAPIService, Notification) {
     $scope.logs = [];
 
     // ====== Sets from which date we retrieve notifications at init =====
-    $scope.dateFrom =  moment().subtract(7, 'days'); // Initialized to one week ago
+
+    $scope.daysBefore =  7; // Initialized to one week ago
     $scope.period = 'week';
 
     init();
-
     function init(){
       $scope.loadedPage = false;
       $scope.dates = [];
-      $scope.logs = [];
-      auditAPIService.getAll($stateParams.companyAccountId, 'userAccount', $scope.dateFrom)
-      .then(
-        function(response){
-          try{
-            var myAudits = getAudits(response.data.message.hasAudits);
-            commonHelpers.addTimestamp(myAudits, function(array, dates){
-              $scope.dates = dates;
-              $scope.logs = array;
-              $scope.logs.reverse();
-              $scope.noLogs = array.length !== 0 ? false : true;
-              $scope.loadedPage = true;
-            });
-          }catch(err){
-            console.log(err);
-            $scope.noLogs = true;
+      $scope.audits = [];
+      auditAPIService.getAll($stateParams.companyAccountId, $scope.daysBefore)
+      .then(function(response){
+        try{
+          $scope.audits = response.data.message;
+          // var myAudits = getAudits(response.data.message);
+          $scope.audits.sort(function(a,b){
+            return b.created - a.created;
+          });
+          $scope.audits.forEach(element => {
+            var date = new Date(element.created );
+            element.timestamp = moment(date);
+            element.dateCaption = element.timestamp.format("Do MMM YYYY");
+            element.timeCaption = element.timestamp.format("hh:mm a");
             $scope.loadedPage = true;
-            Notification.error("Error processing the logs");
-          }
-        })
-        .catch(function(err){
+            if($scope.dates[-1]!=element.dateCaption){
+              $scope.dates.push(element.dateCaption)
+            }
+          });
+          $scope.noLogs = $scope.audits.length !== 0 ? false : true;
+          $scope.loadedPage = true;
+
+        }catch(err){
           console.log(err);
           $scope.noLogs = true;
           $scope.loadedPage = true;
-          Notification.error("Server error");
-        });
-      }
-
-    function getAudits(array){
-      var newArray = [];
-      angular.forEach(array,
-        function(n) { newArray.push(n.id); }
-      );
-      return newArray;
+          Notification.error("Error processing the logs");
+        }
+      })
+      .catch(function(error){
+        console.log(error);
+        $scope.noLogs = true;
+        $scope.loadedPage = true;
+        Notification.error("Server error");
+      });
     }
 
     $scope.notificationsDays = function(period){
       $scope.period = period;
       switch(period){
         case 'today':
-          $scope.dateFrom =  moment().endOf('day').subtract(1, 'days');
+          $scope.daysBefore = 1;
           break;
         case 'week':
-          $scope.dateFrom =  moment().endOf('day').subtract(7, 'days');
+          $scope.daysBefore = 7;
           break;
         case 'month':
-          $scope.dateFrom =  moment().endOf('day').subtract(1, 'months');
+          $scope.daysBefore = 31;
+          break;
+        case 'Half year':
+          $scope.daysBefore = 6 * 31;
           break;
         case 'year':
-          $scope.dateFrom =  moment().endOf('day').subtract(1, 'years');
+          $scope.daysBefore = 365;
           break;
       }
       init();
