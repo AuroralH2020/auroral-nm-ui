@@ -1,23 +1,22 @@
 'use strict';
 angular.module('VicinityManagerApp.controllers')
 .controller('settingsController',
-function ($scope, $window, commonHelpers, tokenDecoder, userAccountAPIService, invitationsAPIService, userAPIService, Notification) {
+function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notification) {
 
   // ====== Triggers window resize to avoid bug =======
   commonHelpers.triggerResize();
 
-  $scope.notifs = [];
-  $scope.notifs2 = [];
-  $scope.oneNotif = false;
-  $scope.isAdmin = false;
-  $scope.numberOfUnread = 0;
-  $scope.comp = {};
-  $scope.user = {};
-  $scope.nameCompany = "";
-  $scope.emailCompany = "";
-  $scope.nameUser = "";
-  $scope.emailUser = "";
-  // $("#myModal").prop("display", "block");
+  // SERVER INFO
+  $scope.imAdmin = false;
+  // $scope.organisation = {};
+  // $scope.user = {};
+
+  // FORM FIELDS
+  $scope.emailUser = ""
+  $scope.nameUser = ""
+  $scope.emailCompany = ""
+  $scope.nameCompany = ""
+
   $('div#myModal1').hide();
   $('div#myModal2').hide();
 
@@ -26,32 +25,33 @@ function ($scope, $window, commonHelpers, tokenDecoder, userAccountAPIService, i
         $('div#myModal1').hide();
         $('div#myModal2').hide();
     }
-  });
+  })
 
-  userAccountAPIService.getUserAccountProfile($window.sessionStorage.companyAccountId)
-  .then(function(response) {
-      $scope.comp = response.data.message;
-      var index = 0;
-      for (index in $scope.comp.accountOf){
-        if ($scope.comp.accountOf[index].id._id.toString() === $window.sessionStorage.userAccountId.toString()){
-          var payload = tokenDecoder.deToken();
-          if(payload.roles.indexOf('administrator') !== -1){
-            $scope.isAdmin = true;
-          }
-        }
+  // INITIALIZE
+  const init = async function() {
+    try {
+        // $scope.organisation =  (await userAccountAPIService.getUserAccountProfile($window.sessionStorage.companyAccountId)).data.message
+        // $scope.user = (await userAPIService.getUser($window.sessionStorage.userAccountId)).data.message
+        getToken()
+    } catch (error) {
+      console.log(error)
+        Notification.error('Issue loading invitations')
+    }
+  }
+
+  function getToken() {
+    const payload = tokenDecoder.deToken()
+    const rolesArr = payload.roles.split(',')
+    for (var i in rolesArr) {
+      if (rolesArr[i] === 'administrator') {
+        $scope.imAdmin = true
       }
-    })
-    .catch(function(err){
-      console.log(err);
-      Notification.error("Server error");
-    });
+    }
+  }
 
-  userAPIService.getUser($window.sessionStorage.userAccountId)
-    .then(function(response) { $scope.user = response.data.message; })
-    .catch(function(err){
-      console.log(err);
-      Notification.error("Server error");
-    });
+  init()
+
+  // END INITIALIZE
 
   $scope.alertPopUp1 = function () {
     $('div#myModal1').show();
@@ -69,53 +69,48 @@ function ($scope, $window, commonHelpers, tokenDecoder, userAccountAPIService, i
     $('div#myModal2').hide();
   };
 
-  $scope.inviteCompany = function (validBool2) {
+  $scope.inviteCompany = async function (validBool2) {
     if (validBool2){
       var data = {
           emailTo: $scope.emailCompany,
           nameTo: $scope.nameCompany,
-          organisation: $scope.comp.name,
-          type: "newCompany"};
-      invitationsAPIService.postOne(data)
-      .then(
-        function(response){
-        $('div#myModal2').hide();
-      })
-      .catch(function(err){
+          type: "newCompany"
+        };
+      try {
+        await invitationsAPIService.postOne(data)
+        $('div#myModal2').hide()
+      } catch (err) {
         console.log(err);
-        Notification.error("Error inviting company");
-      });
-    }else{
+        Notification.error("Error inviting company")
+      }
+    } else {
       $('input#emailVer2').addClass("invalid");
       setTimeout(function() {
         $('input#emailVer2').removeClass("invalid");
-      }, 2000);
+      }, 2000)
     }
-  };
+  }
 
-  $scope.inviteUser = function (validBool) {
+  $scope.inviteUser = async function (validBool) {
     if (validBool) {
       var data = {
           emailTo: $scope.emailUser,
           nameTo: $scope.nameUser,
-          organisation: $scope.comp.name,
-          type: "newUser"};
-
-      invitationsAPIService.postOne(data)
-      .then(
-        function(response){
+          type: "newUser"
+        };
+      try {
+        await invitationsAPIService.postOne(data)
         $('div#myModal1').hide();
-      })
-      .catch(function(err){
+      } catch (err) {
         console.log(err);
         Notification.error("Error inviting user");
-      });
-    }else{
+      }
+    } else {
       $('input#emailVer').addClass("invalid");
       setTimeout(function() {
         $('input#emailVer').removeClass("invalid");
-      }, 2000);
+      }, 2000)
     }
-  };
+  }
 
 });

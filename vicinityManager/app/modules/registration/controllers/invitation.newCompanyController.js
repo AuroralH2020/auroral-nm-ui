@@ -40,6 +40,7 @@ angular.module('Registration')
            $scope.alreadyUsed = results.used;
            $scope.companynameReg = results.nameTo;
            $scope.emailReg = results.emailTo;
+           $scope.invitationId = results.invitationId;
          },
           function errorCallback(response){}
         );
@@ -65,8 +66,9 @@ angular.module('Registration')
             occupation: $scope.occupationReg,
             companyName: $scope.companynameReg,
             companyLocation: $scope.locationReg,
+            invitationId: $scope.invitationId,
             // businessId: $scope.bidReg,
-            termsAndConditions: true,
+            // termsAndConditions: true,
             status: "pending",
             type: "newCompany"
           });

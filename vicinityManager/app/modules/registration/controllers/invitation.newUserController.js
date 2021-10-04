@@ -30,13 +30,16 @@ angular.module('Registration')
 // Onload get invitation info
 
   var myInit = function(){
+    console.log($stateParams.invitationId)
      invitationsAPIService.getOne($stateParams.invitationId)
       .then(
        function successCallback(response){
        var results = response.data.message;
+       console.log(results)
        $scope.alreadyUsed = results.used;
        $scope.companynameUs = results.sentBy.organisation;
        $scope.cid = results.sentBy.cid;
+       $scope.invitationId = results.invitationId;
      },
       function errorCallback(response){}
     );
@@ -58,9 +61,8 @@ angular.module('Registration')
             email: $scope.emailUs,
             password: $scope.password1Us,
             occupation: $scope.occupationUs,
-            companyName: $scope.companynameUs,
             cid: $scope.cid,
-            companyLocation: "",
+            invitationId: $scope.invitationId,
             status: "pending",
             type: "newUser"
           });
