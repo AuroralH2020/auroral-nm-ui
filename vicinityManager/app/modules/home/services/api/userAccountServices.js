@@ -25,8 +25,7 @@ factory('userAccountAPIService', ['$http', 'configuration', '$window', function(
   };
 
   // Neigbourhood management
-  // TBD: Update for AURORAL
-  
+    
   userAccountAPI.sendNeighbourRequest = function (id) {
     var data = {};
     data.userMail = $window.sessionStorage.username;
@@ -56,8 +55,6 @@ factory('userAccountAPIService', ['$http', 'configuration', '$window', function(
     data.userMail = $window.sessionStorage.username;
     return $http.post(configuration.apiUrl +'/organisation/' + id + '/friendship/cancel', data);
   };
-
-  // Notification calls
 
   // Configuration endPoints (currently only schemaColor)
 
