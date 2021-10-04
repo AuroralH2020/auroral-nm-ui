@@ -4,8 +4,8 @@ factory('auditAPIService', ['$http', 'configuration', function($http, configurat
 
   var auditAPI = {};
 
-  auditAPI.getAll = function(id, type, searchDate) {
-    return $http.get(configuration.apiUrl + '/audit/' + id + '?type=' + type + '&searchDate=' + searchDate);
+  auditAPI.getAll = function(id, searchDate) {
+    return $http.get(configuration.apiUrl + '/audits/' + id + '?days='+ searchDate);
   };
 
   return auditAPI;
