@@ -39,6 +39,7 @@ angular.module('Registration')
        $scope.alreadyUsed = results.used;
        $scope.companynameUs = results.sentBy.organisation;
        $scope.cid = results.sentBy.cid;
+       $scope.roles = results.roles;
        $scope.invitationId = results.invitationId;
      },
       function errorCallback(response){}
@@ -62,6 +63,7 @@ angular.module('Registration')
             password: $scope.password1Us,
             occupation: $scope.occupationUs,
             cid: $scope.cid,
+            roles: $scope.roles,
             invitationId: $scope.invitationId,
             status: "pending",
             type: "newUser"
