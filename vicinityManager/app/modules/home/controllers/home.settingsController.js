@@ -16,6 +16,7 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
   $scope.nameUser = ""
   $scope.emailCompany = ""
   $scope.nameCompany = ""
+  $scope.newRoles = []
 
   $('div#myModal1').hide();
   $('div#myModal2').hide();
@@ -27,9 +28,28 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
     }
   })
 
+  // Initialize & onChange Select2 Elements ==============
+
+  $(".select2").select2({
+    allowClear: true,
+    closeOnSelect: false
+  });
+
+  $(".select2").change(function() {
+    $scope.newRoles = ['user'];
+    if (this.selectedOptions && this.selectedOptions[0]){
+      for(var i = 0; i < this.selectedOptions.length; i++){
+        $scope.newRoles.push(this.selectedOptions[i].innerHTML.toString());
+      }
+    }
+  });
+
   // INITIALIZE
   const init = async function() {
     try {
+        // Init roles selector
+        $(".select2").val([]).trigger('change'); // Clear selection
+        $(".select2").trigger('change');
         // $scope.organisation =  (await userAccountAPIService.getUserAccountProfile($window.sessionStorage.companyAccountId)).data.message
         // $scope.user = (await userAPIService.getUser($window.sessionStorage.userAccountId)).data.message
         getToken()
@@ -49,6 +69,13 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
     }
   }
 
+  function resetModal() {
+    $scope.emailUser = ""
+    $scope.nameUser = ""
+    $scope.emailCompany = ""
+    $scope.nameCompany = ""
+  }
+
   init()
 
   // END INITIALIZE
@@ -62,10 +89,12 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
   };
 
   $scope.closeNow1 = function () {
+    resetModal()
     $('div#myModal1').hide();
   };
 
   $scope.closeNow2 = function () {
+    resetModal()
     $('div#myModal2').hide();
   };
 
@@ -78,8 +107,10 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
         };
       try {
         await invitationsAPIService.postOne(data)
+        resetModal()
         $('div#myModal2').hide()
       } catch (err) {
+        resetModal()
         console.log(err);
         Notification.error("Error inviting company")
       }
@@ -96,12 +127,15 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
       var data = {
           emailTo: $scope.emailUser,
           nameTo: $scope.nameUser,
+          roles: $scope.newRoles,
           type: "newUser"
         };
       try {
         await invitationsAPIService.postOne(data)
+        resetModal()
         $('div#myModal1').hide();
       } catch (err) {
+        resetModal()
         console.log(err);
         Notification.error("Error inviting user");
       }
