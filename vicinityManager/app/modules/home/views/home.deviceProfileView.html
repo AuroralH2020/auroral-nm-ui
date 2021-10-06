@@ -33,6 +33,7 @@
 
               <!-- Device Name -->
               <h3 class="profile-username text-center" style="margin-top: 15px">{{item.name}}</h3>
+              <h5 class="text-muted text-center" style="margin-top: 15px">{{item.oid}}</h5>
 
               <!-- Enable/Disable device -->
               <div style="margin-left: 10%; margin-right: 10%; margin-top: 10px; margin-bottom: 10px" ng-show="imDeviceOwner">
@@ -80,12 +81,11 @@
                     <i class="fa fa-sitemap margin-r-5"></i>
                     <strong>Gateway</strong>
                     <br>
-                    <div class="row">
-                      <div class="col-md-9">
-                        <span><b>{{item.gateway.name}}</b></span>
-                        <span>{{item.agid}}</span>
-                      </div>
-                  </div>
+                        <p>
+                            <strong>{{item.gateway.name}}</strong>
+                            <br>
+                            <span class="text-muted">{{item.agid}}</span>
+                      </p>
                   </li>
 
                   <!-- Shift item -->
@@ -113,12 +113,12 @@
                    </div>
                   </li> -->
 
-                  <!-- Delete button -->
-                  <li class="list-group-item" ng-show="(isMyOrgItem && !itemEnabled) || isMyItem">
+                  <!-- Delete button - TEMPORARILY DISABLED-->
+                  <!-- <li class="list-group-item" ng-show="(isMyOrgItem && !itemEnabled) || isMyItem">
                     <i class="fa fa-times margin-r-5"></i>
                     <b>Remove device</b>
                     <a ng-click="deleteItem()" class="pull-right btn-sm btn-danger" style="margin-left: 5px"> Delete </a>
-                  </li>
+                  </li> -->
 
               </ul>
 
