@@ -35,7 +35,7 @@ function ($scope, $stateParams, commonHelpers, auditAPIService, Notification) {
             element.dateCaption = element.timestamp.format("Do MMM YYYY");
             element.timeCaption = element.timestamp.format("hh:mm a");
             $scope.loadedPage = true;
-            if($scope.dates[-1]!=element.dateCaption){
+            if($scope.dates.indexOf(element.dateCaption) === -1){
               $scope.dates.push(element.dateCaption)
             }
           });
