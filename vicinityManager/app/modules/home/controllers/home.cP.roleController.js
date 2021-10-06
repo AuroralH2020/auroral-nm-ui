@@ -101,28 +101,29 @@ function ($scope, $rootScope, $window, commonHelpers, $stateParams, userAPIServi
     };
 
     $scope.deleteUser = function(i){
-      $scope.selectedUser = i;
-      if($scope.oneAdmin()){
-        if(confirm('Are you sure?')){  // TODO
-          $scope.selectedUser = i;
-          userAPIService.deleteUser($scope.selectedUser.uid)
-          .then(function(response){
-            if(response.data[0].result === 'Success'){
-              Notification.success("User removed");
-              $scope.myInit();
-            } else {
-              Notification.warning(response.data[0].result);
-            }
-          })
-          .catch(function(err){
-            console.log(err);
-            Notification.warning("Server error");
-          });
-        }
-      }else{
-        Notification.warning("There must be at least one administrator");
-        $scope.cancelChanges();
-      }
+      Notification.warning('Temporarily disabled, ask admin to remove user')
+      // $scope.selectedUser = i;
+      // if($scope.oneAdmin()){
+      //   if(confirm('Are you sure?')){  // TODO
+      //     $scope.selectedUser = i;
+      //     userAPIService.deleteUser($scope.selectedUser.uid)
+      //     .then(function(response){
+      //       if(response.data[0].result === 'Success'){
+      //         Notification.success("User removed");
+      //         $scope.myInit();
+      //       } else {
+      //         Notification.warning(response.data[0].result);
+      //       }
+      //     })
+      //     .catch(function(err){
+      //       console.log(err);
+      //       Notification.warning("Server error");
+      //     });
+      //   }
+      // }else{
+      //   Notification.warning("There must be at least one administrator");
+      //   $scope.cancelChanges();
+      // }
     };
 
     // Ensure at least one admin in company
