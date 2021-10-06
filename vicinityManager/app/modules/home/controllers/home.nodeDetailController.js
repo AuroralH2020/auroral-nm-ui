@@ -20,12 +20,12 @@ angular.module('VicinityManagerApp.controllers').
     $scope.nId = "";
     $scope.nAgentType = "";
 
-    $scope.modify = true;
+    $scope.creatingNew = true;
     $scope.nodeId = $state.params.nodeId;
     $scope.myNode = "Creating new Access Point";
 
     if($scope.nodeId !== '0'){
-    $scope.modify = false;
+    $scope.creatingNew = false;
     nodeAPIService.getOne($state.params.nodeId)
       .then(function(response){
           $scope.nName = response.data.message.name;
@@ -46,31 +46,9 @@ angular.module('VicinityManagerApp.controllers').
 // ======== Main functions =========
 
     $scope.submitNode = function(){
-      if($scope.nPass === $scope.nPass2){
-        var query = {
-          name: $scope.nName,
-          type: $scope.nAgentType,
-          password: $scope.nPass
-        };
-        // Create new node
-        if ($scope.nodeId === '0') {
-        nodeAPIService.postOne(query)
-        .then(function(response){
-          if(response.error) {
-            Notification.success("Error creating Access Point");
-            $scope.backToList();
-          } else {
-            Notification.success("Access Point successfully created!!");
-            $scope.backToList();
-          }
-        })
-        .catch(function(err){
-          console.log(err);
-          Notification.error("Error creating Access Point");
-        });
-        // Update existing node
-        } else {
-        nodeAPIService.updateOne($state.params.nodeId, query)
+      // Update existing node
+      if($scope.modify) {
+        nodeAPIService.updateOne($state.params.nodeId, {name: $scope.nName})
           .then(
             function successCallback(response){
               if(response.error) {
@@ -86,14 +64,37 @@ angular.module('VicinityManagerApp.controllers').
               Notification.error("Error updating Access Point");
             }
           );
+          $scope.modify=false
         }
+      if($scope.nPass === $scope.nPass2){
+        // Create new node
+        if ($scope.creatingNew) {
+          var query = {
+            name: $scope.nName,
+            type: $scope.nAgentType,
+            password: $scope.nPass
+          };
+        nodeAPIService.postOne(query)
+        .then(function(response){
+          if(response.error) {
+            Notification.success("Error creating Access Point");
+            $scope.backToList();
+          } else {
+            Notification.success("Access Point successfully created!!");
+            $scope.backToList();
+          }
+        })
+        .catch(function(err){
+          console.log(err);
+          Notification.error("Error creating Access Point");
+        });
+        } 
+        
       }else{
         $window.alert("The passwords do not match!!");
         $scope.nPass = $scope.nPass2 = "";
       }
     };
-
-
 
 // ==== Navigation functions =====
 

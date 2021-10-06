@@ -72,7 +72,10 @@
                       <span ng-show="notif.type===34"><span class="label label-default paddedSides">Partnership accepted</span></span>
                       <span ng-show="notif.type===35"><span class="label label-default paddedSides">Partnership request</span></span>
                       <span ng-show="notif.type===36"><span class="label label-default paddedSides">Partnership request cancelled</span></span>
-                      <span ng-show="notif.type===44"><span class="label label-default paddedSides">Node updated</span></span>
+                      <span ng-show="notif.type===73"><span class="label label-default paddedSides">Node discovered</span></span>
+                      <span ng-show="notif.type===74"><span class="label label-default paddedSides">Node removed</span></span>
+                      <span ng-show="notif.type===75"><span class="label label-default paddedSides">Node updated</span></span>
+                      <span ng-show="notif.type===76"><span class="label label-default paddedSides">Node updated</span></span>
 
                       <!-- Label status -->
                       <span ng-show="notif.status==='waiting'"><span class="label label-warning paddedSides">Waiting</span></span>
@@ -104,7 +107,10 @@
                   <span class="padded" ng-show="[33, 34].lastIndexOf(notif.type) >= 0 && !(notif.status=== 'waiting')"><b>{{notif.object.name}}</b> responded our partnership request.</span>
                   <span class="padded" ng-show="notif.type === 35">You have sent a partnership request to <b>{{notif.object.name}}</b>.</span>
                   <span class="padded" ng-show="notif.type === 36">Partnership request cancelled.</span>
-                  <span class="padded" ng-show="notif.type === 44">Node {{notif.target.name}} updated </span>
+                  <span class="padded" ng-show="notif.type === 73">Node <b>{{notif.target.name}}</b> created </span>
+                  <span class="padded" ng-show="notif.type === 74">Node <b>{{notif.target.name}}</b> removed </span>
+                  <span class="padded" ng-show="notif.type === 75">Node <b>{{notif.target.name}}</b> updated </span>
+                  <span class="padded" ng-show="notif.type === 76">Node <b>{{notif.target.name}}</b> key updated</span>
 
                   <span class="ciara" ng-class="bckColor"></span>
 
@@ -135,8 +141,8 @@
                       <a ui-sref="root.main.deviceProfile({deviceId: notif.target.id})"><i class="fa fa-search fa-lg "></i></a>
                     </span>
                   </div>
-
-                  <div class="centered" ng-show="[44].indexOf(notif.type) !== -1">
+                <!-- NODE -->
+                  <div class="centered" ng-show="[73, 74, 75, 76].indexOf(notif.type) !== -1">
                     <span>
                       <a ui-sref="root.main.nodeDetail({nodeId: notif.target.id})"><i class="fa fa-search fa-lg "></i></a>
                     </span>
@@ -147,12 +153,11 @@
                       <a ui-sref="root.main.contracts({contractId: notif.object.id})"><i class="fa fa-search fa-lg"></i></a>
                     </span>
                   </div>
+                <!-- NODE -->
 
-                  <div class="centered" ng-show="[32, 33, 34, 35, 36].indexOf(notif.type) !== -1">
-                    <span>
-                      <a ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})"><i class="fa fa-search fa-lg "></i></a>
-                    </span>
-                  </div>
+
+                </div>
+
 
                 <br>
 

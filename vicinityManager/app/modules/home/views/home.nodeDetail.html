@@ -2,9 +2,9 @@
     <h1>Access Point detail</h1>
 </section>
 
-<!-- MODIFY TEMPLATE -->
+<!-- CREATE TEMPLATE -->
 <section class="content">
-<div ng-show="modify" class="box box-primary" style="width:70%">
+<div ng-show="creatingNew" class="box box-primary" style="width:70%">
   <div class="box-header with-border">
     <h3 class="box-title">{{myNode}}</h3>
   </div>
@@ -49,30 +49,15 @@
             <div class="col-sm-1">
               <img class="pull-left node-logo" src="img/logos/vcntlogo.png"/>
             </div>
-            <div class="col-sm-11">
-              <label>
-                Vicinity agent
-              </label>
-            </div>
           </div>
           <div ng-show="nAgentType === 'Auroral' ">
             <div class="col-sm-1">
               <img class="pull-left node-logo" src="img/logos/aurorallogo.png"/>
             </div>
-            <div class="col-sm-11">
-              <label>
-                Auroral agent
-              </label>
-            </div>
           </div>
           <div ng-show="nAgentType === 'Sharq' ">
             <div class="col-sm-1">
               <img class="pull-left node-logo" src="img/logos/shqlogo.png"/>
-            </div>
-            <div class="col-sm-11">
-              <label>
-                Sharq adapter
-              </label>
             </div>
           </div>
         </div>
@@ -88,7 +73,6 @@
         <span class="help-block" style="color: green" ng-show="nPass===nPass2 && nPass2"><i class="fa fa-check"></i> Passwords match!</span>
         <span class="help-block" style="color: red" ng-show="nPass!==nPass2 && nPass2"><i class="fa fa-times"></i> Passwords do not match</span>
       </div>
-
       </div>
 
   <div class="box-footer">
@@ -102,9 +86,33 @@
   </form>
 </div>
 
+<!-- MODIFY NAME TEMPLATE -->
+<section class="content">
+  <div ng-show="modify" class="box box-primary" style="width:70%">
+    <div class="box-header with-border">
+      <h3 class="box-title">{{myNode}}</h3>
+    </div>
+    <form name="form" role="form" ng-submit="submitNode()">
+      <div class="box-body">
+        <div class="form-group">
+          <label>Access Point name</label>
+          <input class="form-control" ng-model="nName" placeholder="Enter name" required>
+        </div>
+        </div>
+    <div class="box-footer">
+      <div class="col-xs-6">
+        <button type="submit" ng-disabled="!nName" class="btn btn-primary">Submit</button>
+      </div>
+      <div class="col-xs-6">
+        <a href="" ng-click="backToList()" class="pull-right">Cancel</a>
+      </div>
+    </div>
+    </form>
+  </div>
+
 <!-- READ ONLY TEMPLATE-->
 
-<div ng-show="!modify" class="box box-primary" style="width:70%">
+<div ng-show="!creatingNew && !modify" class="box box-primary" style="width:70%">
   <div class="box-header with-border">
     <h3 class="box-title">{{myNode}}</h3>
   </div>
@@ -124,20 +132,15 @@
             <div class="col-sm-1">
               <img class="pull-left node-logo" src="img/logos/vcntlogo.png"/>
             </div>
-            <div class="col-sm-11">
-              <label>
-                Vicinity agent
-              </label>
-            </div>
           </div>
           <div ng-show="nAgentType === 'Sharq' ">
             <div class="col-sm-1">
               <img class="pull-left node-logo" src="img/logos/shqlogo.png"/>
             </div>
-            <div class="col-sm-11">
-              <label>
-                Sharq adapter
-              </label>
+          </div>
+          <div ng-show="nAgentType === 'Auroral' ">
+            <div class="col-sm-1">
+              <img class="pull-left node-logo" src="img/logos/aurorallogo.png"/>
             </div>
           </div>
         </div>
