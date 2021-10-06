@@ -12,5 +12,9 @@ factory('invitationsAPIService', ['$http', 'configuration', function($http, conf
     return $http.post(configuration.apiUrl + '/invitation/', data);
   };
 
+  invitationsAPI.getAll = function() {
+    return $http.get(configuration.apiUrl + '/invitations/all');
+  };
+
   return invitationsAPI;
 }]);
