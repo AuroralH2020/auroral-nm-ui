@@ -53,8 +53,8 @@
 
             <!-- Descriptions -->
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 1">You have received a registration request from:<a ui-sref="root.main.registrationProfile.regAdmin({registrationId: notif.actor.id})">{{notif.actor.name}}</a></p>
-              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 11">An item has been activated <a ui-sref="root.main.deviceProfile({deviceId: notif.target.id})"></a></p>
-              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 12">An item has been deactivated <a ui-sref="root.main.deviceProfile({deviceId: notif.target.id})"></a></p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 11">An item has been enabled</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 12">An item has been disabled</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 13">An item has been discovered</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 14">An item has been updated</p> 
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 15">An item has been updated</p>
