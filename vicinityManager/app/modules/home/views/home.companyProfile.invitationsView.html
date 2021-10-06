@@ -1,0 +1,70 @@
+<div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+  <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+</div>
+
+<div class="centered" ng-show="noInvitations">
+  <h3 class="well">No invitations found...</h3>
+</div>
+
+<!-- HEADER -->
+<div class="box-header box">
+    <div class="col-sm-2">
+        <i ng-click="onSort('nameTo')" class="fa fa-sort" aria-hidden="true"> Name</i>
+    </div>
+    <div class="col-sm-2">
+        <i ng-click="onSort('emailTo')" class="fa fa-sort" aria-hidden="true"> E-Mail</i>
+    </div>
+    <div class="col-sm-2">
+        <i ng-click="onSort('sentByEmail')" class="fa fa-sort" aria-hidden="true"> Initiator</i>
+    </div>
+    <div class="col-sm-2">
+        <i ng-click="onSort('updated')" class="fa fa-sort" aria-hidden="true"> Last Updated</i>
+    </div>
+    <div class="col-sm-2">
+        <p>Roles</p>
+    </div>
+    <div class="col-sm-1">
+        <p>Status</p>
+    </div>
+    <div class="col-sm-1">
+        <!-- <p>Actions</p> -->
+    </div>
+</div>
+
+<!-- BODY -->
+<div ng-if="user.uid === selectedUser.uid || editing === false && user.status !== 'deleted'" class="box-body box" ng-repeat="inv in invitations | orderBy:sortColumn:rev">
+    <div class="col-sm-2">
+        <p>{{inv.nameTo}}</p>
+    </div>
+    <div class="col-sm-2">
+        <p>{{inv.emailTo}}</p>
+    </div>
+    <div class="col-sm-2">
+        <a ui-sref="root.main.userProfile({userAccountId: inv.sentByUid, companyAccountId: companyId})"><strong>{{inv.sentByEmail}}</strong></a>
+    </div>
+    <div class="col-sm-2">
+        <p>{{inv.updated}}</p>
+    </div>
+    <div class="col-sm-2">
+        <div ng-repeat="role in inv.roles">
+            <span class="label label-success">{{role}}</span>
+        </div>
+    </div>
+    <div class="col-sm-1">
+        <span class="label label-success" ng-show="inv.status === 'Done'">{{inv.status}}</span>
+        <span class="label label-warning" ng-show="inv.status === 'Pending'">{{inv.status}}</span>
+        <!-- <span class="label label-danger" ng-show="inv.status === 'Pending' && inv.used === true">Failed</span> -->
+
+    </div>
+    <div class="col-sm-1">
+        <button class="btn btn-primary pull-right" ng-click="resendInvitation()" ng-show="inv.status === 'Pending'">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </button>
+        <!-- <button class="btn btn-danger pull-right" ng-click="cancelInvitation()" ng-show="inv.status === 'Pending' && inv.used === false">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button> -->
+        <button class="btn btn-success pull-right" ng-show="inv.status === 'Done'" style="pointer-events: none;">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>

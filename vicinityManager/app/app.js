@@ -243,6 +243,17 @@ angular.module('VicinityManagerApp', [
             }
         })
 
+        .state('root.main.companyProfile.invitations', {
+          url: '/invitations',
+          views: {
+              'tabPanel@root.main.companyProfile':
+                  {
+                      templateUrl: 'modules/home/views/home.companyProfile.invitationsView.html',
+                      controller: 'cPinvitationsController'
+                  }
+          }
+      })
+
         .state('root.main.companyProfile.roleMgmt', {
             url: '/roleMgmt',
             views: {
