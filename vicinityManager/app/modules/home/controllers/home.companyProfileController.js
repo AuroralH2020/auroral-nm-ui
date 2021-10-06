@@ -217,16 +217,17 @@ angular.module('VicinityManagerApp.controllers')
       };
 
       $scope.removeOrg = function() {
-        if (confirm('Are you sure?')) {
-          userAccountAPIService.removeOrganisation($window.sessionStorage.companyAccountId)
-            .then(
-              function(response) {
-                alert('Organisation successfully removed!');
-                $cookies.remove("rM_V"); // If log out remove rememberMe cookie
-                AuthenticationService.signout("/login");
-              })
-            .catch(errorCallback);
-        }
+        Notification.warning('Temporarily disabled, ask admin to remove organisation')
+        // if (confirm('Are you sure?')) {
+        //   userAccountAPIService.removeOrganisation($window.sessionStorage.companyAccountId)
+        //     .then(
+        //       function(response) {
+        //         alert('Organisation successfully removed!');
+        //         $cookies.remove("rM_V"); // If log out remove rememberMe cookie
+        //         AuthenticationService.signout("/login");
+        //       })
+        //     .catch(errorCallback);
+        // }
       };
 
       // Avatar change functions ==============
