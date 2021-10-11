@@ -1,3 +1,8 @@
+https://img.shields.io/github/v/tag/AuroralH2020/auroral-nm-ui
+https://img.shields.io/github/languages/code-size/AuroralH2020/auroral-nm-ui
+https://img.shields.io/github/issues/code-size/AuroralH2020/auroral-nm-ui
+https://img.shields.io/github/license/code-size/AuroralH2020/auroral-nm-ui
+
 # AURORAL NEIGHBOURHOOD MANAGER UI #
 
 This README documents the web interface of the AURORAL Neighbourhood Manager, which is funded by European Union’s Horizon 2020 Framework Programme for Research and Innovation under grant agreement no 101016854 AURORAL.
