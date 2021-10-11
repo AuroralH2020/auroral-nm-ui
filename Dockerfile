@@ -1,7 +1,7 @@
 FROM node:dubnium-buster-slim as build
-LABEL version="0.1"
+LABEL version="1.0"
 LABEL maintaner="jorge.almela@bavenir.eu"
-LABEL release-date="16-02-2021"
+LABEL release-date="11-10-2021"
 ARG MY_ENV
 RUN apt-get update
 RUN apt-get install -y git

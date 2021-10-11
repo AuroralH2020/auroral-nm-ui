@@ -1,29 +1,22 @@
-# README #
+# AURORAL NEIGHBOURHOOD MANAGER UI #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This README documents the web interface of the AURORAL Neighbourhood Manager, which is funded by European Union’s Horizon 2020 Framework Programme for Research and Innovation under grant agreement no 101016854 AURORAL.
 
-### What is this repository for? ###
+### Deployment ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Docker is the preferred deployment method and NGINX is used as HTTP server.
 
-### How do I get set up? ###
+1. Create your environment variables with your API host address and other defaults for your deployment. Add the file as ./vicinityManager/environments/environments/env.{env_name}.js
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+2. Building an image:
+    docker build --build-arg MY_ENV={env_name} --tag {image_name} -f Dockerfile .
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+3. Run image
+    docker run -p 80:80 --name {container_name} {image_name}
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+Developed by bAvenir
+
+* jorge.almela@bavenir.eu
+* peter.drahovsky@bavenir.eu
