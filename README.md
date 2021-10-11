@@ -1,7 +1,7 @@
-https://img.shields.io/github/v/tag/AuroralH2020/auroral-nm-ui
-https://img.shields.io/github/languages/code-size/AuroralH2020/auroral-nm-ui
-https://img.shields.io/github/issues/code-size/AuroralH2020/auroral-nm-ui
-https://img.shields.io/github/license/code-size/AuroralH2020/auroral-nm-ui
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/AuroralH2020/auroral-nm-ui)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/AuroralH2020/auroral-nm-ui)
+![GitHub issues](https://img.shields.io/github/issues-raw/AuroralH2020/auroral-nm-ui)
+![GitHub](https://img.shields.io/github/license/AuroralH2020/auroral-nm-ui)
 
 # AURORAL NEIGHBOURHOOD MANAGER UI #
 
