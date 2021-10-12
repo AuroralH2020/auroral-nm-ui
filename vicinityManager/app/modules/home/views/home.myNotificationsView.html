@@ -154,13 +154,7 @@
                     </span>
                   </div>
                 <!-- NODE -->
-
-
-                </div>
-
-
                 <br>
-
               </div>
         </li>
         <li>
@@ -169,13 +163,14 @@
       </ul>
     </div>
   </div>
+  
 
   <div class="centered" ng-hide="loadedPage" style="max-width:700px; margin:auto">
     <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
   </div>
 
   <div class="centered" ng-show="!allItemsLoaded && loadedPage" style="max-width:700px; margin:auto">
-    <h3 ng-click="loadMore()" class="well" style="cursor: pointer">Load more notifications</h3>
+    <h3 ng-click="loadMore()" class="well" style="cursor: pointer" >Load more notifications</h3>
   </div>
 
   <div class="centered" ng-show="allItemsLoaded && notifs.length > 0" style="max-width:700px; margin:auto">
