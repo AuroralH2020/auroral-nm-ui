@@ -25,6 +25,9 @@ angular.module('Registration')
        $scope.baseHref = configuration.baseHref + '/#/login';
        //$scope.newRegis2 = false;
        //$scope.comps = [];
+       $scope.testPassword = function(pass){
+        return  new RegExp('(?=^.{8,}$)(?=.*[0-9])(?=.*[!@#$%^&*]*)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$').test(pass)
+      }
 
        $('div#myModal1').hide();
        $('div#newOrganisationInfo').show();
@@ -41,6 +44,9 @@ angular.module('Registration')
            $scope.companynameReg = results.nameTo;
            $scope.emailReg = results.emailTo;
            $scope.invitationId = results.invitationId;
+           $scope.testPassword = function(pass){
+            return  new RegExp('(?=^.{8,}$)(?=.*[0-9])(?=.*[!@#$%^&*]*)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$').test(pass)
+          }
          },
           function errorCallback(response){}
         );

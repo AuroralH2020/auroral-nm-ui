@@ -21,7 +21,6 @@ function ($scope, $stateParams, commonHelpers, auditAPIService, Notification) {
       $scope.loadedPage = false;
       $scope.dates = [];
       $scope.audits = [];
-      console.log($stateParams)
       auditAPIService.getAll($stateParams.userAccountId, $scope.daysBefore)
       .then(function(response){
         try{

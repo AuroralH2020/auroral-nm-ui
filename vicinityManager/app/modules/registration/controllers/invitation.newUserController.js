@@ -21,6 +21,9 @@ angular.module('Registration')
      $scope.note2 = "Registration form";
      $scope.termsAccepted = false;
      $scope.baseHref = configuration.baseHref + '/#/login';
+     $scope.testPassword = function(pass){
+      return  new RegExp('(?=^.{8,}$)(?=.*[0-9])(?=.*[!@#$%^&*]*)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$').test(pass)
+    }
 
      $('div#myModal1').hide();
      $('div#newOrganisationInfo').hide();
@@ -41,6 +44,9 @@ angular.module('Registration')
        $scope.cid = results.sentBy.cid;
        $scope.roles = results.roles;
        $scope.invitationId = results.invitationId;
+       $scope.testPassword = function(pass){
+        return  new RegExp('(?=^.{8,}$)(?=.*[0-9])(?=.*[!@#$%^&*]*)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$').test(pass)
+      }
      },
       function errorCallback(response){}
     );

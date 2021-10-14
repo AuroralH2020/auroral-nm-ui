@@ -36,6 +36,11 @@
             <span> Repeat password </span><span style="color: red">*</span>
             <input id="pwUs2" ng-model="password2Us" style="width: 60%" type="password"  class="pull-right" placeholder="Same password again" required/>
           </div>
+          <!-- Password checks -->
+          <span class="help-block" style="color: green" ng-show="password1Us===password2Us && password2Us && testPassword(password1Us)"><i class="fa fa-check"></i> Passwords match and are complex</span>
+          <span class="help-block" style="color: red" ng-show="testPassword(password1Us) && password1Us!==password2Us && password2Us"><i class="fa fa-times"></i> Passwords not matching</span>
+          <span class="help-block" style="color: red" ng-show="password1Us && !testPassword(password1Us)"><i class="fa fa-times"></i> Use at least 8 characters containing number, uppercase letter and lower case letter</span>
+          
 
           <div  class="form-group has-feedback">
             <span>Name</span><span style="color: red">*</span>
@@ -59,7 +64,7 @@
             <a id="zmiz" href="" ng-click="alertPopUp1()" class="text-center">Terms and Conditions</a>
         </div>
         <div style="margin-top: 50px">
-          <button type="submit" ng-disabled="!termsAccepted" class="btn btn-primary btn-block btn-flat" >Register me</button>    <!-- ng-disabled="form.$invalid || dataLoading" -->
+          <button type="submit" ng-disabled="!termsAccepted || !testPassword(password1Us) || password1Us !== password2Us" class="btn btn-primary btn-block btn-flat" >Register me</button>    <!-- ng-disabled="form.$invalid || dataLoading" -->
         </div>
 
       </form>
