@@ -34,7 +34,7 @@
               <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[31, 33, 34].lastIndexOf(notif.type) !== -1" ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})">
                 <img ng-src="./img/icons/data_request.png" alt="Company Avatar">
               </a>
-              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[32, 35, 36].lastIndexOf(notif.type) !== -1" ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[32, 35, 36, 51, 52, 53].lastIndexOf(notif.type) !== -1" ui-sref="root.main.userProfile.devices({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">
                 <img ng-src="./img/icons/data_request.png" alt="Company Avatar">
               </a>
               <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[73, 74, 75, 76].lastIndexOf(notif.type) !== -1" ui-sref="root.main.nodeDetail({nodeId: notif.target.id})">
@@ -74,7 +74,11 @@
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 73">Node has been discovered</p>            
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 74">Node has been removed</p>            
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 75">Node has been updated</p>            
-              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 76">Node's key has been updated</p>            
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 76">Node's key has been updated</p>        
+                  <!--USER  -->
+                  <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 51">User created</p>            
+                  <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 52">User removed</p>            
+                  <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 53">User updated</p>        
             </div>
 
           <!-- Actions -->
