@@ -24,7 +24,7 @@ factory('userAPIService', ['$http', 'configuration', '$window', function($http, 
   userAPI.deleteUser = function(id) {
     var data = {};
     data.userMail = $window.sessionStorage.username;
-    return $http.post(configuration.apiUrl + '/user/delete/' + id, data);
+    return $http.delete(configuration.apiUrl + '/user/' + id);
   };
 
   return userAPI;
