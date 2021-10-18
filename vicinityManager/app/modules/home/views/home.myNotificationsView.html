@@ -76,6 +76,9 @@
                       <span ng-show="notif.type===74"><span class="label label-default paddedSides">Node removed</span></span>
                       <span ng-show="notif.type===75"><span class="label label-default paddedSides">Node updated</span></span>
                       <span ng-show="notif.type===76"><span class="label label-default paddedSides">Node updated</span></span>
+                      <span ng-show="notif.type===51"><span class="label label-default paddedSides">User created</span></span>
+                      <span ng-show="notif.type===52"><span class="label label-default paddedSides">User removed</span></span>
+                      <span ng-show="notif.type===53"><span class="label label-default paddedSides">User updated</span></span>
 
                       <!-- Label status -->
                       <span ng-show="notif.status==='waiting'"><span class="label label-warning paddedSides">Waiting</span></span>
@@ -111,6 +114,11 @@
                   <span class="padded" ng-show="notif.type === 74">Node <b>{{notif.target.name}}</b> removed </span>
                   <span class="padded" ng-show="notif.type === 75">Node <b>{{notif.target.name}}</b> updated </span>
                   <span class="padded" ng-show="notif.type === 76">Node <b>{{notif.target.name}}</b> key updated</span>
+                  <!-- USER -->
+                  <span class="padded" ng-show="notif.type === 51">User <b>{{notif.target.name}}</b> created by {{notif.actor.name}}</span>
+                  <span class="padded" ng-show="notif.type === 52">User <b>{{notif.target.name}}</b> removed by {{notif.actor.name}}</span>
+                  <span class="padded" ng-show="notif.type === 53">User <b>{{notif.target.name}}</b> updated by {{notif.actor.name}}</span>
+
 
                   <span class="ciara" ng-class="bckColor"></span>
 
