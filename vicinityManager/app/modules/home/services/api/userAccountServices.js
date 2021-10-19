@@ -62,11 +62,8 @@ factory('userAccountAPIService', ['$http', 'configuration', '$window', function(
     return $http.get(configuration.apiUrl +'/organisation/' + id + '/configuration');
   };
 
-  // TBD: Update for AURORAL
-  userAccountAPI.removeOrganisation = function(id) {
-    var data = {};
-    data.userMail = $window.sessionStorage.username;
-    return $http.post(configuration.apiUrl +'/organisation/' + id + '/remove', data);
+  userAccountAPI.removeOrganisation = function() {
+    return $http.delete(configuration.apiUrl + '/organisation');
   };
 
   return userAccountAPI;

@@ -1,7 +1,7 @@
 "use strict";
 angular.module('VicinityManagerApp.controllers')
   .controller('companyProfileController',
-    function($rootScope, $scope, $window, commonHelpers, $state, $stateParams, $location, $cookies, userAccountAPIService, itemsAPIService, tokenDecoder, AuthenticationService, Notification, configuration) {
+    function($rootScope, $scope, $window, commonHelpers, $state, $stateParams, $location, $cookies, userAccountAPIService, tokenDecoder, AuthenticationService, Notification, configuration) {
 
       // ====== Triggers window resize to avoid bug =======
       commonHelpers.triggerResize();
@@ -216,19 +216,19 @@ angular.module('VicinityManagerApp.controllers')
           .catch(errorCallback);
       };
 
-      $scope.removeOrg = function() {
-        Notification.warning('Temporarily disabled, ask admin to remove organisation')
-        // if (confirm('Are you sure?')) {
-        //   userAccountAPIService.removeOrganisation($window.sessionStorage.companyAccountId)
-        //     .then(
-        //       function(response) {
-        //         alert('Organisation successfully removed!');
-        //         $cookies.remove("rM_V"); // If log out remove rememberMe cookie
-        //         AuthenticationService.signout("/login");
-        //       })
-        //     .catch(errorCallback);
-        // }
-      };
+      $scope.removeOrg = async function() {
+        if (confirm('Are you sure?')) {
+          try {
+            await userAccountAPIService.removeOrganisation()
+            Notification.success('Organisation successfully removed!')
+            $cookies.remove("rM_V"); // If log out remove rememberMe cookie
+            AuthenticationService.signout("/login")
+          } catch (err) {
+            console.log(err)
+            Notification.error('Problem removing organisation, contact with the admins')
+          }
+        }
+      }
 
       // Avatar change functions ==============
 
@@ -302,4 +302,4 @@ angular.module('VicinityManagerApp.controllers')
         }
       }
 
-    });
+  });
