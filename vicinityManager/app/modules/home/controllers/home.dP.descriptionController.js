@@ -28,6 +28,8 @@ function ($scope, $window, $stateParams, commonHelpers, itemsAPIService, Notific
   initData();
 
   function initData(){
+    $scope.item = $scope.$parent.item
+    isMyItem();
     $scope.loaded = true
   }
 
@@ -35,6 +37,7 @@ function ($scope, $window, $stateParams, commonHelpers, itemsAPIService, Notific
     try {
       await itemsAPIService.putOne($scope.item.oid, data)
       Notification.success("Device updated");
+      $scope.$parent.childHook()
     } catch (err) {
       if (err.status < 500) {
         Notification.warning('Unauthorized or item not found');
