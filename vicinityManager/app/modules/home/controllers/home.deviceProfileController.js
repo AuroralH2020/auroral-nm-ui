@@ -39,6 +39,7 @@ angular.module('VicinityManagerApp.controllers')
       });
 
     // Functions
+    
 
       function initData() {
         itemsAPIService.getItemWithAdd($stateParams.deviceId)
@@ -71,6 +72,10 @@ angular.module('VicinityManagerApp.controllers')
               Notification.error("Server error");
             }
           });
+      }
+
+      $scope.childHook = function (){
+        initData()
       }
 
       function getToken() {

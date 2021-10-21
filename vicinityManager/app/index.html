@@ -70,6 +70,9 @@
       <!-- jQuery 2.1.4 -->
       <script src="bower_components/jquery/dist/jquery.min.js"></script>
       <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <!-- Moved before bootstrap because of tooltips was not working, also script on the 180 was commented out-->
+      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
 
       <!-- Bootstrap 3.3.5 -->
       <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -173,14 +176,12 @@
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
      fixed layout. -->
-
-      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
       <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-      <script>
+      <!-- <script>
         $.widget.bridge('uibutton', $.ui.button);
         $(function() {
           $(".select2").select2();
-        })
+        }) -->
 
       </script>
       <!-- Morris.js charts -->
