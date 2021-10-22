@@ -1,14 +1,25 @@
 <div class="coll-md-1" ng-show="!loaded" style="margin: auto; width:60%">
   <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
 </div>
-
 <section>
   <div>
     <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
-    <a ng-if="imItemOwner" ng-click="descriptionEdit()" id="not2" class="pull-right btn-sm btn-info edit_profile">Edit</a>
-    <a id="not4" ng-click="descriptionSave()" style="display: block; margin-top: 5px; margin-left: 2px" class="pull-right btn-sm btn-info edit_profile"><i style="color: green" class="fa fa-check"></i>Save</a>
-    <a id="not5" ng-click="descriptionCancel()" style="display: block; margin-top: 5px; margin-left: 2px" class="pull-right btn-sm btn-info edit_profile"><i style="color: red" class="fa fa-times"></i>Cancel</a>
-    <textarea id="not3" rows="4" cols="80" style="display: block; margin-top: 5px; margin-left: 0px" class="style-1" type="text" ng-model="descriptionNew"></textarea>
-    <p id="not1">{{item.description}}</p>
+    <a ng-if="imItemOwner" ng-click="descriptionEdit()" id="not2" class="descNormal pull-right btn-sm btn-info edit_profile">Edit</a>
+    <a id="not4" ng-click="descriptionSave()" style="display: block; margin-top: 5px; margin-left: 2px" class=" descEdit pull-right btn-sm btn-info edit_profile"><i style="color: green" class="fa fa-check"></i>Save</a>
+    <a id="not5" ng-click="descriptionCancel()" style="display: block; margin-top: 5px; margin-left: 2px" class="descEdit pull-right btn-sm btn-info edit_profile"><i style="color: red" class="fa fa-times"></i>Cancel</a>
+    <textarea id="not3" rows="4" cols="80" style="display: block; margin-top: 5px; margin-left: 0px" class="descEdit style-1" type="text" ng-model="descriptionNew"></textarea>
+    <p class="descNormal" id="not1">{{item.description}}</p>
+   
+    <span>
+      <strong ><i class="fa fa-tag margin-r-5"></i> Domain:</strong>
+      <span class='descNormal' ng-show="item.labels.domain.length > 0">
+       <span ng-if="item.labels.domain !== 'Undefined'" class="label label-default paddedSides">{{item.labels.domain}}</span>
+      </span>
+    </span>
+    <span class="descEdit">
+      <select id="editDomain" ng-model=item.labels.domain name="menu">
+        <option ng-repeat="domain in availibleDomains" value={{domain}} >{{domain}}</option>
+      </select>
+    </span>
   </div>
 </section>

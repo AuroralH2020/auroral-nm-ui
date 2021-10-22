@@ -77,7 +77,6 @@ angular.module('VicinityManagerApp.controllers')
       $scope.childHook = function (){
         initData()
       }
-
       function getToken() {
         const payload = tokenDecoder.deToken()
         const rolesArr = payload.roles.split(',')
@@ -190,10 +189,16 @@ angular.module('VicinityManagerApp.controllers')
           $("img#pic").prop("src", $scope.item.avatar);
           $('img#pic').fadeIn('slow');
         }, 600);
+        $('#input1').val('')
       };
 
       $scope.uploadPic = async function() {
         try {
+          //test if image is selected
+          if($('#input1').val() === ''){
+            Notification.warning("Please select image");
+            return
+          }
           await itemsAPIService.putOne($scope.item.oid, {
             avatar: base64String
           })
@@ -208,9 +213,10 @@ angular.module('VicinityManagerApp.controllers')
             $("img#pic").prop("src", $scope.item.avatar);
             $('img#pic').fadeIn('slow');
           }, 600);
+          $('#input1').val('')
         } catch (err) {
           if (err.status < 500) {
-            Notification.warning("User is unauthorized...");
+            Notification.error("Error changing image. Check source");
           } else {
             Notification.error("Server error");
           }
