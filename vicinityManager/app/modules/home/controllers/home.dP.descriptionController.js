@@ -11,13 +11,12 @@ function ($scope, $window, $stateParams, commonHelpers, itemsAPIService, Notific
   $scope.item = {};
   $scope.descriptionNew = ""
   $scope.imItemOwner = false;
+  //TBD - get domains from backend?
+  $scope.availibleDomains = ["Undefined", "Energy", "Mobility", "Health", "Farming", "Tourism", "Weather", "Indoor quality"];
 
   // DOM Initialization
-  $('a#not2').show();
-  $('p#not1').show();
-  $('a#not4').hide();
-  $('a#not5').hide();
-  $('textarea#not3').hide();
+  $('.descEdit').hide();
+  $('.descNormal').show();
 
   // Get item info from parent
   $scope.$on('itemChanged', function (event, value) {
@@ -56,33 +55,28 @@ function ($scope, $window, $stateParams, commonHelpers, itemsAPIService, Notific
   // DOM modifying functions
 
   $scope.descriptionEdit = function() {
-    $('a#not2').hide();
-    $('p#not1').hide();
-    $('a#not4').show();
-    $('a#not5').show();
+    $('.descNormal').hide()
+    $('.descEdit').show()
     $scope.descriptionNew = $scope.item.description;
-    $('textarea#not3').show();
   };
 
   $scope.descriptionCancel = function() {
     $scope.descriptionNew = "";
-    $('a#not2').show();
-    $('p#not1').show();
-    $('a#not4').hide();
-    $('a#not5').hide();
-    $('textarea#not3').hide();
+    $('.descNormal').show()
+    $('.descEdit').hide()
+
   };
 
   $scope.descriptionSave = function() {
     var data = {
-      description: $scope.descriptionNew
+      description: $scope.descriptionNew,
+      labels: {
+        domain: $('select#editDomain').val()
+      }
     };
     updateItem(data);
-    $('a#not2').show();
-    $('p#not1').show();
-    $('a#not4').hide();
-    $('a#not5').hide();
-    $('textarea#not3').hide();
+    $('.descNormal').show()
+    $('.descEdit').hide()
     $scope.descriptionNew = "";
   };
 
