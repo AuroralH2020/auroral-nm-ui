@@ -20,7 +20,7 @@ function ($scope, $window, configuration, commonHelpers, $stateParams, itemsAPIS
   $scope.loaded = false;
 
   function init(){
-    itemsAPIService.getMyItems('Device', $scope.offset)
+    itemsAPIService.getUserItems($stateParams.userAccountId, 'Device', $scope.offset)
     // itemsAPIService.getUserItems($stateParams.userAccountId, $stateParams.companyAccountId, 'device')
       .then(successCallback)
       .catch(function(err){

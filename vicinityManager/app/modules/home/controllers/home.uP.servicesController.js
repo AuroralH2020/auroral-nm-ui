@@ -20,8 +20,7 @@ function ($scope, $window, commonHelpers, $stateParams, itemsAPIService,  Notifi
   $scope.loaded = false;
 
   function init(){
-    itemsAPIService.getMyItems('Service', $scope.offset)
-    // itemsAPIService.getUserItems($stateParams.userAccountId, $stateParams.companyAccountId, 'service')
+    itemsAPIService.getUserItems($stateParams.userAccountId, 'Service', $scope.offset)
     .then(successCallback)
     .catch(function(err){
       console.log(err);

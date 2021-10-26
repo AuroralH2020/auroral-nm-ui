@@ -118,15 +118,15 @@
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{accessLevelCaption}}
             <span class="caret"></span></button>
           <ul class="dropdown-menu">
-            <li ng-click="accessLevelNew=1; saveNewAccess()"><a href="#">Private Profile</a></li>
-            <li ng-click="accessLevelNew=2; saveNewAccess()"><a href="#">Visible for friends</a></li>
-            <li ng-click="accessLevelNew=3; saveNewAccess()"><a href="#">Public Profile</a></li>
+            <li ng-click="accessLevelNew=0; saveNewAccess()"><a href="#">Private Profile</a></li>
+            <li ng-click="accessLevelNew=1; saveNewAccess()"><a href="#">Visible for friends</a></li>
+            <li ng-click="accessLevelNew=2; saveNewAccess()"><a href="#">Public Profile</a></li>
           </ul>
         </div>
       </div>
     </div>
 
-    <div class="col-md-9" ng-show="loaded && isMyProfile">
+    <div class="col-md-9" ng-show="loaded ">
       <div class="nav-tabs-custom">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">

@@ -21,7 +21,7 @@ function ($scope, $window, commonHelpers, $stateParams, itemsAPIService,  Notifi
   $scope.offset = 0;
 
   function init(){
-    itemsAPIService.getMyItems('Device', $scope.offset)
+    itemsAPIService.getCompanyItems($stateParams.companyAccountId, 'Device', $scope.offset)
       .then(successCallback)
       .catch(errorCallback);
   }
