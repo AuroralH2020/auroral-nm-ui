@@ -31,13 +31,16 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
     return $http.get(configuration.apiUrl + '/items?type=' + type + '&offset=' + offset + '&filter=4');
   };
 
-  itemsAPI.getArrayOfItems = function(items){
-    return $http.post(configuration.apiUrl + '/items/array', items);
+  itemsAPI.getCompanyItems = function(cid, type, offset) {
+    return $http.get(configuration.apiUrl + '/items/company/' + cid + '?type=' + type + '&offset=' + offset);
   };
 
-  itemsAPI.getUserItems = function(reqId, reqCid, type){
-    var payload = { reqId: reqId, reqCid: reqCid, type: type};
-    return $http.post(configuration.apiUrl + '/items/user', payload);
+  itemsAPI.getUserItems = function(uid, type, offset) {
+    return $http.get(configuration.apiUrl + '/items/user/' + uid + '?type=' + type + '&offset=' + offset);
+  };
+
+  itemsAPI.getArrayOfItems = function(items){
+    return $http.post(configuration.apiUrl + '/items/array', items);
   };
 
   itemsAPI.getMyContractItems = function(cid, oid){
