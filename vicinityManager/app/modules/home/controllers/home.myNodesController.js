@@ -130,6 +130,19 @@ $scope.closeModal = function () {
   $('div#keymodal').hide();
 };
 
+$scope.editVisibility = function (_agid, visibility) {
+  nodeAPIService
+    .updateOne(_agid, { visible: visibility })
+    .then(function successCallback(response) {
+      Notification.success("Visibility updated");
+      myInit()
+    })
+    .catch(function (err) {
+      console.log(err);
+      Notification.error("Error updating visibility");
+    });
+};
+
 
 // ==== Navigation functions =====
 

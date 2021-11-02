@@ -13,6 +13,7 @@ angular.module('VicinityManagerApp.controllers').
 // ====== Triggers window resize to avoid bug =======
     commonHelpers.triggerResize();
     $scope.nName = "";
+    $scope.nVisibility = "";
     $scope.nUri = "";
     $scope.nAgent = "";
     $scope.nPass = "";
@@ -33,6 +34,7 @@ angular.module('VicinityManagerApp.controllers').
           // $scope.nAgent = response.data.message.agent;
           $scope.nAgentType = response.data.message.type;
           $scope.nId = response.data.message.agid;
+          $scope.nVisibility = response.data.message.visible;
           $scope.myNode = $scope.nName + " profile view";
         })
         .catch(function(err){
