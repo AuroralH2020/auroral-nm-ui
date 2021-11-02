@@ -22,12 +22,13 @@ angular.module('VicinityManagerApp.controllers').
     $scope.nAgentType = "";
 
     $scope.creatingNew = true;
-    $scope.nodeId = $state.params.nodeId;
+    $scope.nodeId = $state.params.nodeId
+    $scope.modify = $state.params.modify
     $scope.myNode = "Creating new Access Point";
 
     if($scope.nodeId !== '0'){
-    $scope.creatingNew = false;
-    nodeAPIService.getOne($state.params.nodeId)
+      $scope.creatingNew = false;
+      nodeAPIService.getOne($state.params.nodeId)
       .then(function(response){
           $scope.nName = response.data.message.name;
           // $scope.nUri = response.data.message.eventUri;

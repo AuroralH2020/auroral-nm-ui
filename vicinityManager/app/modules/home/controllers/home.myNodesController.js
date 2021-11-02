@@ -69,7 +69,7 @@ $scope.deleteNode = function(agid){
 
   // Access node management
   $scope.goToEdit = function(i){
-      $state.go("root.main.nodeDetail",{nodeId: i});
+      $state.go("root.main.nodeDetail",{ nodeId: i, modify: true });
   };
 
 // MODALS

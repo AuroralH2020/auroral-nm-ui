@@ -55,8 +55,8 @@
             <span>{{nod.itemsCount}}</span>
           </td>
           <td class="col-sm-1">
-            <button data-toggle="tooltip" title="Make invisible to public" ng-show="nod.visible" type="button" ng-click="editVisibility(nod.agid, false)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye fa-lg col-sm-4"></i></button>
-            <button data-toggle="tooltip" title="Make visible to public"  ng-show="!nod.visible" type="button" ng-click="editVisibility(nod.agid, true)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye-slash fa-lg col-sm-4"></i></button>
+            <button data-toggle="tooltip" title="Make invisible to other organisations" ng-show="nod.visible" type="button" ng-click="editVisibility(nod.agid, false)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye fa-lg col-sm-4"></i></button>
+            <button data-toggle="tooltip" title="Make visible to other organisations"  ng-show="!nod.visible" type="button" ng-click="editVisibility(nod.agid, true)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye-slash fa-lg col-sm-4"></i></button>
           </td>
           <td class="col-sm-1">
             <div data-toggle="tooltip" title="Public key is stored"  align="center"><i ng-show="nod.hasKey" style="color: green" class="fa fa-shield fa-lg"></i></div>
@@ -64,8 +64,8 @@
           </td>
           <td class="col-sm-2">
               <div align="center">
-                  <button data-toggle="tooltip" title="Rename AP" type="button" ng-click="goToEdit(nod.agid)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-pencil fa-lg col-sm-4"></i></button>
-                  <button data-toggle="tooltip" title="Delete AP" type="button" ng-click="deleteNode(nod.agid)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
+                  <button data-toggle="tooltip" title="Rename Access point" type="button" ng-click="goToEdit(nod.agid)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-pencil fa-lg col-sm-4"></i></button>
+                  <button data-toggle="tooltip" title="Delete Access point" type="button" ng-click="deleteNode(nod.agid)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
                   <button data-toggle="tooltip" title="Modify public key" type="button" ng-click="showModal(nod.agid)" class="btn btn-default"><i style="color: blue; padding-left:10%" class="fa fa-key fa-lg col-sm-4"></i></button>
               </div>
           </td>

@@ -446,6 +446,9 @@ angular.module('VicinityManagerApp', [
 
         .state('root.main.nodeDetail', {
           url: '/nodeDetail/:nodeId',
+          params: {
+            modify: false
+          },
           views: {
             'mainContentView@root':
             {
