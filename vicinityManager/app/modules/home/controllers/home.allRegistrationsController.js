@@ -21,7 +21,7 @@ angular.module('VicinityManagerApp.controllers').
     init();
 
     function init(){
-      registrationsAPIService.getAll()
+      registrationsAPIService.getAllCompany()
       .then(function(response){
         $scope.regisList = response.data.message.map(
           (it) => { return {
@@ -31,7 +31,7 @@ angular.module('VicinityManagerApp.controllers').
             }
           }
         );
-        console.log($scope.regisList)
+        // console.log($scope.regisList)
         $scope.loadedPage = true;
       })
       .catch(errorCallback);

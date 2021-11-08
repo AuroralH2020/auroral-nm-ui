@@ -50,7 +50,7 @@ angular.module('VicinityManagerApp.controllers').
 
     $scope.submitNode = function(){
       // Update existing node
-      if($scope.modify) {
+      if($scope.modify && !$scope.creatingNew) {
         nodeAPIService.updateOne($state.params.nodeId, {name: $scope.nName})
           .then(
             function successCallback(response){

@@ -43,8 +43,20 @@ function ($scope, $stateParams, commonHelpers, invitationsAPIService, Notificati
   init()
 
   // Functions
-  $scope.resendInvitation = function(){
-    alert('Resend Not Implemented')
+  $scope.resendInvitation = async function(id){
+    try{
+      const response = await invitationsAPIService.resendOne(id)
+      Notification.success("Mail sent")
+    }
+    catch (err) {
+      if(err.status == 429){
+        Notification.warning('Please wait at least 1 minute between resend requests')
+      }
+      else{
+        Notification.error("Server error")
+      }
+    }
+  
   }
 
   $scope.cancelInvitation = function(){

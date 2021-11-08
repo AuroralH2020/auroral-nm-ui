@@ -19,7 +19,7 @@ angular.module('VicinityManagerApp.controllers').
   $scope.rev = false;
   $scope.myOrderBy = 'name';
   $scope.loadedPage = false;
-  $scope.gatewayKey = "Introduce your public key here";
+  $scope.gatewayKey = "";
   $scope.nodeUpdatingKey = "";
 
   $('div#keymodal').hide();
@@ -81,7 +81,7 @@ $scope.showModal = function (id) {
       if(response.data.message){
         $scope.gatewayKey = response.data.message;
       } else {
-        $scope.gatewayKey = "Introduce your public key here";
+        $scope.gatewayKey = "";
       }
       $scope.nodeUpdatingKey = id;
       $('div#keymodal').show();
@@ -93,6 +93,10 @@ $scope.showModal = function (id) {
 };
 
 $scope.saveModal = function () {
+  if(!$scope.gatewayKey ){
+    Notification.error("Please provide valid key");
+    return
+  }
   nodeAPIService.updateOne($scope.nodeUpdatingKey, {key: $scope.gatewayKey})
   .then(
     function successCallback(response){

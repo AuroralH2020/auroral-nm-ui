@@ -57,7 +57,7 @@
 
     </div>
     <div class="col-sm-1">
-        <button data-toggle="tooltip" title="Resend invitation" class="btn btn-primary pull-right" ng-click="resendInvitation()" ng-show="inv.status === 'Pending'">
+        <button data-toggle="tooltip" title="Resend invitation" class="btn btn-primary pull-right" ng-click="resendInvitation(inv.id)" ng-show="inv.status === 'Pending'">
             <i class="fa fa-paper-plane" aria-hidden="true"></i>
         </button>
         <!-- <button class="btn btn-danger pull-right" ng-click="cancelInvitation()" ng-show="inv.status === 'Pending' && inv.used === false">

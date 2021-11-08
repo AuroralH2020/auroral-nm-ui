@@ -8,6 +8,10 @@ factory('invitationsAPIService', ['$http', 'configuration', function($http, conf
     return $http.get(configuration.apiUrl + '/invitation/' + id );
   };
 
+  invitationsAPI.resendOne = function(id){
+    return $http.get(configuration.apiUrl + '/invitation/' + id + '/resend' );
+  };
+
   invitationsAPI.postOne = function(data) {
     return $http.post(configuration.apiUrl + '/invitation/', data);
   };
