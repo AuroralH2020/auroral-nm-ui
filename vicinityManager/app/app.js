@@ -68,7 +68,7 @@ angular.module('VicinityManagerApp', [
             views: {
               'mainContentView@root':
                 {
-                  templateUrl: 'modules/home/views/home.allItems.html',
+                  templateUrl: 'modules/home/views/home.allItemsView.html',
                   controller: 'allItemsController'
                 }
             }
