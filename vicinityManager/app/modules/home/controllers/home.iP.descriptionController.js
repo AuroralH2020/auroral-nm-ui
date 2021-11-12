@@ -1,6 +1,6 @@
 'use strict';
 angular.module('VicinityManagerApp.controllers')
-.controller('dPdescriptionController',
+.controller('iPdescriptionController',
 function ($scope, $window, $stateParams, commonHelpers, itemsAPIService, Notification) {
 
 // Variables and initData

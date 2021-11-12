@@ -8,17 +8,17 @@
 
 <!-- HEADER -->
 <div class="box-header box">
-    <div class="col-sm-2">
-        <i ng-click="onSort('nameTo')" class="fa fa-sort" aria-hidden="true"> Name</i>
+    <div class="col-sm-1">
+        <p><i ng-click="onSort('nameTo')" class="fa fa-sort" aria-hidden="true"></i> Name</p>
     </div>
-    <div class="col-sm-2">
-        <i ng-click="onSort('emailTo')" class="fa fa-sort" aria-hidden="true"> E-Mail</i>
+    <div class="col-sm-3">
+        <p><i ng-click="onSort('emailTo')" class="fa fa-sort" aria-hidden="true"></i> E-Mail</p>
     </div>
-    <div class="col-sm-2">
-        <i ng-click="onSort('sentByEmail')" class="fa fa-sort" aria-hidden="true"> Initiator</i>
+    <div class="col-sm-3">
+        <p><i ng-click="onSort('sentByEmail')" class="fa fa-sort" aria-hidden="true"></i> Initiator</p>
     </div>
-    <div class="col-sm-2">
-        <i ng-click="onSort('updated')" class="fa fa-sort" aria-hidden="true"> Last Updated</i>
+    <div class="col-sm-1">
+        <p><i ng-click="onSort('updated')" class="fa fa-sort" aria-hidden="true"> </i> Last Updated</p> 
     </div>
     <div class="col-sm-2">
         <p>Roles</p>
@@ -33,16 +33,16 @@
 
 <!-- BODY -->
 <div ng-if="user.uid === selectedUser.uid || editing === false && user.status !== 'deleted'" class="box-body box" ng-repeat="inv in invitations | orderBy:sortColumn:rev">
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <p>{{inv.nameTo}}</p>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
         <p>{{inv.emailTo}}</p>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
         <a ui-sref="root.main.userProfile({userAccountId: inv.sentByUid, companyAccountId: companyId})"><strong>{{inv.sentByEmail}}</strong></a>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <p>{{inv.updated}}</p>
     </div>
     <div class="col-sm-2">

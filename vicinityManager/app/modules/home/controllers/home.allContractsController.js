@@ -1,6 +1,5 @@
 'use strict'
-
-angular.module('VicinityManagerApp.controllers').controller('allDevicesController',
+angular.module('VicinityManagerApp.controllers').controller('allContractsController',
    function ($scope, $window, itemsAPIService, commonHelpers, Notification, configuration){
 
 // ====== Triggers window resize to avoid bug =======
@@ -23,21 +22,21 @@ angular.module('VicinityManagerApp.controllers').controller('allDevicesControlle
    $scope.myId = $window.sessionStorage.companyAccountId;
    $scope.offset = 0;
    $scope.allItemsLoaded = false;
-   $scope.typeOfItem = "devices";
-   $scope.header = "My Devices";
+   $scope.typeOfItem = "Contracts";
+   $scope.header = "My Contracts";
    $scope.listView = false;
    $scope.myOrderBy = 'name';
    $scope.accessFilterData = [
-     {id: 0, name: "My disabled devices"},
-     {id: 1, name: "My private devices"},
-     {id: 2, name: "My devices for friends"},
-     {id: 3, name: "My public devices"},
-     {id: 4, name: "My devices"},
-    //  {id: 8, name: "Contracted devices"},
-    //  {id: 9, name: "Mine & Contracted devices"},
-     {id: 5, name: "Friend's devices"},
-     {id: 6, name: "All public devices"},
-    //  {id: 7, name: "All devices"}
+     {id: 0, name: "My disabled "+$scope.typeOfItem},
+     {id: 1, name: "My private "+$scope.typeOfItem},
+     {id: 2, name: "My "+$scope.typeOfItem+" for friends"},
+     {id: 3, name: "My public "+$scope.typeOfItem},
+     {id: 4, name: "My "+$scope.typeOfItem},
+    //  {id: 8, name: "Contracted "+$scope.typeOfItem},
+    //  {id: 9, name: "Mine & Contracted "+$scope.typeOfItem},
+     {id: 5, name: "Friend's "+$scope.typeOfItem},
+     {id: 6, name: "All public "+$scope.typeOfItem},
+    //  {id: 7, name: "All "+$scope.typeOfItem}
    ];
    $scope.selectedAccessFilter = $scope.accessFilterData[4];
    $scope.filterNumber = $scope.selectedAccessFilter.id;
@@ -47,12 +46,12 @@ angular.module('VicinityManagerApp.controllers').controller('allDevicesControlle
    async function init(){
      $scope.loaded = false;
      try {
-        const response = await itemsAPIService.getAllItems("Device", $scope.offset, $scope.filterNumber)
-        response.data.message.forEach(it => {
+        const responseItem = await itemsAPIService.getAllItems(["Marketplace"], $scope.offset, $scope.filterNumber)
+        responseItem.data.message.forEach(it => {
           $scope.items.push(addCaptionAndAvatar(it))
         })
         $scope.noItems = ($scope.items.length === 0);
-        $scope.allItemsLoaded = response.data.message.length < 12;
+        $scope.allItemsLoaded = responseItem.data.message.length < 12;
         $scope.loaded = true;
         $scope.loadedPage = true;
       } catch (err) {
@@ -65,7 +64,7 @@ angular.module('VicinityManagerApp.controllers').controller('allDevicesControlle
     $scope.items=[];
     $scope.loaded = false;
     try {
-        const response = await itemsAPIService.getAllItems("Device", $scope.offset, $scope.filterNumber)
+        const response = await itemsAPIService.getAllItems("Marketplaces", $scope.offset, $scope.filterNumber)
         $scope.items = response.data.message.map(it => {
           return addCaptionAndAvatar(it)
         })

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('VicinityManagerApp.controllers')
-  .controller('deviceProfileController',
+  .controller('itemProfileController',
     function($scope, $window, $state, commonHelpers, tokenDecoder, $stateParams, $location, itemsAPIService, Notification, configuration) {
 
       $scope.locationPrefix = $location.path();
@@ -42,7 +42,7 @@ angular.module('VicinityManagerApp.controllers')
     
 
       function initData() {
-        itemsAPIService.getItemWithAdd($stateParams.deviceId)
+        itemsAPIService.getItemWithAdd($stateParams.itemId)
           .then(function(response) {
             $scope.isMyItem = false;
             $scope.isMyOrgItem = false;
@@ -65,8 +65,8 @@ angular.module('VicinityManagerApp.controllers')
           .catch(function(err) {
             if (err.status === 404) {
               console.log(err);
-              Notification.error("Device not found");
-              $state.go("root.main.allDevices");
+              Notification.error("Item not found");
+              $state.go("root.main.allItems");
             } else {
               console.log(err);
               Notification.error("Server error");
@@ -100,7 +100,7 @@ angular.module('VicinityManagerApp.controllers')
                         { "status": 'Disabled' } :
                         { "status": 'Enabled' }
           await itemsAPIService.putOne($scope.item.oid, query)
-          Notification.success('Device status updated!!');
+          Notification.success('Item status updated!!');
           initData();
         } catch (err) {
           if (err.status < 500) {
@@ -202,7 +202,7 @@ angular.module('VicinityManagerApp.controllers')
           await itemsAPIService.putOne($scope.item.oid, {
             avatar: base64String
           })
-          const response = await itemsAPIService.getItemWithAdd($stateParams.deviceId)
+          const response = await itemsAPIService.getItemWithAdd($stateParams.itemId)
           Notification.success("Avatar updated");
           $scope.item = response.data.message;
           $('#editCancel1').fadeOut('slow');
@@ -222,7 +222,14 @@ angular.module('VicinityManagerApp.controllers')
           }
         }
       };
-
+      
+      $scope.copyToClipboard = function (oid, id='ID') {
+        navigator.clipboard.writeText(oid).then(function() {
+          Notification.success(id + " has been copied");
+        }, function(err) {
+          Notification.error("Could not copy text");
+        });
+      }
             // Move / Change item owner/gateway
 
             // $scope.changeToInputMove = function() {

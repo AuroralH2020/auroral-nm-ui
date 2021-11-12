@@ -6,13 +6,15 @@
   <div class="row" ng-show="loaded">
 
     <div ng-repeat="device in devices" class="col-md-6 col-lg-4">
-      <div class="box box-widget widget-user-2" style="cursor: pointer" onmouseover="" ui-sref="root.main.deviceProfile.description({deviceId: device.oid})">
-        <div style="z-index: -2" class="widget-user-header2 bg-yellow">
-          <div class="round">
-            <img ng-src="{{device.avatar}}" alt="Company Avatar">
+      <div class="box box-widget widget-user-2" style="cursor: pointer" onmouseover="" ui-sref="root.main.itemProfile.description({itemId: device.oid})">
+        <div style="z-index: -2" class="widget-user-header2" ng-class="{'Device':'bg-aqua', 'Service':'bg-yellow'}[device.type]">
+          <div class="widget-user-image">
+            <img class="img-circle" style="background-color: white" ng-src="{{device.avatar}}" alt="Device Avatar">
           </div>
           <span class="pull-right" id="circle_gray" ><a style="cursor:default" title="Unknown" alt="Unknown"> &nbsp; &nbsp; &nbsp;</a></span>
           <h3 class="widget-user-username2"><a style="color: #FFF" href="">{{device.name}}</a></h3>
+          <h5 class="widget-user-desc" >{{device.type}}</h5>
+          <h5 class="widget-user-desc" ng-if="dev.status !== 'Disabled'">{{device.privacyCaption}}</h5>
         </div>
       </div>
     </div>

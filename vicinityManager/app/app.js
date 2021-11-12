@@ -68,21 +68,21 @@ angular.module('VicinityManagerApp', [
             views: {
               'mainContentView@root':
                 {
-                  templateUrl: 'modules/home/views/home.allDevicesView.html',
-                  controller: 'allDevicesController'
+                  templateUrl: 'modules/home/views/home.allItems.html',
+                  controller: 'allItemsController'
                 }
             }
           })
 
 // ======== Side menu list views
 
-        .state('root.main.allDevices', {
-          url: '/allDevices/:searchTerm',
+        .state('root.main.allItems', {
+          url: '/allItems/:searchTerm',
           views: {
             'mainContentView@root':
               {
-                templateUrl: 'modules/home/views/home.allDevicesView.html',
-                controller: 'allDevicesController'
+                templateUrl: 'modules/home/views/home.allItemsView.html',
+                controller: 'allItemsController'
               }
           }
         })
@@ -98,13 +98,24 @@ angular.module('VicinityManagerApp', [
           }
         })
 
-        .state('root.main.allServices', {
-          url: '/allServices',
+        .state('root.main.allMarketplaces', {
+          url: '/allMarketplaces',
           views: {
             'mainContentView@root':
               {
-                templateUrl: 'modules/home/views/home.allServices.html',
-                controller: 'allServicesController'
+                templateUrl: 'modules/home/views/home.allMarketplacesView.html',
+                controller: 'allMarketplacesController'
+              }
+          }
+        })
+
+        .state('root.main.allContracts', {
+          url: '/allContracts',
+          views: {
+            'mainContentView@root':
+              {
+                templateUrl: 'modules/home/views/home.AllContractsView.html',
+                controller: 'allContractsController'
               }
           }
         })
@@ -189,27 +200,27 @@ angular.module('VicinityManagerApp', [
         })
 
 
-        .state('root.main.companyProfile.devices', {
-            url: '/devices',
+        .state('root.main.companyProfile.items', {
+            url: '/items',
             views: {
                 'tabPanel@root.main.companyProfile':
                     {
-                        templateUrl: 'modules/home/views/home.companyProfile.devicesView.html',
-                        controller: 'cPdevicesController'
+                        templateUrl: 'modules/home/views/home.companyProfile.itemsView.html',
+                        controller: 'cPitemsController'
                     }
             }
         })
 
-        .state('root.main.companyProfile.services', {
-            url: '/services',
-            views: {
-                'tabPanel@root.main.companyProfile':
-                    {
-                        templateUrl: 'modules/home/views/home.companyProfile.servicesView.html',
-                        controller: 'cPservicesController'
-                    }
-            }
-        })
+        // .state('root.main.companyProfile.services', {
+        //     url: '/services',
+        //     views: {
+        //         'tabPanel@root.main.companyProfile':
+        //             {
+        //                 templateUrl: 'modules/home/views/home.companyProfile.servicesView.html',
+        //                 controller: 'cPservicesController'
+        //             }
+        //     }
+        // })
 
         .state('root.main.companyProfile.friends', {
             url: '/partners',
@@ -310,47 +321,57 @@ angular.module('VicinityManagerApp', [
         //     }
         //   }
         // })
-
-        .state('root.main.deviceProfile', {
-          url: '/profile/device/:deviceId',
+        .state('root.main.marketplaceProfile', {
+          url: '/profile/marketplace/:itemId',
           views: {
             'mainContentView@root':
             {
-              templateUrl: 'modules/home/views/home.deviceProfileView.html',
-              controller:  'deviceProfileController'
+              templateUrl: 'modules/home/views/home.marketplaceView.html',
+              controller:  'marketplaceProfileController'
             }
           }
         })
 
-        .state('root.main.deviceProfile.history', {
+        .state('root.main.itemProfile', {
+          url: '/profile/item/:itemId',
+          views: {
+            'mainContentView@root':
+            {
+              templateUrl: 'modules/home/views/home.itemProfileView.html',
+              controller:  'itemProfileController'
+            }
+          }
+        })
+
+        .state('root.main.itemProfile.history', {
           url: '/history',
           views: {
-            'tabPanel@root.main.deviceProfile':
+            'tabPanel@root.main.itemProfile':
             {
-              templateUrl: 'modules/home/views/home.deviceProfile.historyView.html',
-              controller:  'dPhistoryController'
+              templateUrl: 'modules/home/views/home.itemProfile.historyView.html',
+              controller:  'iPhistoryController'
             }
           }
         })
 
-        // .state('root.main.deviceProfile.whoSee', {
+        // .state('root.main.itemProfile.whoSee', {
         //   url: '/whoSee',
         //   views: {
-        //     'tabPanel@root.main.deviceProfile':
+        //     'tabPanel@root.main.itemProfile':
         //     {
-        //       templateUrl: 'modules/home/views/home.deviceProfile.whoSeeView.html',
+        //       templateUrl: 'modules/home/views/home.itemProfile.whoSeeView.html',
         //       controller:  'dPwhoSeeController'
         //     }
         //   }
         // })
 
-        .state('root.main.deviceProfile.description', {
+        .state('root.main.itemProfile.description', {
           url: '/description',
           views: {
-            'tabPanel@root.main.deviceProfile':
+            'tabPanel@root.main.itemProfile':
             {
-              templateUrl: 'modules/home/views/home.deviceProfile.description.html',
-              controller:  'dPdescriptionController'
+              templateUrl: 'modules/home/views/home.itemProfile.description.html',
+              controller:  'iPdescriptionController'
             }
           }
         })
@@ -366,13 +387,13 @@ angular.module('VicinityManagerApp', [
           }
         })
 
-        .state('root.main.userProfile.devices', {
-          url: '/devices',
+        .state('root.main.userProfile.items', {
+          url: '/items',
           views: {
             'tabPanel@root.main.userProfile':
             {
-              templateUrl: 'modules/home/views/home.userProfileView.devices.html',
-              controller:  'uPdevicesController'
+              templateUrl: 'modules/home/views/home.userProfileView.items.html',
+              controller:  'uPitemsController'
             }
           }
         })

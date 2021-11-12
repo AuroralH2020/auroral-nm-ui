@@ -8,7 +8,7 @@
 
   <!-- /.box-header -->
 <section class="content" ng-show="loadedPage && !imMobile">
-  <span class="col-xs-2 pull-right">
+  <span class=" pull-right">
   <div>
     <button class="btn btn-default" ng-click="goToEdit(0)"><span class="glyphicon glyphicon-plus"></span>Create Access Point</button>
   </div>
@@ -37,7 +37,7 @@
             <a ui-sref="root.main.nodeDetail({nodeId: nod.agid})"><span>{{nod.name}}</span></a>
           </td>
           <td class="col-sm-3">
-            <span>{{nod.agid}}</span>
+            <span data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(nod.agid)" >{{nod.agid}}</span>
           </td>
           <td class="col-sm-3">
             <div class="row">

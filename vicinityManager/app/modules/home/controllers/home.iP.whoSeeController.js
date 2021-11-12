@@ -1,6 +1,6 @@
 'use strict';
 angular.module('VicinityManagerApp.controllers')
-.controller('dPwhoSeeController',
+.controller('iPwhoSeeController',
 function ($scope, $stateParams, commonHelpers, userAccountAPIService, itemsAPIService, Notification) {
   // ====== Triggers window resize to avoid bug =======
   commonHelpers.triggerResize();

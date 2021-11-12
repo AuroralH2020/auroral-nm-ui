@@ -147,6 +147,13 @@ $scope.editVisibility = function (_agid, visibility) {
     });
 };
 
+$scope.copyToClipboard = function (oid) {
+  navigator.clipboard.writeText(oid).then(function() {
+    Notification.success("AGID has been copied");
+  }, function(err) {
+    Notification.error("Could not copy text");
+  });
+}
 
 // ==== Navigation functions =====
 

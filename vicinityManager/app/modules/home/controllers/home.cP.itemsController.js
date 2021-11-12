@@ -7,7 +7,7 @@ Filters the items based on the following rules:
   . are flagged as public
   . if I am partner of the company, also items flagged for friends
 */
-.controller('cPdevicesController',
+.controller('cPitemsController',
 function ($scope, $window, commonHelpers, $stateParams, itemsAPIService,  Notification, configuration) {
 
   // ====== Triggers window resize to avoid bug =======
@@ -21,7 +21,7 @@ function ($scope, $window, commonHelpers, $stateParams, itemsAPIService,  Notifi
   $scope.offset = 0;
 
   function init(){
-    itemsAPIService.getCompanyItems($stateParams.companyAccountId, 'Device', $scope.offset)
+    itemsAPIService.getCompanyItems($stateParams.companyAccountId, $scope.offset)
       .then(successCallback)
       .catch(errorCallback);
   }
@@ -40,9 +40,17 @@ function ($scope, $window, commonHelpers, $stateParams, itemsAPIService,  Notifi
 
   function successCallback(response) {
     for(var i = 0; i < response.data.message.length; i++){
+        if(response.data.message[i].accessLevel === 2) { 
+          response.data.message[i].privacyCaption = 'Public';
+        } else if(response.data.message[i].accessLevel === 1) { 
+          response.data.message[i].privacyCaption = 'For Friends'; 
+        } else { 
+          response.data.message[i].privacyCaption = 'Private'; 
+        }
         response.data.message[i].avatar = response.data.message[i].avatar || configuration.avatarItem
         $scope.devices.push(response.data.message[i]);
     }
+    console.log($scope.devices)
     $scope.noItems = ($scope.devices.length === 0);
     $scope.allItemsLoaded = response.data.message.length < 12;
     $scope.loaded = true;

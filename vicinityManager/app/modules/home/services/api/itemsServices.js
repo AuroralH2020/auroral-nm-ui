@@ -12,7 +12,37 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
   Get all items I can see, based on restrictive filter (0 most to 7 less restrictive)
   */
   itemsAPI.getAllItems = function(type, offset, filter) {
-    return $http.get(configuration.apiUrl + '/items?type=' + type + '&offset=' + offset + '&filter=' + filter);
+    var tempType='type=' + type +'&'
+    // types
+    if(Array.isArray(type))
+    {
+      tempType=''
+      type.forEach(t => {
+        tempType+='type='+t+'&'
+      });
+    }
+    return $http.get(configuration.apiUrl + '/items?' +  tempType + 'offset=' + offset + '&filter=' + filter);
+  };
+
+  itemsAPI.getFilteredItems = function(type, offset, filter, domain) {
+    var tempType='type=' + type +'&'
+    var tempDomain=''
+    // types
+    if(Array.isArray(type))
+    {
+      tempType=''
+      type.forEach(t => {
+        tempType+='type='+t+'&'
+      });
+    }
+    // domains
+    if(domain && Array.isArray(domain)){
+      domain.forEach(d => {
+        tempDomain+='domain='+d+'&'
+      });
+    }
+    const response =  $http.get(configuration.apiUrl + '/items?' +  tempDomain + tempType + 'offset=' + offset + '&filter=' + filter);
+    return response
   };
 
   itemsAPI.getItemWithAdd = function(id){
@@ -31,12 +61,12 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
     return $http.get(configuration.apiUrl + '/items?type=' + type + '&offset=' + offset + '&filter=4');
   };
 
-  itemsAPI.getCompanyItems = function(cid, type, offset) {
-    return $http.get(configuration.apiUrl + '/items/company/' + cid + '?type=' + type + '&offset=' + offset);
+  itemsAPI.getCompanyItems = function(cid, offset) {
+    return $http.get(configuration.apiUrl + '/items/company/' + cid + '?type=Device&type=Service' + '&offset=' + offset);
   };
 
-  itemsAPI.getUserItems = function(uid, type, offset) {
-    return $http.get(configuration.apiUrl + '/items/user/' + uid + '?type=' + type + '&offset=' + offset);
+  itemsAPI.getUserItems = function(uid, offset) {
+    return $http.get(configuration.apiUrl + '/items/user/' + uid + '?type=Device&type=Service' + '&offset=' + offset);
   };
 
   itemsAPI.getArrayOfItems = function(items){

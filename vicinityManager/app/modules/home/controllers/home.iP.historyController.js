@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('VicinityManagerApp.controllers')
-.controller('dPhistoryController',
+.controller('iPhistoryController',
 function ($scope, $stateParams, commonHelpers, auditAPIService, Notification) {
 
     // ====== Triggers window resize to avoid bug =======

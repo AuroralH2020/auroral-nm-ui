@@ -126,10 +126,10 @@
                     <span ng-if="notif.status === 'waiting'" >
                       <i ng-click="acceptNeighbourRequest(notif.notificationId, notif.object.id)" class="fa fa-check fa-lg fontGreen paddedSides"></i>
                       <i ng-click="rejectNeighbourRequest(notif.notificationId, notif.object.id)" class="fa fa-close fa-lg fontRed paddedSides"></i>
-                      <a data-toggle="tooltip" title="View company" ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})"><i class="fa fa-search fa-lg paddedSides"></i></a>
+                      <a data-toggle="tooltip" title="View company" ui-sref="root.main.companyProfile.items({companyAccountId: notif.object.id})"><i class="fa fa-search fa-lg paddedSides"></i></a>
                     </span>
                     <span ng-if="notif.status !== 'waiting'" >
-                      <a data-toggle="tooltip" title="View company" data-toggle="tooltip" title="View detail" ui-sref="root.main.companyProfile.devices({companyAccountId: notif.object.id})"><i class="fa fa-search fa-lg"></i></a>
+                      <a data-toggle="tooltip" title="View company" data-toggle="tooltip" title="View detail" ui-sref="root.main.companyProfile.items({companyAccountId: notif.object.id})"><i class="fa fa-search fa-lg"></i></a>
                     </span>
                   </div>
 
@@ -146,7 +146,7 @@
 
                   <div class="centered" ng-show="[11, 12, 13, 14, 15, 16].indexOf(notif.type) !== -1">
                     <span>
-                      <a data-toggle="tooltip" title="View item" ui-sref="root.main.deviceProfile({deviceId: notif.target.id})"><i class="fa fa-search fa-lg "></i></a>
+                      <a data-toggle="tooltip" title="View item" ui-sref="root.main.itemProfile({itemId: notif.target.id})"><i class="fa fa-search fa-lg "></i></a>
                     </span>
                   </div>
                 <!-- NODE -->

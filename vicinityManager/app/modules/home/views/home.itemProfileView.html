@@ -1,5 +1,5 @@
 <section class="content-header">
-  <h1>Device profile</h1>
+  <h1>{{item.type}} profile</h1>
 </section>
 
 
@@ -33,7 +33,7 @@
 
               <!-- Device Name -->
               <h3 class="profile-username text-center" style="margin-top: 15px">{{item.name}}</h3>
-              <h5 class="text-muted text-center" style="margin-top: 15px">{{item.oid}}</h5>
+              <h5 data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(item.oid,'OID')" class="text-muted text-center" style="margin-top: 15px">OID: {{item.oid}}</h5>
 
               <!-- Enable/Disable device -->
               <div style="margin-left: 10%; margin-right: 10%; margin-top: 10px; margin-bottom: 10px" ng-show="imDeviceOwner">
@@ -79,12 +79,12 @@
                   <!-- Infrastructure -->
                   <li class="list-group-item" ng-show="isMyOrgItem">
                     <i class="fa fa-sitemap margin-r-5"></i>
-                    <strong>Gateway</strong>
+                    <strong>Access Point</strong>
                     <br>
                         <p>
                             <strong>{{item.gateway.name}}</strong>
                             <br>
-                            <span class="text-muted">{{item.agid}}</span>
+                            <span data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(item.agid,'AGID')" class="text-muted">AGID: {{item.agid}}</span>
                       </p>
                   </li>
 
@@ -131,9 +131,9 @@
           <div class="nav-tabs-custom">
           <!-- Nav tabs -->
             <ul class="nav nav-tabs">
-              <li ui-sref-active="active"><a ui-sref="root.main.deviceProfile.description"><i class="fa fa-cube"></i>&nbsp;Description</a></li>
-              <li ui-sref-active="active" ng-show="isMyOrgItem"><a ui-sref="root.main.deviceProfile.history"><i class="fa fa-clock-o"></i>&nbsp;History</a></li>
-              <!-- <li ui-sref-active="active"><a ui-sref="root.main.deviceProfile.whoSee"><i class="fa fa-eye"></i>&nbsp;Who see</a></li> -->
+              <li ui-sref-active="active"><a ui-sref="root.main.itemProfile.description"><i class="fa fa-cube"></i>&nbsp;Description</a></li>
+              <li ui-sref-active="active" ng-show="isMyOrgItem"><a ui-sref="root.main.itemProfile.history"><i class="fa fa-clock-o"></i>&nbsp;History</a></li>
+              <!-- <li ui-sref-active="active"><a ui-sref="root.main.itemProfile.whoSee"><i class="fa fa-eye"></i>&nbsp;Who see</a></li> -->
             </ul>
             <!-- Tab panes -->
             <div class="tab-content" ui-view="tabPanel">

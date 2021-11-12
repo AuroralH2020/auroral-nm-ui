@@ -1,0 +1,32 @@
+<section class="content-header">
+  <h1> {{header}} </h1>
+</section>
+
+<section class="content">
+
+  <!-- Filter -->
+<!-- Start -->
+  <div ng-show="loadedPage">
+
+    <!-- onlyPrivateDevices -->
+    <div ng-show="noItems" >
+       <h2 style="margin-left:20px;">No {{typeOfItem}} found for the current selection...</h2>
+   </div>
+   <h3 class="well" >Site is under  reconstruction!</h3>
+
+  </div>
+  <!--END VIEW BLOCK -->
+
+</section>
+<script>
+  // In your Javascript (external .js resource or <script> tag)
+  $(document).ready(function() {
+      $('#RegTable').DataTable({
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "select.info": false,
+        "ordering": true
+      });
+  })
+</script>
