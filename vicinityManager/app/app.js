@@ -114,7 +114,7 @@ angular.module('VicinityManagerApp', [
           views: {
             'mainContentView@root':
               {
-                templateUrl: 'modules/home/views/home.AllContractsView.html',
+                templateUrl: 'modules/home/views/home.allContractsView.html',
                 controller: 'allContractsController'
               }
           }
