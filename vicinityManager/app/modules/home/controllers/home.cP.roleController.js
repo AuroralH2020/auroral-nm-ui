@@ -46,8 +46,13 @@ function ($scope, $rootScope, $window, commonHelpers, $stateParams, userAPIServi
           $scope.myInit();
         })
         .catch(function(err){
-          console.log(err);
-          Notification.error("Problem updating user profile");
+          if (err.status < 500) {
+            console.log(err.status + ': ' + err.statusText)
+            Notification.warning(err.data.error);
+          } else {
+            console.log(err);
+            Notification.error("Problem updating user profile");
+          }
         });
       };
 
