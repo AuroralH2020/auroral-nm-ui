@@ -8,6 +8,7 @@ function ($scope,
           notificationsAPIService,
           userAccountsHelpers,
           commonHelpers,
+          contractAPIService,
           registrationsHelpers,
           configuration,
           Notification) {
@@ -152,6 +153,23 @@ $scope.$on('$destroy', function(){
           Notification.error("Error rejecting registration");
         });
     };
+
+    $scope.acceptContractRequest = function (ctid){
+      contractAPIService.acceptContractRequest(ctid)
+      .then($scope.init)
+      .catch(function(err){
+        console.log(err);
+        Notification.error("Error accepting neighbourhood request");
+      });
+    }
+    $scope.rejectContractRequest = function (ctid){
+      contractAPIService.acceptContractRequest(ctid)
+      .then($scope.init)
+      .catch(function(err){
+        console.log(err);
+        Notification.error("Error rejecting neighbourhood request");
+      });
+    }
 
   }
 );

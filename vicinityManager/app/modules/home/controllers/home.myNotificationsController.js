@@ -6,6 +6,7 @@ angular.module('VicinityManagerApp.controllers').
             commonHelpers,
             notificationsAPIService,
             tokenDecoder,
+            contractAPIService,
             registrationsHelpers,
             userAccountsHelpers,
             Notification) {
@@ -145,5 +146,24 @@ $scope.loadMore = function(){
         Notification.error("Error rejecting registration");
       });
   };
+
+  $scope.acceptContractRequest = function (ctid){
+    console.log(ctid)
+    contractAPIService.acceptContractRequest(ctid)
+    .then(reset)
+    .catch(function(err){
+      console.log(err);
+      Notification.error("Error accepting contract request");
+    });
+  }
+  $scope.rejectContractRequest = function (ctid){
+    contractAPIService.acceptContractRequest(ctid)
+    .then(reset)
+    .catch(function(err){
+      console.log(err);
+      Notification.error("Error rejecting contract request");
+    });
+  }
+
 
 });

@@ -1,0 +1,58 @@
+<div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+  <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+</div>
+<!-- Edit table -->
+<div ng-show="!noItems" class="box ">
+  <div class="box-body">
+    <table id="RegTable" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Name<i ng-click="orderByMe('name')" class="fa fa-fw fa-sort"/></th>
+          <th>Type<i ng-click="orderByMe('type')" class="fa fa-fw fa-sort"/></th>
+          <th>Privacy<i ng-click="orderByMe('type')" class="fa fa-fw fa-sort"/></th>
+          <th>Owner<i ng-click="orderByMe('owner')" class="fa fa-fw fa-sort"/></th>
+          <th>Enabled<i class="fa fa-fw"/></th>
+          <th>Write permissions<i class="fa fa-fw "/></th>
+          <th>Contracted<i class="fa fa-fw "/></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in items | orderBy:myOrderBy:rev">
+          <td class="col-sm-2">
+            <a ui-sref="root.main.itemProfile.description({itemId: item.oid})"><span>{{item.name}}</span></a>
+          </td>
+          <td class="col-sm-1">
+            </a><span>{{item.type}}</span>
+          </td>
+          <td class="col-sm-2">
+          </a><span>{{item.privacyCaption}}</span>
+        </td>
+          <td class="col-sm-2">
+            <a ui-sref="root.main.userProfile.items({userAccountId: item.uid, companyAccountId: item.cid})"><span>{{item.owner}}</span></a>
+          </td>
+          <td class="col-sm-1">
+            <button ng-show="item.enabled && item.uid === uid && item.contracted" data-toggle="tooltip" title="Disable item in contract"  type="button" ng-click="itemContractStatus(ctid, item.oid, !item.enabled)" class="btn btn-default"><i style="color: green; padding-left:10%" class="fa fa-check-circle-o fa-lg col-sm-4"></i></button>
+            <button ng-show="!item.enabled && item.uid === uid && item.contracted" data-toggle="tooltip" title="Enable item for contract"  type="button" ng-click="itemContractStatus(ctid, item.oid, !item.enabled)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
+            <span><i ng-show="!item.enabled && item.uid !== uid || !item.contracted" style="color: red" class="fa fa-close fa-lg"></i></span>
+            <span><i ng-show="item.enabled && item.uid !== uid " style="color: green" class="fa fa-check-circle-o fa-lg"></i></span>
+          </td>
+          <td class="col-sm-1">
+            <button ng-show="item.rw && item.uid === uid && item.contracted" data-toggle="tooltip" title="Disable write permissions"  type="button" ng-click="itemContractRw(ctid, item.oid, !item.rw)" class="btn btn-default"><i style="color: green; padding-left:10%" class="fa fa-check-circle-o fa-lg col-sm-4"></i></button>
+            <button ng-show="!item.rw && item.uid === uid && item.contracted" data-toggle="tooltip" title="Enable write permissions"  type="button" ng-click="itemContractRw(ctid, item.oid, !item.rw)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
+            <span><i ng-show="!item.rw && item.uid !== uid || !item.contracted" style="color: red" class="fa fa-close fa-lg"></i></span>
+            <span><i ng-show="item.rw && item.uid !== uid " style="color: green" class="fa fa-check-circle-o fa-lg"></i></span>
+          </td>
+          <td class="col-sm-1">
+            <span ng-show="item.contracted && !infrastructureOperator"><a ng-click="addItemToContrat(ctid, item.oid, !item.contracted, item.accessLevel)"><i style="color: green" class="fa fa-check-circle-o fa-lg"></i></span></a>
+            <button ng-show="item.contracted && infrastructureOperator" data-toggle="tooltip" title="Remove item from contract"  type="button" ng-click="addItemToContract(ctid, item.oid, !item.contracted, item.accessLevel)" class="btn btn-default"><i style="color: green; padding-left:10%" class="fa fa-check-circle-o fa-lg col-sm-4"></i></button>
+            <button ng-show="!item.contracted" data-toggle="tooltip" title="Add item to contract"  type="button" ng-click="addItemToContract(ctid, item.oid, !item.contracted, item.accessLevel)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="centered" ng-show="noItems">
+   <h3 class="well">No items found...</h3>
+</div>

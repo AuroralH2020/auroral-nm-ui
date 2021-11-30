@@ -51,6 +51,8 @@
                   <strong>Access level</strong>
                   <br>
                   <span ng-show="!isMyItem">{{ALcaption}}</span>
+                  <br>
+                  <span ng-show="item.contract.contractable">Contractable</span>
                     <div class="dropdown" ng-show="isMyItem">
                       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ALcaption}}
                       <span class="caret"></span></button>
@@ -62,16 +64,26 @@
                     </div>
                 </li>
 
+                <!-- Contract -->
+                <li ng-show="!isMyItem" class="list-group-item">
+                  <i class="fa fa-handshake-o margin-r-5"></i>
+                  <strong>Contracts</strong>
+                  <br>
+                  <span ng-show="item.contract.contracted">Included in contract</span>
+                  <button ng-show="item.contract.contractable" ng-click="requestContract()"  class="btn btn-info btn-block"><i class="fa"></i><b> Request adding to contract</b></button>
+                  <span ng-show="!item.contract.contracted && !item.contract.contractable">You do not have contract with this organisation</span>
+                </li>
+
                   <!-- Ownership -->
                   <li class="list-group-item">
                     <i class="fa fa-user margin-r-5"></i>
                     <strong>Owner</strong>
                     <br>
-                    <a ui-sref="root.main.companyProfile.devices({companyAccountId: item.cid})">{{item.companyName}}</a>
+                    <a ui-sref="root.main.companyProfile.items({companyAccountId: item.cid})">{{item.companyName}}</a>
                     <p>
                       {{item.owner.name}}
                       <br>
-                      <a ng-show="itemEnabled" ui-sref="root.main.userProfile.devices({companyAccountId: item.cid, userAccountId: item.uid})">{{item.owner.email}}</a>
+                      <a ng-show="itemEnabled" ui-sref="root.main.userProfile.items({companyAccountId: item.cid, userAccountId: item.uid})">{{item.owner.email}}</a>
                       <a class="text-muted" ng-show="!itemEnabled">Unassigned</a>
                     </p>
                   </li>

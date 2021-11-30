@@ -1,0 +1,81 @@
+<section class="content-header">
+  <h1>Contract logs</h1>
+</section>
+<br>
+<br>
+<div class="box-group" id="accordion" style="max-width:800px">
+<!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+<div class="panel box-bg-dark-grey box-warning">
+  <div class="box-header with-border">
+    <div class="box-tools">
+      <div class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown">Select period
+          <span class="caret"></span>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+           <li><a ng-click="notificationsDays('today')">Today</a></li>
+           <li><a ng-click="notificationsDays('week')">Whole week</a></li>
+           <li><a ng-click="notificationsDays('month')">Whole month</a></li>
+           <li><a ng-click="notificationsDays('year')">Whole year</a></li>
+        </ul>
+       </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="coll-md-1" ng-hide="loadedPage" style="margin: auto; max-width:700px">
+<i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+</div>
+
+<div class="centered"  ng-show="loadedPage && noLogs">
+  <h3 class="well">No logs found...</h3>
+</div>
+
+<!-- /.box-header -->
+<section class="content" ng-show="loadedPage && !noLogs">
+
+<div class="box-body">
+
+<div class="row">
+
+<div class="col-md-12">
+  <!-- The time line -->
+  <ul class="timeline">
+    <!-- timeline time label -->
+    <li class="time-label" ng-repeat="d in dates">
+          <span class="bg-gray">
+            {{ d }}
+
+          </span>
+
+          <div class="timeline-item" style="max-width:700px; margin-top:10px" ng-repeat="audit in audits" ng-if="audit.dateCaption === d">
+           <!-- Clock -->
+           <span class="time">
+            <i class="fa fa-clock-o"></i> {{audit.timeCaption}}</span>
+          <!-- <h3 class="timeline-header bg-warning"> -->
+          <!-- <div class="inline">
+                <span><i class="fa fa-minus my-red"/></span>
+                <span>{{audit.target.name}}</span>
+              </div> -->
+          <!-- </h3> -->
+
+          <!-- Description -->
+          <div class="timeline-body bg-warning">
+            <span>{{audit.message}}</span>
+            <br/>
+
+              <!-- Initiator -->
+              <!-- <span>Action performed by <b>{{audit.actor.name}}</b></span> -->
+
+              </div>
+          </li>
+      <li>
+      <i class="fa fa-clock-o bg-gray"></i>
+    </li>
+  </ul>
+</div>
+</div>
+</div>
+</section>

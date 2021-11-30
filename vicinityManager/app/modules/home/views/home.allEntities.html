@@ -41,7 +41,7 @@
             <img ng-show="!(activeCompanyID === result.cid)" style="cursor: pointer" onmouseover="" ui-sref="root.main.companyProfile.items({companyAccountId: result.cid})" class="img-circle" ng-src="{{result.avatar}}" alt="Comapany Avatar">
           </div>
 
-          <i ng-if="myFriends.indexOf(result.cid) !== -1" class="tooltip2 fa fa-users push-right" aria-hidden="true"></i>
+          <i data-toggle="tooltip" title="You are partners" ng-if="myFriends.indexOf(result.cid) !== -1" class="tooltip2 fa fa-users push-right" aria-hidden="true"></i>
 
           <!-- /.widget-user-image -->
           <h3 ng-show="activeCompanyID === result.cid" class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">{{result.name}}</a></h3>

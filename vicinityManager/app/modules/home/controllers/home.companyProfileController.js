@@ -1,7 +1,7 @@
 "use strict";
 angular.module('VicinityManagerApp.controllers')
   .controller('companyProfileController',
-    function($rootScope, $scope, $window, commonHelpers, $state, $stateParams, $location, $cookies, userAccountAPIService, tokenDecoder, AuthenticationService, Notification, configuration) {
+    function($rootScope, $scope, $window, commonHelpers, $state, $stateParams, $location, $cookies, userAccountAPIService, contractAPIService, tokenDecoder, AuthenticationService, Notification, configuration) {
 
       // ====== Triggers window resize to avoid bug =======
       commonHelpers.triggerResize();
@@ -91,6 +91,15 @@ angular.module('VicinityManagerApp.controllers')
           })
           .catch(errorCallback);
       };
+      $scope.sendContractRequest = function() {
+        contractAPIService.createContract([$stateParams.companyAccountId])
+          .then(function(response) {
+            Notification.success("Contract request sent!");
+            onlyRefreshAccount();
+          })
+          .catch(errorCallback);
+      };
+      
 
       $scope.cancelNeighbourship = function() {
         if (confirm('Are you sure? May affect existing contracts.')) {
@@ -114,11 +123,15 @@ angular.module('VicinityManagerApp.controllers')
       };
 
       function updateScopeAttributes(response) {
+        console.log(response.data.message)
         $scope.name = response.data.message.name;
         $scope.avatar = response.data.message.avatar || configuration.avatarOrg;
         $scope.companyAccountId = response.data.message.cid;
         $scope.location = response.data.message.location;
         $scope.notes = response.data.message.notes;
+        $scope.contracted = response.data.message.contracted;
+        $scope.contractRequested = response.data.message.contractRequested;
+        $scope.ctid = response.data.message.ctid;
         // $scope.bid = response.data.message.businessId;
         $scope.canSendNeighbourRequest = response.data.message.canSendNeighbourRequest;
         $scope.canCancelNeighbourRequest = response.data.message.canCancelNeighbourRequest;
@@ -296,7 +309,11 @@ angular.module('VicinityManagerApp.controllers')
           console.log(err);
           Notification.error("Company not found");
           $state.go("root.main.allEntities");
-        } else {
+        } else if(err.status < 500) {
+          console.log(err);
+          Notification.error(err.data.error);
+        }
+        else{
           console.log(err);
           Notification.error("Server error");
         }

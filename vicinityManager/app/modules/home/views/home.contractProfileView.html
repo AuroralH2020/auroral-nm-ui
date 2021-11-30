@@ -1,0 +1,92 @@
+<section class="content-header">
+  <h1>Contract profile</h1>
+</section>
+
+
+<section class="content">
+      <div class="row">
+        <div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+          <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+        </div>
+
+        <div class="col-md-3" ng-show="loaded">
+
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+
+              <!-- Contract details -->
+              <h3 class="profile-username text-center" style="margin-top: 15px">{{contract.type}} contract</h3>
+              <h5 data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(contract.ctid,'CTID')" class="text-muted text-center" style="margin-top: 15px">CTID: {{contract.ctid}}</h5>
+
+              <!-- Enable/Disable device -->
+              <!-- <div style="margin-left: 10%; margin-right: 10%; margin-top: 10px; margin-bottom: 10px" ng-show="imDeviceOwner"> -->
+                <!-- <a ng-click="changeStatus()" class="btn btn-primary btn-block"><i class="fa fa-plus-square"></i><b> Enable device</b></a> -->
+                <!-- <a ng-click="changeStatus()" class="btn btn-default btn-block"><i class="fa fa-minus-square"></i><b> Disable device</b></a> -->
+              <!-- </div> -->
+
+
+              <!-- Contract info -->
+              <ul class="list-group list-group-unbordered">
+
+                  <!-- Parties -->
+                  <li class="list-group-item">
+                    <i class="fa fa-users margin-r-5"></i>
+                    <strong>Parties</strong>
+                    <br>
+                    <div ng-repeat="org in contract.organisationsWithName">
+                      <a ui-sref="root.main.companyProfile.items({companyAccountId: org.cid})">{{org.name}}</a>
+                    </div>
+                    <div ng-repeat="org in contract.pendingOrganisationsWithName">
+                      <a ui-sref="root.main.companyProfile.items({companyAccountId: org.cid})">{{org.name}} - pending</a>
+                    </div>
+                  </li>
+                  
+
+                  <!-- Items -->
+                  <li class="list-group-item">
+                    <p>
+                        <strong>Description:</strong>
+                        <h5 class="text-muted " style="margin-top: 15px">{{contract.description}}</h5>
+                    </p>
+                    <p>
+                      <strong>Terms and conditions:</strong>
+                      <h5 class="text-muted " style="margin-top: 15px">{{contract.termsAndConditions}}</h5>
+                  </p>
+                  <p>
+                    <strong>Items:</strong>
+                    {{contract.itemsNumber}}
+                </p>
+                </li>
+                <li class="list-group-item">
+                  <p>
+                    <a ng-show="accepted" ng-click="removeFromContract(contract.ctid)" class="pull-center btn-sm btn-danger" style="margin-left: 5px"> Leave contract </a>
+                  </p> 
+                  <p>
+                    <a ng-show="!accepted" ng-click="answerRequest(contract.ctid, true)" class="pull-center btn-sm btn-success" style="margin-left: 5px"> Accept contract request</a>
+                  </p>
+                  <p>
+                    <a ng-show="!accepted" ng-click="answerRequest(contract.ctid, false)" class="pull-center btn-sm btn-warning" style="margin-left: 5px"> Reject contract request</a>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-9" ng-show="loaded">
+          <div class="nav-tabs-custom">
+          <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+              <li ui-sref-active="active"><a ui-sref="root.main.contractProfile.items"><i class="fa fa-cube"></i>&nbsp;Contract Items</a></li>
+              <li ui-sref-active="active"><a ui-sref="root.main.contractProfile.edit"><i class="fa fa-check-square-o"></i>&nbsp;Update my items</a></li>
+              <li ui-sref-active="active"><a ui-sref="root.main.contractProfile.history"><i class="fa fa-clock-o"></i>&nbsp;History</a></li>
+              <!-- <li ui-sref-active="active"><a ui-sref="root.main.itemProfile.whoSee"><i class="fa fa-eye"></i>&nbsp;Who see</a></li> -->
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" ui-view="tabPanel">
+            </div>
+          </div>
+        </div>
+      </div>
+</section>

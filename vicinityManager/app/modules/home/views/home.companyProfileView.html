@@ -73,7 +73,9 @@
           <a class="btn btn-primary btn-block" ng-show="canSendNeighbourRequest" ng-click="sendNeighbourRequest()"><i class="fa fa-user-plus"></i>&nbsp;<b>Send partnership request</b></a>
           <a class="btn btn-default btn-block" ng-show="canCancelNeighbourRequest" ng-click="cancelNeighbourRequest()"><i class="fa fa-user-plus"></i>&nbsp;<b>Cancel partnership request</b></a>
           <a class="btn btn-default btn-block" ng-show="isNeighbour" ng-click="cancelNeighbourship()"><i class="fa fa-user-times"></i>&nbsp;<b>Cancel partnership</b></a>
-          <!-- <a href="#" class="btn btn-primary btn-block" ng-hide="isMyProfile"><i class="fa fa-star-o"></i>&nbsp;<b>Follow</b></a> -->
+          <a class="btn btn-default btn-block" ng-show="isNeighbour && !contracted && !contractRequested" ng-click="sendContractRequest()"><i class="fa fa-handshake-o"></i>&nbsp;<b>Send contract request</b></a>
+          <span ng-show="isNeighbour &&  contractRequested">You have a <a ui-sref="root.main.contractProfile({contractId: ctid})">contract</a> with this company</span>
+          <span ng-show="isNeighbour &&  contracted">You have a <a ui-sref="root.main.contractProfile({contractId: ctid})" >contract</a> with this company</span>
         </div>
         <!-- /.box-body -->
       </div>

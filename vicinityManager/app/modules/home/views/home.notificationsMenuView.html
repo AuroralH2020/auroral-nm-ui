@@ -59,9 +59,9 @@
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 14">An item has been updated</p> 
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 15">An item has been updated</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 16">An item has been deleted</p>
-              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 21">There is a <a ui-sref="root.main.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a> request from <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">{{notif.actor.name}}</a>.</p>
-              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 22">The <a ui-sref="root.main.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a> with <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has been accepted.</p>
-              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 23">The <a ui-sref="root.main.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a> with <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has been removed.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 21">Contract request from <a ui-sref="root.main.companyProfile.items({companyAccountId: notif.object.id})">{{notif.actor.name}}</a>.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 22">The <a ui-sref="root.main.contractProfile({contractId:  notif.object.id})">contract</a> with <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has been accepted.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 23">The <a ui-sref="root.main.contractProfile({contractId:  notif.object.id})">contract</a> with <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has been removed.</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 24">The user <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has joined the <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a>.</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 25">The user <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has abandoned the <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a>.</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 26">The <a ui-sref="root.main.contracts({contractId: notif.object.id})">contract</a> has been updated and might have inactive items.</p>
@@ -88,6 +88,9 @@
 
             <button  ng-show="notif.type === 31 && notif.status === 'waiting'" ng-click="acceptNeighbourRequest(notif.notificationId, notif.object.id)" type="button" class="btn btn-default btn-xs">Accept</button>
             <button  ng-show="notif.type === 31 && notif.status === 'waiting'" ng-click="rejectNeighbourRequest(notif.notificationId, notif.object.id)" type="button" class="btn btn-default btn-xs">Decline</button>
+            
+            <button  ng-show="notif.type === 21 && notif.status === 'waiting'" ng-click="acceptContractRequest(notif.object.id)" type="button" class="btn btn-default btn-xs">Accept</button>
+            <button  ng-show="notif.type === 21 && notif.status === 'waiting'" ng-click="rejectContractRequest(notif.object.id)" type="button" class="btn btn-default btn-xs">Decline</button>
           </div>
 
         </li>

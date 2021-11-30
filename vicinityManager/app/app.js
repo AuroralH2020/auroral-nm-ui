@@ -152,18 +152,6 @@ angular.module('VicinityManagerApp', [
               }
           }
         })
-
-        .state('root.main.contracts', {
-          url: '/contracts',
-          views: {
-            'mainContentView@root':
-              {
-                templateUrl: 'modules/home/views/home.contracts.html',
-                controller: 'contractsController'
-              }
-          }
-        })
-
         .state('root.main.myNotifications', {
           url: '/myNotifications',
           views: {
@@ -420,18 +408,6 @@ angular.module('VicinityManagerApp', [
           }
         })
 
-        // .state('root.main.userProfile.contracts', {
-        //   url: '/contracts?contractId',
-        //   // reloadOnSearch : false, // DEBUG case use query parameters to change view
-        //   views: {
-        //     'tabPanel@root.main.userProfile':
-        //     {
-        //       templateUrl: 'modules/home/views/home.userProfileView.contracts.html',
-        //       controller:  'uPcontractsController'
-        //     }
-        //   }
-        // })
-
         .state('root.main.registrationProfile', {
           url: '/profile/registration/:registrationId',
           views: {
@@ -454,13 +430,46 @@ angular.module('VicinityManagerApp', [
           }
         })
 
-        .state('root.main.contractDetail', {
-          url: '/contractDetail/:contractId',
+        .state('root.main.contractProfile', {
+          url: '/profile/contract/:contractId',
           views: {
             'mainContentView@root':
             {
-              templateUrl: 'modules/home/views/home.contractDetail.html',
-              controller:  'contractDetailController'
+              templateUrl: 'modules/home/views/home.contractProfileView.html',
+              controller:  'contractProfileController'
+            }
+          }
+        })
+
+        .state('root.main.contractProfile.history', {
+          url: '/history',
+          views: {
+            'tabPanel@root.main.contractProfile':
+            {
+              templateUrl: 'modules/home/views/home.conProfile.historyView.html',
+              controller:  'conProfileHistoryController'
+            }
+          }
+        })
+        
+        .state('root.main.contractProfile.items', {
+          url: '/items',
+          views: {
+            'tabPanel@root.main.contractProfile':
+            {
+              templateUrl: 'modules/home/views/home.conProfile.itemsView.html',
+              controller:  'conProfileItemsController'
+            }
+          }
+        })
+
+        .state('root.main.contractProfile.edit', {
+          url: '/edit',
+          views: {
+            'tabPanel@root.main.contractProfile':
+            {
+              templateUrl: 'modules/home/views/home.conProfile.editView.html',
+              controller:  'conProfileEditController'
             }
           }
         })
@@ -475,17 +484,6 @@ angular.module('VicinityManagerApp', [
             {
               templateUrl: 'modules/home/views/home.nodeDetail.html',
               controller:  'nodeDetailController'
-            }
-          }
-        })
-
-        .state('root.main.requestService', {
-          url: '/requestservice/:companyAccountId/:serviceId',
-          views: {
-            'mainContentView@root':
-            {
-              templateUrl: 'modules/home/views/home.contract.requestService.html',
-              controller:  'cTrequestService'
             }
           }
         })

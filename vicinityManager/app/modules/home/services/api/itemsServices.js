@@ -72,11 +72,6 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
   itemsAPI.getArrayOfItems = function(items){
     return $http.post(configuration.apiUrl + '/items/array', items);
   };
-
-  itemsAPI.getMyContractItems = function(cid, oid){
-    return $http.get(configuration.apiUrl + '/items/' + cid + '/contract/' + oid);
-  };
-
   /*
   Count
   */
@@ -85,40 +80,49 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
     return $http.get(configuration.apiUrl + '/items/count/' + type);
   };
 
-  /*
-  Contract management
-  */
-  itemsAPI.getContracts = function(id, offset, limit, filter){
-    return $http.get(configuration.apiUrl + '/items/contract/' + id + '?filter=' + filter + '&offset=' + offset + '&limit=' + limit);
-  };
+  // /*
+  // Contract management
+  // */
 
-  itemsAPI.postContract = function(payload){
-    return $http.post(configuration.apiUrl + '/items/contract', payload);
-  };
-
-  itemsAPI.acceptContract = function(id){
-    return $http.put(configuration.apiUrl + '/items/contract/' + id + '/accept');
-  };
-
-  // itemsAPI.modifyContract = function(id, payload){
-  //   return $http.put(configuration.apiUrl + '/items/contract/' + id + '/modify', payload);
+  // itemsAPI.getContracts = function(){
+  //   return $http.get(configuration.apiUrl + '/contracts/');
   // };
 
-  itemsAPI.removeContract = function(id){
-    return $http.delete(configuration.apiUrl + '/items/contract/' + id);
-  };
+  // itemsAPI.getContract = function(ctid){
+  //   return $http.get(configuration.apiUrl + '/contract/' + ctid);
+  // };
+  
+  // itemsAPI.acceptContractRequest = function(ctid){
+  //   return $http.post(configuration.apiUrl + '/contract/' + ctid + '/accept');
+  // };
 
-  itemsAPI.ctDisableItem = function(payload){
-    return $http.post(configuration.apiUrl + '/items/contract/disableItem', payload);
-  };
+  // itemsAPI.rejectContractRequest = function(ctid){
+  //   return $http.post(configuration.apiUrl + '/contract/' + ctid + '/reject');
+  // };
 
-  itemsAPI.ctRemoveItem = function(payload){
-    return $http.post(configuration.apiUrl + '/items/contract/removeItem', payload);
-  };
+  // itemsAPI.removeOrgFromContract = function(ctid){
+  //   return $http.delete(configuration.apiUrl + '/contract/' + ctid);
+  // };
+  
+  // itemsAPI.getContractItems = function(ctid, offset){
+  //   return $http.get(configuration.apiUrl + '/contract/' + ctid + '/items?' + 'offset=' + offset);
+  // };
 
-  itemsAPI.ctEnableItem = function(payload){
-    return $http.post(configuration.apiUrl + '/items/contract/enableItem', payload);
-  };
+  // itemsAPI.getContractCompanyItems = function(ctid){
+  //   return $http.get(configuration.apiUrl + '/contract/' + ctid + '/items/company');
+  // };
+
+  // itemsAPI.addContractItem = function(ctid, oid){
+  //   return $http.post(configuration.apiUrl + '/contract/' + ctid + '/item/' + oid);
+  // };
+
+  // itemsAPI.removeContractItem = function(ctid, oid){
+  //   return $http.delete(configuration.apiUrl + '/contract/' + ctid + '/item/' + oid);
+  // };
+  
+  // itemsAPI.editContractItem = function(ctid, oid, payload){
+  //   return $http.put(configuration.apiUrl + '/contract/' + ctid + '/item/' + oid, payload);
+  // };
 
   /*
   Infrastructure
@@ -137,10 +141,6 @@ factory('itemsAPIService', ['$http', 'configuration', '$window', function($http,
 
   itemsAPI.moveItem = function(payload){
     return $http.put(configuration.apiUrl + '/infrastructure/moveItem', payload);
-  };
-
-  itemsAPI.moveContract = function(payload){
-    return $http.put(configuration.apiUrl + '/infrastructure/moveContract', payload);
   };
 
   return itemsAPI;

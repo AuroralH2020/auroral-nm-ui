@@ -1,7 +1,7 @@
 'use strict';
 angular.module('VicinityManagerApp.controllers')
   .controller('itemProfileController',
-    function($scope, $window, $state, commonHelpers, tokenDecoder, $stateParams, $location, itemsAPIService, Notification, configuration) {
+    function($scope, $window, $state, commonHelpers, tokenDecoder, $stateParams, $location, itemsAPIService, contractAPIService, Notification, configuration) {
 
       $scope.locationPrefix = $location.path();
 
@@ -129,6 +129,25 @@ angular.module('VicinityManagerApp.controllers')
           }
         }
       };
+      // Contract
+      $scope.requestContract = async function() {
+        try {
+          console.log($scope.item)
+          // console.log($scope.item.contract.ctid + ' ' + $scope.item.oid)
+          await contractAPIService.addContractItem($scope.item.contract.ctid, $scope.item.oid)
+          Notification.success('Item requested');
+          initData();
+        } catch (err) {
+          if (err.status < 500) {
+            Notification.warning('Problem requesting item');
+            console.log(err)
+            initData();
+          } else {
+            Notification.error("Server error");
+          }
+        }
+      };
+      
 
       // Access Level
 
