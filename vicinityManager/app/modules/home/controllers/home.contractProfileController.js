@@ -125,9 +125,10 @@ angular
             Notification.success('Contract leaved ');
               $state.go("root.main.allContracts");
           } catch (error) {
-            if (err.status < 500) {
-              Notification.warning(err.message);
+            if (error.status < 500) {
+              Notification.warning(error.data.error);
             } else {
+              console.log(error)
               Notification.error("Server error");
             }
           }

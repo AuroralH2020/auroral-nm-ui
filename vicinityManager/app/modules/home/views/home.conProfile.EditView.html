@@ -8,6 +8,7 @@
       <thead>
         <tr>
           <th>Name<i ng-click="orderByMe('name')" class="fa fa-fw fa-sort"/></th>
+          <th>OID<i ng-click="orderByMe('name')" class="fa fa-fw fa-sort"/></th>
           <th>Type<i ng-click="orderByMe('type')" class="fa fa-fw fa-sort"/></th>
           <th>Privacy<i ng-click="orderByMe('type')" class="fa fa-fw fa-sort"/></th>
           <th>Owner<i ng-click="orderByMe('owner')" class="fa fa-fw fa-sort"/></th>
@@ -19,7 +20,10 @@
       <tbody>
         <tr ng-repeat="item in items | orderBy:myOrderBy:rev">
           <td class="col-sm-2">
-            <a ui-sref="root.main.itemProfile.description({itemId: item.oid})"><span>{{item.name}}</span></a>
+            <a ui-sref="root.main.itemProfile.description({itemId: item.oid})"><span>{{item.name}}</span><br></a>
+          </td>
+          <td class="col-sm-2">
+            </a><span data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(item.oid)" >{{item.oid}}</span>
           </td>
           <td class="col-sm-1">
             </a><span>{{item.type}}</span>

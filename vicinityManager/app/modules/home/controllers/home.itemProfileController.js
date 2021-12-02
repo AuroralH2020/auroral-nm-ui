@@ -104,7 +104,7 @@ angular.module('VicinityManagerApp.controllers')
           initData();
         } catch (err) {
           if (err.status < 500) {
-            Notification.warning('Unauthorized to change status...');
+            Notification.warning(err.data.error);
           } else {
             Notification.error("Server error");
           }
