@@ -446,7 +446,7 @@ angular.module('VicinityManagerApp', [
           views: {
             'tabPanel@root.main.contractProfile':
             {
-              templateUrl: 'modules/home/views/home.conProfile.historyView.html',
+              templateUrl: 'modules/home/views/home.conProfile.HistoryView.html',
               controller:  'conProfileHistoryController'
             }
           }
@@ -468,7 +468,7 @@ angular.module('VicinityManagerApp', [
           views: {
             'tabPanel@root.main.contractProfile':
             {
-              templateUrl: 'modules/home/views/home.conProfile.editView.html',
+              templateUrl: 'modules/home/views/home.conProfile.EditView.html',
               controller:  'conProfileEditController'
             }
           }
