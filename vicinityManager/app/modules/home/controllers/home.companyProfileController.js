@@ -123,7 +123,6 @@ angular.module('VicinityManagerApp.controllers')
       };
 
       function updateScopeAttributes(response) {
-        console.log(response.data.message)
         $scope.name = response.data.message.name;
         $scope.avatar = response.data.message.avatar || configuration.avatarOrg;
         $scope.companyAccountId = response.data.message.cid;

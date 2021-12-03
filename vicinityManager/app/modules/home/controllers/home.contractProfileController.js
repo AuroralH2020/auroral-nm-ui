@@ -30,9 +30,14 @@ angular
       $scope.loaded = false;
       $scope.contract = {};
       $scope.accessLevelNew = 0;
+      $scope.descriptionNew =''
       // Initialize controller
 
+      $('.descriptionNormal').show();
+      $('.descriptionEdit').hide();
+
       initData();
+      
 
       // Listen for changes and broadcast to children
 
@@ -123,7 +128,7 @@ angular
           try {
             await contractAPIService.removeOrgFromContract(ctid)
             Notification.success('Contract leaved ');
-              $state.go("root.main.allContracts");
+            $state.go("root.main.allContracts");
           } catch (error) {
             if (error.status < 500) {
               Notification.warning(error.data.error);
@@ -144,5 +149,31 @@ angular
           }
         );
       };
+      $scope.descriptionEdit = async function () {
+        $scope.descriptionNew = $scope.contract.description
+        $('.descriptionNormal').hide();
+        $('.descriptionEdit').show();
+      }
+      $scope.descriptionSave = async function () {
+        try{
+          await contractAPIService.updateContract($scope.contract.ctid, {description: $scope.descriptionNew})
+          Notification.success('Description updated')
+          initData();
+        } catch (err) {
+          if (error.status < 500) {
+            Notification.warning(error.data.error);
+          } else {
+            console.log(error)
+            Notification.error("Server error");
+          }
+          
+        }
+        $('.descriptionNormal').show();
+        $('.descriptionEdit').hide();
+      }
+      $scope.descriptionCancel = async function () {
+        $('.descriptionNormal').show();
+        $('.descriptionEdit').hide();
+      }
     }
   );

@@ -25,6 +25,10 @@ factory('contractAPIService', ['$http', 'configuration', '$window', function($ht
     return $http.post(configuration.apiUrl + '/contract/' + ctid + '/reject');
   };
 
+  contractAPI.updateContract = function(ctid, data){
+    return $http.put(configuration.apiUrl + '/contract/' + ctid, data);
+  };
+
   contractAPI.removeOrgFromContract = function(ctid){
     return $http.delete(configuration.apiUrl + '/contract/' + ctid);
   };

@@ -3,30 +3,34 @@
 </section>
 
 <section class="content">
-    <!-- Filter -->
-    <!-- <div class="box box-default"> -->
-        <!-- <div class="box-header with-border"> -->
-            <!-- <h3 class="box-title">Filter</h3>
+  <!-- Filter -->
 
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="changeView()" ng-disabled="!listView"><i class="fa fa-th-large fa-lg"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="changeView()" ng-disabled="listView"><i class="fa fa-list fa-lg"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div> -->
-        <!-- </div> -->
-        <!-- /.box-header -->
-        <!-- <div class="box-body">
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <label>Type</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                </div>
-            </div>
+
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">Filter</h3>
+    
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="changeView()" ng-disabled="!listView"><i class="fa fa-th-large fa-lg"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="changeView()" ng-disabled="listView"><i class="fa fa-list fa-lg"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
         </div>
-    </div> -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <!-- /.col -->
+            <div class="col-md-6">
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+      </div>
+  
+  <!-- VIEW BLOCK -->
 
     <!-- Start -->
     <div ng-show="loadedPage">
@@ -38,20 +42,25 @@
 
         <div class="row" ng-if="!listView || imMobile">
             <!-- reaped on each device in the list -->
-            <div class="col-lg-4" ng-repeat="contract in contracts | nameFilter:searchTerm">
+            <div class="col-md-4" ng-repeat="contract in contracts" >
                 <!-- Widget: user widget style 1 -->
-                <div class="box box-widget widget-user-2" >
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header" ng-class="{'Private':'bg-olive', 'Community':'bg-yellow'}[contract.type]">
-                        <h3 class="widget-user-username">{{ contract.displayName | limitTo: 20 }}{{contract.displayName.length > 20 ? '...' : ''}}</h3>
-                        <!-- /.widget-user-image -->
-                        <h5 class="widget-user-desc" >{{ contract.type }} contract</h5>
-                        <h5 class="widget-user-desc" >Items: {{ contract.itemsNumber }} </h5>
+                <div class="box box-widget widget-user-2">
+                  <!-- Add the bg color to the header using any of the bg-* classes -->
+                  <div class="widget-user-header "ng-class="{'Private':'bg-olive', 'Community':'bg-yellow'}[contract.type]" >
+                    <div class="widget-user-image">
+                        <img  style="cursor: pointer" onmouseover="" ui-sref="root.main.contractProfile({contractId: contract.ctid})" class="img-circle"  ng-src="{{contract.avatar}}" alt="Contract Avatar">
                     </div>
-                    <a href="" class="widget-user-footer-moreinfo" ui-sref="root.main.contractProfile({contractId: contract.ctid})">More info<i class="fa fa-arrow-circle-right"></i></a>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">{{ contract.displayName | limitTo: 20 }}{{contract.displayName.length > 20 ? '...' : ''}}</h3>
+                    <!-- /.widget-user-image -->
+                    <h5 class="widget-user-desc" >{{ contract.type }} contract</h5>
+                    <h5 class="widget-user-desc" >Items: {{ contract.itemsNumber }} </h5>
+                  </div>
+                  <a href="" class="widget-user-footer-moreinfo" ui-sref="root.main.contractProfile({contractId: contract.ctid})">More info<i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
-        </div>
+              </div>
+
+           
 
         <!-- LIST VIEW -->
         <div class="box" ng-if="listView && !imMobile && !noItems">

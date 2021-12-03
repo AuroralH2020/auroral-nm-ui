@@ -34,8 +34,7 @@ angular.module('VicinityManagerApp.controllers').controller('allContractsControl
    async function init(){
      $scope.loaded = false;
      try {
-        const responseItem = await contractAPIService.getContracts()
-        await loadData()
+        const responseItem = await loadData()
         $scope.noItems = ($scope.contracts.length === 0);
         $scope.allItemsLoaded = responseItem.data.message.length < 12;
         $scope.loaded = true;
@@ -50,9 +49,9 @@ angular.module('VicinityManagerApp.controllers').controller('allContractsControl
     $scope.items=[];
     $scope.loaded = false;
     try {
-        await loadData()
+      const responseItem = await loadData()
         $scope.noItems = ($scope.items.length === 0);
-        $scope.allItemsLoaded = response.data.message.length < 12;
+        $scope.allItemsLoaded = responseItem < 12;
         $scope.loaded = true;
         $scope.loadedPage = true;
       } catch (error) {
@@ -70,6 +69,7 @@ angular.module('VicinityManagerApp.controllers').controller('allContractsControl
        const responseItem = await contractAPIService.getContracts()
         $scope.contracts=[];
         responseItem.data.message.forEach(it => {
+            it.avatar = configuration.avatarContract
             it.displayName ='';
             if (it.type === 'Private') {
               const orgs = (it.organisationsWithName).concat(it.pendingOrganisationsWithName)
@@ -82,6 +82,7 @@ angular.module('VicinityManagerApp.controllers').controller('allContractsControl
 
             $scope.contracts.push(it);
         });
+        return responseItem
     }
 
   // Add caption based on item status and privacy

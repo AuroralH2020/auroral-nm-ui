@@ -42,15 +42,21 @@
                   </li>
                   
 
+
                   <!-- Items -->
                   <li class="list-group-item">
                     <p>
                         <strong>Description:</strong>
-                        <h5 class="text-muted " style="margin-top: 15px">{{contract.description}}</h5>
+                        <a ng-click="descriptionEdit()" class="descriptionNormal pull-right btn-sm btn-info edit_profile">Edit</a>
+                        <a ng-click="descriptionSave()" style="display: block; margin-top: 5px; margin-left: 2px" class="descriptionEdit pull-right btn-sm btn-info edit_profile"><i style="color: green" class="fa fa-check"></i>Save</a>
+                        <a ng-click="descriptionCancel()" style="display: block; margin-top: 5px; margin-left: 2px" class="descriptionEdit pull-right btn-sm btn-info edit_profile"><i style="color: red" class="fa fa-times"></i>Cancel</a>
+                        <p class="descriptionNormal text-muted" >{{contract.description}}</p>
+                        <input style="display: block; margin-top: 5px; margin-left: 0px" class="descriptionEdit style-1" type="text" ng-model="descriptionNew" />
+
                     </p>
                     <p>
                       <strong>Terms and conditions:</strong>
-                      <h5 class="text-muted " style="margin-top: 15px">{{contract.termsAndConditions}}</h5>
+                      <p class="text-muted" id="loc1">{{contract.termsAndConditions}}</p>
                   </p>
                   <p>
                     <strong>Items:</strong>
