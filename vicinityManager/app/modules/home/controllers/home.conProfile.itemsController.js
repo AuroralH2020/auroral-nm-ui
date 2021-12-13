@@ -61,7 +61,6 @@ function ($scope, $window, commonHelpers, $stateParams, contractAPIService,  Not
         response.data.message[i].avatar = response.data.message[i].avatar || configuration.avatarItem
         $scope.items.push(response.data.message[i]);
     }
-    console.log($scope.items)
     $scope.noItems = ($scope.items.length === 0);
     $scope.allItemsLoaded = response.data.message.length < 12;
     $scope.loaded = true;

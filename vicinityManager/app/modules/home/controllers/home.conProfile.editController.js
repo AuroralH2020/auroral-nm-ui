@@ -59,7 +59,6 @@ function ($scope, $window, commonHelpers, $stateParams, tokenDecoder, contractAP
     $scope.allItemsLoaded = response.data.message.length < 12;
     $scope.loaded = true;
     $scope.loadedPage = true;
-    console.log($scope.items)
   }
   // change item status
   $scope.itemContractStatus = async function (ctid, oid, status){
@@ -94,7 +93,6 @@ function ($scope, $window, commonHelpers, $stateParams, tokenDecoder, contractAP
   // change item enabled
   $scope.addItemToContract = async function (ctid, oid, status, privacy){
     try {
-      console.log(privacy)
       if(privacy === 0){
           Notification.warning('Item privacy is too low')
         }

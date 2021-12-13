@@ -93,9 +93,21 @@ angular.module('VicinityManagerApp.controllers')
       /* MAIN FUNCTIONS */
 
       // Change status
-      
       $scope.changeStatus = async function() {
         try {
+          if($scope.item.hasContracts.length > 0) {
+            // ask if remove from contracts
+            if(confirm('Item will be removed from contract. Are you sure?')){
+              // remove from all contracts
+              for (const ctid of ($scope.item.hasContracts)) {
+                await contractAPIService.removeContractItem(ctid, $scope.item.oid)
+              };
+            }
+            // user does not want to remove from contract -> return
+            else {
+                return
+            }
+          }
           const query = $scope.item.status === 'Enabled' ?
                         { "status": 'Disabled' } :
                         { "status": 'Enabled' }
@@ -112,7 +124,6 @@ angular.module('VicinityManagerApp.controllers')
       };
 
       // Delete items
-      
       $scope.deleteItem = async function() {
         if (confirm('Are you sure?')) {
           try {
@@ -132,8 +143,6 @@ angular.module('VicinityManagerApp.controllers')
       // Contract
       $scope.requestContract = async function() {
         try {
-          console.log($scope.item)
-          // console.log($scope.item.contract.ctid + ' ' + $scope.item.oid)
           await contractAPIService.addContractItem($scope.item.contract.ctid, $scope.item.oid)
           Notification.success('Item requested');
           initData();
@@ -154,19 +163,34 @@ angular.module('VicinityManagerApp.controllers')
       $scope.saveNewAccess = async function() {
         if (Number($scope.accessLevelNew) !== 0) {
           try {
+            // Item is contracted
+            if (Number($scope.accessLevelNew) == 1 && $scope.item.hasContracts.length > 0) {
+              // ask if remove from contract
+              if(confirm('Item will be removed from contract. Are you sure?')){
+                // remove from all contracts
+                for (const ctid of ($scope.item.hasContracts)) {
+                  await contractAPIService.removeContractItem(ctid, $scope.item.oid)
+                };
+              }
+              // user does not want to remove from contract -> return
+              else {
+                  return
+              }
+              
+            }
+            // Changing access level
             await itemsAPIService.putOne($scope.item.oid, {
             accessLevel: Number($scope.accessLevelNew) - 1
             })
             Notification.success("Access level updated");
             initData();
           } catch (err) {
-              if (err.status < 500) {
-                Notification.warning("User is unauthorized or access level too low...");
-                $state.go("root.main.home");
-              } else {
-                Notification.error("Server error");
-              }
+            if (err.status < 500) {
+              Notification.warning(err.data.error);
+            } else {
+              Notification.error("Server error");
             }
+          }
         }
       };
 
