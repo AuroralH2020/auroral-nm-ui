@@ -1,7 +1,7 @@
 'use strict';
 angular.module('VicinityManagerApp.controllers')
 .controller('serviceProfileController',
-function ($scope, $window, $state, $stateParams, $location, tokenDecoder, commonHelpers, itemsAPIService, Notification) {
+function ($scope, $window, $state, imageHelpers,  $stateParams, $location, tokenDecoder, commonHelpers, itemsAPIService, Notification) {
 
   $scope.locationPrefix = $location.path();
 
@@ -311,22 +311,14 @@ function ($scope, $window, $state, $stateParams, $location, tokenDecoder, common
 
 var base64String= "";
 
-$("input#input1").on('change',function(evt) {
-
+$("input#input1").on('change', function(evt) {
   var tgt = evt.target || window.event.srcElement,
-        files = tgt.files;
-
-  if (FileReader && files && files.length) {
-        var fr = new FileReader();
-        fr.onload = function () {
-            // $("img#pic").src = fr.result;
-            $("img#pic").prop("src",fr.result);
-            base64String = fr.result;
-        };
-        fr.readAsDataURL(files[0]);
-    }else{
-        // fallback -- perhaps submit the input to an iframe and temporarily store
-        // them on the server until the user's session ends.
+    files = tgt.files;
+    var img = new Image;
+    img.src = URL.createObjectURL(tgt.files[0]);
+    img.onload = function() {
+      base64String = imageHelpers.resizeImage(img, 120, 120, 0); //HERE IS WHERE THE FUNCTION RESIZE IS CALLED!!!!
+      $("img#pic").prop("src", base64String);
     }
 });
 
