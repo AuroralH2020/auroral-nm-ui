@@ -106,7 +106,7 @@
                   <span class="padded" ng-show="notif.type === 24">The user <b>{{notif.actor.name}}</b> has joined the contract <b>{{notif.object.id}}</b>.</span>
                   <span class="padded" ng-show="notif.type === 25">The user <b>{{notif.actor.name}}</b> has abandoned the contract <b>{{notif.object.id}}</b>.</span>
                   <span class="padded" ng-show="notif.type === 26">The contract <b>{{notif.object.id}}</b> has been updated, might have inactive items.</span>
-                  <span class="padded" ng-show="notif.type === 28">Item  <b>{{notif.object.name}}</b> has been updated by {{notif.actor.name}}</span>
+                  <span class="padded" ng-show="notif.type === 28">Your item <b>{{notif.target.name}}</b> has been requested by {{notif.actor.name}} in {{notif.object.name}} </span>
                   <span class="padded" ng-show="notif.type === 31 && (notif.status === 'responded' || notif.status=== 'waiting')"><b>{{notif.object.name}}</b> wants to partner with you.</span>
                   <span class="padded" ng-show="notif.type === 32">The partnership between <b>{{notif.target.name}}</b> and <b>{{notif.object.name}}</b> was cancelled by <b>{{notif.actor.name}}</b>.</span>
                   <span class="padded" ng-show="[33, 34].lastIndexOf(notif.type) >= 0 && !(notif.status=== 'waiting')"><b>{{notif.object.name}}</b> responded our partnership request.</span>
@@ -171,7 +171,7 @@
 
                   <div class="centered" ng-show="[ 22, 23, 24, 25, 26, 28].indexOf(notif.type) !== -1">
                     <span>
-                      <a data-toggle="tooltip" title="View contract" ui-sref="root.main.contracts({contractId: notif.object.id})"><i class="fa fa-search fa-lg"></i></a>
+                      <a data-toggle="tooltip" title="View contract" ui-sref="root.main.contractProfile.items({contractId: notif.object.id})"><i class="fa fa-search fa-lg"></i></a>
                     </span>
                   </div>
                 <!-- NODE -->

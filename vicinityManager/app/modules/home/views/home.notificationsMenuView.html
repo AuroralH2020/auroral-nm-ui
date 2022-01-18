@@ -40,7 +40,7 @@
               <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[73, 74, 75, 76].lastIndexOf(notif.type) !== -1" ui-sref="root.main.nodeDetail({nodeId: notif.target.id})">
                 <img ng-src="./img/icons/data_request.png" alt="Company Avatar">
               </a>
-              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[11, 12, 13, 14, 15, 16, 26].lastIndexOf(notif.type) !== -1" ui-sref="root.main.itemProfile({itemId: notif.id})">
+              <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[11, 12, 13, 14, 15, 16, 26, 28].lastIndexOf(notif.type) !== -1" ui-sref="root.main.itemProfile({itemId: notif.id})">
                 <img ng-src="./img/icons/data_request.png" alt="Company Avatar"/>
               </a>
               <a ng-click="changeIsUnread(notif.notificationId)" ng-show="[23, 25].lastIndexOf(notif.type) !== -1" ui-sref="root.main.contracts({companyAccountId: orgId,userAccountId: userId})">
@@ -64,7 +64,9 @@
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 23">The <a ui-sref="root.main.contractProfile({contractId:  notif.object.id})">contract</a> with <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has been removed.</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 24">The user <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has joined the <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a>.</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 25">The user <a ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a> has abandoned the <a ui-sref="root.main.userProfile.contracts({companyAccountId: orgId, userAccountId: userId, contractId: notif.object.id})">contract</a>.</p>
-              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 26">The <a ui-sref="root.main.contracts({contractId: notif.object.id})">contract</a> has been updated and might have inactive items.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 26">The <a ui-sref="root.main.contractProfile({contractId: notif.object.id})">contract</a> has been updated and might have inactive items.</p>
+              <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 28">Item <a ui-sref="root.main.contractProfile.items({contractId: notif.object.id})">{{notif.target.name}}</a> has been requested by {{notif.actor.name}} </p>
+
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 31">You have a partnership request from <a  ui-sref="root.main.companyProfile.items({companyAccountId: notif.object.id})">{{notif.object.name}}</a>.</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 32">The partnership between {{notif.target.name}} and {{notif.object.name}} was cancelled by <a  ui-sref="root.main.userProfile.items({userAccountId: notif.actor.id, companyAccountId: notif.object.id})">{{notif.actor.name}}</a>.</p>
               <p ng-click="changeIsUnread(notif.notificationId)" ng-show="notif.type === 33">Your partnership with <a  ui-sref="root.main.companyProfile.items({companyAccountId: notif.object.id})">{{notif.object.name}}</a> was rejected.</p>
