@@ -21,8 +21,17 @@ angular.module('Authentication')
           };
 
           service.Login = function(username, password) {
-            return $http.post(configuration.apiUrl + '/login/authenticate',{ username: username, password: password});
+            return $http.post(configuration.apiUrl + '/login/authenticate', { username: username, password: password});
           };
+
+          service.Passwordless = function(username) {
+            return $http.post(configuration.apiUrl + '/login/passwordless', { username });
+          };
+          service.PasswordlessLogin = function(token) {
+            return $http.post(configuration.apiUrl + '/login/passwordless/' + token);
+          };
+
+          
 
           service.signout = function(path){
             // console.log(path);

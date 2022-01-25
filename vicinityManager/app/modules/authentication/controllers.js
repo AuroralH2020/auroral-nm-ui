@@ -31,7 +31,9 @@ angular.module('Authentication')
    $('div#newUserInfo').hide();
    $('div#verEmailSent').hide();
    $('div#forgot1').hide();
+   $('div#passwordless1').hide();
    $('div#forgot2').hide();
+   $('div#passwordless2').hide();
 
 // Check screen resolution
 
@@ -178,7 +180,28 @@ $scope.registerCompany = function () {
 };
 
 
-
+/*
+  Send passwordless link to mail
+*/
+$scope.sendPasswordlessLink = function() {
+  AuthenticationService.Passwordless( $scope.passwordlessMail )
+  .then(
+    function(response){
+    if(response.data.error){
+      Notification.warning("The username does not exist...");
+      $scope.passwordlessMail = "";
+    }else{
+      $('div#allTemplates').fadeOut('slow');
+      setTimeout(function() {
+       $('div#passwordless2').fadeIn();
+       }, 1000);
+     }
+   })
+   .catch(function(err){
+     console.log(err);
+     Notification.error("User not found");
+   });
+  };
 
 
 /*
@@ -261,6 +284,7 @@ TODO Check company BID
     $('div#allTemplates').show();
     $('div#login-wrap').hide();
     $('div#myModal1').hide();
+    $('div#passwordless1').hide();
     $("#myCheck").prop("checked", false);
     $("#pass").prop("type", "password");
     $('div#newOrganisationInfo').hide();
@@ -278,6 +302,7 @@ TODO Check company BID
   $scope.registerNew = function(){
     $('div#allTemplates').show();
     $('div#login-wrap').hide();
+    $('div#passwordless1').hide();
     $('div#myModal1').hide();
     $("#myCheck").prop("checked", false);
     $("#pass").prop("type", "password");
@@ -293,9 +318,28 @@ TODO Check company BID
      }, 1000);
   };
 
+  $scope.passwordlessLogin = function(){
+    $('div#allTemplates').show();
+    $('div#login-wrap').hide();
+    $('div#myModal1').hide();
+    $("#myCheck").prop("checked", false);
+    $("#pass").prop("type", "password");
+    $('div#forgot1').hide();
+    $('div#newUserInfo').hide();
+    $('div#verEmailSent').hide();
+    $('div#forgot2').hide();
+    $scope.note = "Back to log in";
+    $scope.note2 = "Login without password";
+    $('div#alert2').fadeOut('slow');
+    setTimeout(function() {
+     $('div#passwordless1').fadeIn('slow');
+     }, 1000);
+  };
+
   $scope.backToLogin = function(){
     $('div#allTemplates').show();
     $('div#newOrganisationInfo').hide();
+    $('div#passwordless1').hide();
     $('div#myModal1').hide();
     $("#myCheck").prop("checked", false);
     $("#pass").prop("type", "password");
@@ -389,5 +433,40 @@ TODO Check company BID
         // TBD: ISSUE changing path, not redirecting
         $location.path('/login')
       }
-}]);
+}])
 
+// ==== passwordlessLogin controller ========
+
+.controller('passwordlessLoginController',
+           ['$scope', '$stateParams', '$location', 'AuthenticationService', 'Notification', 'configuration',
+           function ($scope, $stateParams, $location, AuthenticationService, Notification, configuration){
+
+   $('div#recoverTmp').show();
+   $('div#emailSentTmp').hide();
+   $scope.baseHref = configuration.baseHref + '/#/login';
+   $scope.message1 = "Passwordless login in progress"
+   
+
+   $scope.backToLogin = function(){
+    $location.url("/login");
+   }
+   $scope.login = function(){
+     AuthenticationService.PasswordlessLogin($stateParams.token)
+     .then(function(response){
+      if(response.status < 400) {
+          AuthenticationService.SetCredentials(response.data.message);
+          $location.path("/home");
+       } else {
+        Notification.error('Error logging in');
+       }
+    })
+    .catch(function(err){
+      if(err.data.error!= undefined){
+        Notification.error(err.data.error);
+      }
+      $location.url("/home");
+    })
+   }
+   $scope.login()
+
+}])
