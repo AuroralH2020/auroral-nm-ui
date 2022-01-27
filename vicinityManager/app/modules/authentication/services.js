@@ -33,11 +33,10 @@ angular.module('Authentication')
 
           
 
-          service.signout = function(path){
-            // console.log(path);
+          service.signout = function(){
             service.ClearCredentialsAndInvalidateToken();
-            $location.path(path);
-            // $cookies.remove("rM_V"); Implemented in userAccountController
+            $location.url('/login');
+            $cookies.remove("r_12fg"); // If log out remove rememberMe cookie
           };
 
           service.SetCredentials = function(token){
@@ -69,14 +68,14 @@ angular.module('Authentication')
           // If there is a cookie, look if it has assigned an id and if so refresh token and log the user
           // If the token in the cookie is faked or expired, the refresh token process will fail
           service.wasCookie = function(){
-            var myCookie = $cookies.getObject("rM_V");
+            var myCookie = $cookies.getObject("r_12fg");
             if(myCookie){
-              $http.put(configuration.apiUrl + '/login/remember/' + myCookie.id, {token : myCookie.token})
+              $http.post(configuration.apiUrl + '/login/remember/', {cookie: myCookie})
                 .then(
                     function successCallback(response){
                       if(!response.data.error){
                         service.SetCredentials(response.data.message);
-                        $location.path("/home");
+                        $location.url("/home");
                       }else{
                         Notification.error('Token expired');
                       }
@@ -89,12 +88,11 @@ angular.module('Authentication')
               return false;
             };
 
-          service.SetRememberMeCookie = function(data){
-            $http.post(configuration.apiUrl + '/login/remember', data).then(
+          service.SetRememberMeCookie = function(){
+            $http.get(configuration.apiUrl + '/login/remember').then(
               function successCallback(response){
-                var content = {id: response.data.message._id, token:response.data.message.token};
-                $cookies.remove("rM_V");
-                $cookies.putObject("rM_V",content);
+                $cookies.remove("r_12fg");
+                $cookies.putObject("r_12fg", response.data.message);
               }
             );
           };

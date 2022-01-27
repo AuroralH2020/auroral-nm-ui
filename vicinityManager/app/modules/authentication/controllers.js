@@ -60,7 +60,7 @@ $scope.login = function() {
      if(response.status < 400){
       //  Notification.success("Welcome to Vicinity!");
        AuthenticationService.SetCredentials(response.data.message);
-       if($scope.rememberMe){AuthenticationService.SetRememberMeCookie(response.data.message);}
+       if($scope.rememberMe){AuthenticationService.SetRememberMeCookie();}
        $location.path("/home");
        $scope.isError = false;
      } else {
