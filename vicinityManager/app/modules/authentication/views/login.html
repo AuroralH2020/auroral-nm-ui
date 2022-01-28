@@ -58,6 +58,12 @@
             <img ng-if="dataLoading" ng-src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
           </div>
 
+          <hr>
+
+          <div style="margin-top: 20px">
+            <button data-toggle="tooltip" title="Login to AURORAL without password" class="btn btn-success btn-block btn-flat" ng-click="passwordlessLogin()">Send magic link</button>
+          </div>
+
           </div>
 
           <div style="margin-top: 20px" class="col-xs-6">
@@ -67,6 +73,7 @@
           <div style="margin-top: 20px" class="col-xs-6">
             <a href="" ng-click="forgotPwd()" class="text-center">Forgot my password</a>
           </div>
+
         </form>
         </div>
 
@@ -171,6 +178,24 @@
             </div>
           </form>
           </div>
+        
+        <!-- Passwordless login functionality -->
+
+          <div id="passwordless1">
+            <h3 style="color: black" class="login-box-msg"> Dear user, please introduce your email address.</h3>
+            <form role="form" ng-submit="sendPasswordlessLink()">
+              <div  class="well centered">
+                <span> User email </span><span style="color: red">*</span>
+                <input ng-model="passwordlessMail" style="width: 60%" type="email"  class="pull-right" placeholder="Email of user" required/>
+              </div>
+              <div class="col-xs-6">
+                <a href="" ng-click="backToLogin()" class="text-center">{{note}}</a>
+              </div>
+              <div class="col-xs-6">
+                <button type="submit"  class="btn btn-primary btn-block btn-flat">Send login link</button>
+              </div>
+            </form>
+            </div>
 
     </div>
 
@@ -189,6 +214,13 @@
         </div>
         <div align="center"><h3><i class="fa fa-check fa-3x" style="color: green"></i></h3></div>
     </div>
+
+    <div id="passwordless2">
+      <div>
+        <h3 style="color: green" class="login-box-msg"> Dear user, follow the instructions sent by mail in order to login to AURORAL.</h3>
+      </div>
+      <div align="center"><h3><i class="fa fa-check fa-3x" style="color: green"></i></h3></div>
+  </div>
 
   </div>
 </section>

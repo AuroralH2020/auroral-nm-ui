@@ -18,8 +18,7 @@ controller('userAccountController', function($scope, $window, $cookies, commonHe
 
   $scope.signout = function(){
     console.log("Begin: Signout");
-    $cookies.remove("rM_V"); // If log out remove rememberMe cookie
-    AuthenticationService.signout("/login");
+    AuthenticationService.signout();
     console.log("End: Signout");
   };
 

@@ -69,14 +69,14 @@
                   <i class="fa fa-handshake-o margin-r-5"></i>
                   <strong>Contracts</strong>
                   <br>
-                  <span ng-show="!isMyItem && item.contract.contracted">Included in contract</span>
-                  <button ng-show="!isMyItem &&item.contract.contractable" ng-click="requestContract()"  class="btn btn-info btn-block"><i class="fa"></i><b> Request adding to contract</b></button>
-                  <span ng-show="!isMyItem && !item.contract.contracted && !item.contract.contractable">You do not have contract with this organisation</span>
+                  <span ng-show="!isMyOrgItem && item.contract.contracted">Included in contract</span>
+                  <button ng-show="!isMyOrgItem &&item.contract.contractable" ng-click="requestContract()"  class="btn btn-info btn-block"><i class="fa"></i><b> Request adding to contract</b></button>
+                  <span ng-show="!isMyOrgItem && !item.contract.contracted && !item.contract.contractable">You do not have contract with this organisation</span>
                   <div ng-repeat="ctid in item.hasContracts">
-                    <span ng-show="isMyItem" > <a ui-sref="root.main.contractProfile({contractId: ctid})"> {{ctid}}</a> </span> 
+                    <span ng-show="isMyOrgItem" > <a ui-sref="root.main.contractProfile({contractId: ctid})"> {{ctid}}</a> </span> 
                     <br>
                   </div>
-                  <span ng-show="isMyItem && item.hasContracts.length === 0"> Not included</span> 
+                  <span ng-show="isMyOrgItem && item.hasContracts.length === 0"> Not included</span> 
 
                 </li>
 

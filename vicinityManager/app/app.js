@@ -534,6 +534,12 @@ angular.module('VicinityManagerApp', [
           // }
         })
 
+        .state('passwordlessLogin', {
+          url: '/authentication/passwordlessLogin/:token',
+          templateUrl: 'modules/authentication/views/passwordlessLogin.html',
+          controller: 'passwordlessLoginController',
+        })
+
         .state('login', {
           url: '/login',
           templateUrl: 'modules/authentication/views/login.html',
@@ -603,6 +609,8 @@ angular.module('VicinityManagerApp', [
               $location.path('/registration/newCompany/' + param);
             }else if ((url.indexOf('/registration/newUser/')) !== -1 && check){
               $location.path('/registration/newUser/' + param);
+            }else if ((url.indexOf('/authentication/passwordlessLogin/')) !== -1 && check){
+              $location.path('/authentication/passwordlessLogin/' + param);
             }else if ((url.indexOf('/authentication/recoverPassword/')) !== -1 && check){
               $location.path('/authentication/recoverPassword/' + param);
             }else{

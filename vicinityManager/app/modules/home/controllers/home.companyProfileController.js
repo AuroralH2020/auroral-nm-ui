@@ -233,8 +233,8 @@ angular.module('VicinityManagerApp.controllers')
           try {
             await userAccountAPIService.removeOrganisation()
             Notification.success('Organisation successfully removed!')
-            $cookies.remove("rM_V"); // If log out remove rememberMe cookie
-            AuthenticationService.signout("/login")
+            $cookies.remove("r_12fg"); // If log out remove rememberMe cookie
+            AuthenticationService.signout()
           } catch (err) {
             console.log(err)
             Notification.error('Problem removing organisation, contact with the admins')
