@@ -61,7 +61,10 @@ angular.module('Authentication')
 
           service.ClearCredentialsAndInvalidateToken = function(){
             //TODO: Invalidate token
-            // $http.post("http://localhost:3000/api/authenticate/invalidate",{token: $window.sessionStorage.token});
+            var myCookie = $cookies.getObject("r_12fg");
+            console.log(myCookie)
+            myCookie.split(':')
+            $http.delete(configuration.apiUrl + '/login/remember/'+ myCookie.split(':')[0])
             service.ClearCredentials();
           };
 
