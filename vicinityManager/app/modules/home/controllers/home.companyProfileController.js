@@ -281,7 +281,8 @@ angular.module('VicinityManagerApp.controllers')
           })
           .then(
             function(response) {
-              $scope.avatar = response.data.message.avatar;
+              console.log(response)
+              $scope.avatar = response.config.data.avatar;
               $rootScope.$broadcast('refreshOrganisationAvatar', {avatar: $scope.avatar});
               $('#editCancel1').fadeOut('slow');
               $('#editUpload2').fadeOut('slow');

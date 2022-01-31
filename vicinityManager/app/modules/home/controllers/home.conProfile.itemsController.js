@@ -68,8 +68,13 @@ function ($scope, $window, commonHelpers, $stateParams, contractAPIService,  Not
   }
 
   function errorCallback(err){
-    console.log(err);
-    Notification.error("Problem retrieving items");
+    // console.log(err);
+    // Notification.error("Problem retrieving items");
+    $scope.noItems = ($scope.items.length === 0);
+    $scope.loaded = true;
+    $scope.loadedPage = true;
+    $scope.allItemsLoaded = true;
+
   }
 
 });
