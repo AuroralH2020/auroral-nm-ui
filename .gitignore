@@ -8,9 +8,6 @@ node_modules/
 dist/
 vicinityManager/app/bower_components/
 
-# Scripts
-*.sh
-
 # Compiled Java class files
 *.class
 
