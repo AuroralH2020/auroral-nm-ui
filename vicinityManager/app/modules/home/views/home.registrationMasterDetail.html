@@ -45,8 +45,9 @@
           <i ng-if="regis.status === 'open' " ng-click="verifyAction(regis.registrationId)" style="color: green; padding-left:10%" class="fa fa-check fa-lg col-sm-4"></i>
           <i ng-if="regis.status === 'open' " ng-click="declineAction(regis.registrationId)" style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i>
           <i ng-if="regis.status === 'pending' " ng-click="resendAction(regis.registrationId)" style="color: blue; padding-left:10%" class="fa fa-paper-plane fa-lg col-sm-4"></i>
+          <i ng-if="regis.status === 'pending' " ng-click="autoVerifyAction(regis.registrationId)" style="color: green; padding-left:10%" class="fa fa-check fa-lg col-sm-4"></i>
           <a data-toggle="tooltip" title="View registration" ng-if="regis.status === 'open' " ui-sref="root.main.registrationProfile.regAdmin({registrationId: regis.registrationId})"><i style="padding-left:10%" class="fa fa-search fa-lg col-sm-4"></i></a>
-          <a data-toggle="tooltip" title="View registration" ng-if="regis.status !== 'open' " ui-sref="root.main.registrationProfile.regAdmin({registrationId: regis.registrationId})"><i style="padding-left:40%" class="fa fa-search fa-lg col-sm-4"></i></a>
+          <a data-toggle="tooltip" title="View registration" ng-if="regis.status !== 'open' " ui-sref="root.main.registrationProfile.regAdmin({registrationId: regis.registrationId})"><i style="padding-left:10%" class="fa fa-search fa-lg col-sm-4"></i></a>
         </td>
       </tr>
       </tbody>

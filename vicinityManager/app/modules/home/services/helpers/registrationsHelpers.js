@@ -13,7 +13,7 @@ factory('registrationsHelpers', ['Notification', 'registrationsAPIService',
      Accepts organisation registration request
      */
      helpers.acceptRegistration = function(reg_id){
-       return registrationsAPIService.putOne(reg_id, {status: "pending" })
+       return registrationsAPIService.putAdmin(reg_id, {status: "pending" })
          .then(function successCallback(response){
            if (response.error) {
              Notification.error("Registration process failed...");
@@ -28,7 +28,7 @@ factory('registrationsHelpers', ['Notification', 'registrationsAPIService',
      Rejects organisation registration request
      */
      helpers.rejectRegistration = function(reg_id){
-       return registrationsAPIService.putOne(reg_id, {status: "declined" })
+       return registrationsAPIService.putAdmin(reg_id, {status: "declined" })
          .then(function successCallback(response){
            if (response.error) {
              Notification.error("Registration process failed...");

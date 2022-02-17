@@ -24,6 +24,10 @@ factory('registrationsAPIService', ['$http', 'configuration', function($http, co
     return $http.put(configuration.apiUrl +'/registration/' + id, data);
   };
 
+  registrationsAPI.putAdmin = function(id, data) {
+    return $http.put(configuration.apiUrl +'/admin-registration/' + id, data);
+  };
+
   registrationsAPI.findDuplicatesUser = function(data) {
     return $http.post(configuration.apiUrl +'/registration/duplicatesUser', data);
   };
