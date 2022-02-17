@@ -41,9 +41,19 @@ angular.module('VicinityManagerApp.controllers').
 
   $scope.verifyAction = function(id){
     $scope.loadedPage = false;
-    registrationsAPIService.putOne(id,{status: "pending" })
+    registrationsAPIService.putOne(id, { status: "pending" })
     .then(function(response){
       Notification.success("Verification mail was sent to the company!");
+      init();
+    })
+    .catch(errorCallback);
+  };
+
+  $scope.resendAction = function(id){
+    $scope.loadedPage = false;
+    registrationsAPIService.putOne(id, { status: "resending" })
+    .then(function(response){
+      Notification.success("Verification mail was re-sent to the company!");
       init();
     })
     .catch(errorCallback);
