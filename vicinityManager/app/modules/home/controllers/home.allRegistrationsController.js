@@ -41,7 +41,7 @@ angular.module('VicinityManagerApp.controllers').
 
   $scope.verifyAction = function(id){
     $scope.loadedPage = false;
-    registrationsAPIService.putOne(id, { status: "pending" })
+    registrationsAPIService.putAdmin(id, { status: "pending" })
     .then(function(response){
       Notification.success("Verification mail was sent to the company!");
       init();
@@ -51,7 +51,7 @@ angular.module('VicinityManagerApp.controllers').
 
   $scope.resendAction = function(id){
     $scope.loadedPage = false;
-    registrationsAPIService.putOne(id, { status: "resending" })
+    registrationsAPIService.putAdmin(id, { status: "resending" })
     .then(function(response){
       Notification.success("Verification mail was re-sent to the company!");
       init();
@@ -59,9 +59,19 @@ angular.module('VicinityManagerApp.controllers').
     .catch(errorCallback);
   };
 
+  $scope.autoVerifyAction = function(id){
+    $scope.loadedPage = false;
+    registrationsAPIService.putAdmin(id, { status: "masterVerification" })
+    .then(function(response){
+      Notification.success("Company was verified by admin!");
+      init();
+    })
+    .catch(errorCallback);
+  };
+  
   $scope.declineAction = function(id){
     $scope.loadedPage = false;
-  registrationsAPIService.putOne(id,{status: "declined" })
+  registrationsAPIService.putAdmin(id,{status: "declined" })
     .then(function(response){
       Notification.success("Company was rejected!");
       init();

@@ -36,7 +36,7 @@ function ($scope,
   }
 
   $scope.verifyAction = function(){
-  registrationsAPIService.putOne($scope.id,{status: "pending" })
+  registrationsAPIService.putAdmin($scope.id,{status: "pending" })
     .then(function(response){
       Notification.success("Verification mail was sent to the company!");
       $scope.status = 'pending';
@@ -46,7 +46,7 @@ function ($scope,
   };
 
   $scope.declineAction = function(){
-  registrationsAPIService.putOne($scope.id,{status: "declined" })
+  registrationsAPIService.putAdmin($scope.id,{status: "declined" })
     .then(function(response){
       Notification.success("Company was rejected!");
       $scope.status = 'declined';
