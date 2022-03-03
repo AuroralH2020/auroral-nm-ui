@@ -109,10 +109,15 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
         await invitationsAPIService.postOne(data)
         resetModal()
         $('div#myModal2').hide()
+        Notification.success("Invitation sent")
       } catch (err) {
         resetModal()
         console.log(err);
-        Notification.error("Error inviting company")
+        if(err.status === 403){
+          Notification.warning("Only administrators have permission invite new company")
+        } else {
+          Notification.error("Error inviting company")
+        }
       }
     } else {
       $('input#emailVer2').addClass("invalid");
@@ -134,10 +139,15 @@ function ($scope, commonHelpers, tokenDecoder, invitationsAPIService, Notificati
         await invitationsAPIService.postOne(data)
         resetModal()
         $('div#myModal1').hide();
+        Notification.success("Invitation sent")
       } catch (err) {
         resetModal()
         console.log(err);
-        Notification.error("Error inviting user");
+        if(err.status === 403){
+          Notification.warning("Only administrators have permission invite new users")
+        } else {
+          Notification.error("Error inviting user");
+        }
       }
     } else {
       $('input#emailVer').addClass("invalid");
