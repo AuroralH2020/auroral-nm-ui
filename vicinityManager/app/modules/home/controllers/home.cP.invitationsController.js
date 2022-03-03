@@ -50,7 +50,7 @@ function ($scope, $stateParams, commonHelpers, invitationsAPIService, Notificati
     }
     catch (err) {
       if(err.status == 429){
-        Notification.warning('Please wait at least 1 minute between resend requests')
+        Notification.warning('Please wait at least 5 minute between resend requests')
       }
       else{
         Notification.error("Server error")
