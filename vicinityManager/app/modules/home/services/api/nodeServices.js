@@ -31,6 +31,10 @@ factory('nodeAPIService', ['$http', 'configuration', '$window', function($http, 
   nodeAPI.removeKey = function(id) {
     return $http.delete(configuration.apiUrl +'/node/' + id + '/key/');
   };
+  
+  nodeAPI.updateDefaultOwner = function(id, data) { 
+    return $http.put(configuration.apiUrl +'/node/' + id + '/defaultOwner/', data);
+  };
 
   // nodeAPI.pullIdFromOrganisation = function(cid,data) {
   //   return $http.put(configuration.apiUrl + '/nodes/node/' + cid, data);

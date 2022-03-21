@@ -6,6 +6,7 @@ angular.module('VicinityManagerApp.controllers').
             $window,
             commonHelpers,
             nodeAPIService,
+            userAPIService,
             Notification) {
 
 // ======== Set initial variables ==========
@@ -20,6 +21,15 @@ angular.module('VicinityManagerApp.controllers').
     $scope.nPass2 = "";
     $scope.nId = "";
     $scope.nAgentType = "";
+    $scope.nAutoenabling = false
+    //TEMP
+    $scope.deviceUsers = [ { uid: null, name: "disabled"} ]
+    $scope.serviceUsers = [ { uid: null, name: "disabled"} ]
+    $scope.defaultOwner = { Device: null, Service: null, Marketplace: null}
+    $scope.selectedServiceUser = { uid: null, name: "disabled" }
+    $scope.selectedDeviceUser = { uid: null, name: "disabled"} 
+    // $scope.deviceUsers=[{uid: null, name: "disabled"},{uid:"123", name: "ATA"}, {uid:"321", name: "BETA"}]
+    // $scope.serviceUsers=[{uid: null, name: "disabled"},{uid:"123", name: "ATA"}, {uid:"321", name: "BETA"}]
 
     $scope.creatingNew = true;
     $scope.nodeId = $state.params.nodeId
@@ -35,8 +45,35 @@ angular.module('VicinityManagerApp.controllers').
           // $scope.nAgent = response.data.message.agent;
           $scope.nAgentType = response.data.message.type;
           $scope.nId = response.data.message.agid;
+          $scope.cid = response.data.message.cid;
           $scope.nVisibility = response.data.message.visible;
+          $scope.defaultOwner = {...$scope.defaultOwner, ...response.data.message.defaultOwner}
+          const autoenabling = response.data.message.defaultOwner
+          $scope.nAutoenabling = autoenabling && Object.keys(autoenabling).length != 0;
           $scope.myNode = $scope.nName + " profile view";
+
+          // get availible users for defaultOwner
+          userAPIService.getAll($scope.cid)
+          .then(function(response) {
+            const users = response.data.message
+            users.forEach(user => {
+              if(user.roles.includes("device owner")){
+                $scope.deviceUsers.push({uid: user.uid, name: user.name})
+              }
+              if(user.roles.includes("service provider")){
+                $scope.serviceUsers.push({uid: user.uid, name: user.name})
+              }
+            });
+            if($scope.nAutoenabling && $scope.defaultOwner.Device){
+              $scope.selectedDeviceUser={uid: $scope.defaultOwner.Device}
+            }
+            if($scope.nAutoenabling && $scope.defaultOwner.Service){
+              $scope.selectedServiceUser={uid: $scope.defaultOwner.Service}
+            }
+          }) .catch(function(err){
+            console.log(err);
+            Notification.error("Server error");
+          });
         })
         .catch(function(err){
           console.log(err);
@@ -51,15 +88,21 @@ angular.module('VicinityManagerApp.controllers').
     $scope.submitNode = function(){
       // Update existing node
       if($scope.modify && !$scope.creatingNew) {
-        nodeAPIService.updateOne($state.params.nodeId, {name: $scope.nName})
+        nodeAPIService.updateOne($state.params.nodeId, {name: $scope.nName, visible: $scope.nVisibility})
           .then(
             function successCallback(response){
+              $scope.backToList();
               if(response.error) {
-                Notification.success("Error updating Access Point");
-                $scope.backToList();
+                Notification.error("Error updating Access Point");
               } else {
-                Notification.success("Access Point successfully modified!!");
-                $scope.backToList();
+                nodeAPIService.updateDefaultOwner($state.params.nodeId,$scope.buildDefaultOwnerUpdate()).then(
+                  function successCallback(response){
+                    Notification.success("Access Point successfully modified!!");
+                  }, 
+                  function errorCallback(err){
+                    console.log(err);
+                    Notification.error("Error updating Access Point");
+                  })
               }
             },
             function errorCallback(err){
@@ -93,10 +136,25 @@ angular.module('VicinityManagerApp.controllers').
         });
         } 
         
-      }else{
+      } else {
         $window.alert("The passwords do not match!!");
         $scope.nPass = $scope.nPass2 = "";
       }
+    };
+
+    $scope.buildDefaultOwnerUpdate = function(){
+      let update = {}
+      if(!$scope.nAutoenabling){
+        $scope.selectedDeviceUser= { uid: null, name: 'default' }
+        $scope.selectedServiceUser= { uid: null, name: 'default' }
+      }
+      if($scope.defaultOwner.Device != $scope.selectedDeviceUser.uid){
+        update.Device = $scope.selectedDeviceUser.uid
+      }
+      if($scope.defaultOwner.Service != $scope.selectedServiceUser.uid){
+        update.Service = $scope.selectedServiceUser.uid
+      }
+      return update
     };
 
 // ==== Navigation functions =====
@@ -105,6 +163,7 @@ angular.module('VicinityManagerApp.controllers').
         $state.go("root.main.myNodes");
     };
 
+    
     $scope.toModify= function(){
       $scope.modify = true;
       $scope.myNode = "Modifying Access Point: " + $scope.nName;

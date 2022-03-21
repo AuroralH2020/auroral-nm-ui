@@ -26,7 +26,7 @@
           <th>AGID<i ng-click="orderByMe('adid')" class="fa fa-fw fa-sort"/></th>
           <th>Types<i ng-click="orderByMe('types')" class="fa fa-fw fa-sort"/></th>
           <th># Items<i ng-click="orderByMe('# Items')" class="fa fa-fw fa-sort"/></th>
-          <th>Visibility</th>
+          <th>Details</th>
           <th>Key</th>
           <th></th>
         </tr>
@@ -39,34 +39,53 @@
           <td class="col-sm-3">
             <span data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(nod.agid)" >{{nod.agid}}</span>
           </td>
-          <td class="col-sm-3">
-            <div class="row">
-              <div class="col-sm-6">
-                <span>{{nod.type}}</span>
-              </div>
-              <div class="col-sm-6">
-                <img ng-show="nod.type === 'Sharq'" class="pull-right node-logo" src="img/logos/shqlogo.png"/>
-                <img ng-show="nod.type === 'Auroral'" class="pull-right node-logo" src="img/logos/auroral_horizontal.png"/>
-                <img ng-show="nod.type === 'Vicinity'" class="pull-right node-logo" src="img/logos/vcntlogo.png"/>
-              </div>
+          <td class="col-sm-2" ">
+              <img ng-show="nod.type === 'Sharq'" class=" node-logo" src="img/logos/shqlogo.png"/>
+              <img ng-show="nod.type === 'Auroral'" class="node-logo" src="img/logos/auroral_horizontal.png"/>
+              <img ng-show="nod.type === 'Vicinity'" class="node-logo" src="img/logos/vcntlogo.png"/>
             </div>
           </td>
           <td class="col-sm-1">
             <span>{{nod.itemsCount}}</span>
           </td>
-          <td class="col-sm-1">
-            <button data-toggle="tooltip" title="Make invisible to other organisations" ng-show="nod.visible" type="button" ng-click="editVisibility(nod.agid, false)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye fa-lg col-sm-4"></i></button>
-            <button data-toggle="tooltip" title="Make visible to other organisations"  ng-show="!nod.visible" type="button" ng-click="editVisibility(nod.agid, true)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye-slash fa-lg col-sm-4"></i></button>
+          <td class="col-sm-2">
+            <!-- Visibility -->
+            <span class="fa-stack fa-lg" data-toggle="tooltip" title="Visible for other organisations" ng-show="nod.visible">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa fa-eye fa-stack-1x"></i>
+            </span>
+            <span class="fa-stack fa-lg" data-toggle="tooltip" title="Not visible for other organisations" ng-show="!nod.visible">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa fa-eye-slash fa-stack-1x" style="color: rgb(173, 27, 56)"></i>
+            </span>
+            <!-- Device defaultOwner -->
+            <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for devices enabled" ng-show="nod.defaultOwner && nod.defaultOwner.Device">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa-cube fa-stack-1x"></i>
+            </span>
+            <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for devices disabled" ng-show="!nod.defaultOwner || !nod.defaultOwner.Device">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa-cube fa-stack-1x" style="color: rgb(173, 27, 56)"></i>
+            </span>
+            <!-- Service defaultOwner -->
+            <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for services enabled" ng-show="nod.defaultOwner && nod.defaultOwner.Service">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa-paperclip fa-stack-1x"></i>
+            </span>
+            <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for services disabled" ng-show="!nod.defaultOwner || !nod.defaultOwner.Service">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa-paperclip fa-stack-1x" style="color: rgb(173, 27, 56)"></i>
+            </span>
           </td>
           <td class="col-sm-1">
             <div data-toggle="tooltip" title="Public key is stored"  align="center"><i ng-show="nod.hasKey" style="color: green" class="fa fa-shield fa-lg"></i></div>
-            <div data-toggle="tooltip" title="No stored key" align="center"><i ng-show="!nod.hasKey" style="color: red" class="fa fa-close fa-lg"></i></div>
+            <div data-toggle="tooltip" title="Missing public key for this node" align="center"><i ng-show="!nod.hasKey" style="color: rgb(173, 27, 56)" class="fa fa-close fa-lg"></i></div>
           </td>
           <td class="col-sm-2">
               <div align="center">
-                  <button data-toggle="tooltip" title="Rename Access point" type="button" ng-click="goToEdit(nod.agid)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-pencil fa-lg col-sm-4"></i></button>
-                  <button data-toggle="tooltip" title="Delete Access point" type="button" ng-click="deleteNode(nod.agid)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
-                  <button data-toggle="tooltip" title="Modify public key" type="button" ng-click="showModal(nod.agid)" class="btn btn-default"><i style="color: blue; padding-left:10%" class="fa fa-key fa-lg col-sm-4"></i></button>
+                  <button data-toggle="tooltip" title="Edit Access point settings" type="button" ng-click="goToEdit(nod.agid)" style="margin: auto; text-align: center; width: 50px;" class="btn btn-default"><i style="color: black;  " class="fa fa-gear fa-lg "></i></button>
+                  <button data-toggle="tooltip" title="Modify public key" type="button" style="margin: auto; text-align: center; width: 50px;" ng-click="showModal(nod.agid)" class="btn btn-default"><i style="color: black;" class="fa fa-key fa-lg"></i></button>
+                  <button data-toggle="tooltip" title="Delete Access point" type="button" ng-click="deleteNode(nod.agid)" style="margin: auto; text-align: center; width: 50px;" class="btn btn-default"><i style="color: black;" class="fa fa-trash fa-lg "></i></button>
               </div>
           </td>
         </tr>
@@ -116,40 +135,72 @@
   </span>
   <hr>
   <div class="box-body box" ng-repeat="nod in nodes | orderBy:'name':rev">
-      <div class="col-sm-2">
+      <div class="">
         <label>Name: </label>
         <a ui-sref="root.main.nodeDetail({nodeId: nod.agid})"><span>{{nod.name}}</span></a>
       </div>
-      <div class="col-sm-4">
+      <div class="">
         <label>AGID: </label>
         <span>{{nod.agid}}</span>
       </div>
-      <div class="col-sm-4">
+      <div class="">
         <label>Type: </label>
         <span>{{nod.type}}</span>
       </div>
-      <div class="col-sm-3">
+      <div class="">
         <label>Items: </label>
         <span>{{nod.itemsCount}}</span>
       </div>
-      <div class="col-sm-3">
+      <div class="">
+        <label>Details: </label>
+         <!-- Visibility -->
+         <span class="fa-stack fa-lg" data-toggle="tooltip" title="Visible for other organisations" ng-show="nod.visible">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa fa-eye fa-stack-1x"></i>
+        </span>
+        <span class="fa-stack fa-lg" data-toggle="tooltip" title="Not visible for other organisations" ng-show="!nod.visible">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa fa-eye-slash fa-stack-1x" style="color: rgb(173, 27, 56)"></i>
+        </span>
+        <!-- Device defaultOwner -->
+        <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for devices enabled" ng-show="nod.defaultOwner && nod.defaultOwner.Device">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-cube fa-stack-1x"></i>
+        </span>
+        <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for devices disabled" ng-show="!nod.defaultOwner || !nod.defaultOwner.Device">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-cube fa-stack-1x" style="color: rgb(173, 27, 56)"></i>
+        </span>
+        <!-- Service defaultOwner -->
+        <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for services enabled" ng-show="nod.defaultOwner && nod.defaultOwner.Service">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-paperclip fa-stack-1x"></i>
+        </span>
+        <span class="fa-stack fa-lg" data-toggle="tooltip" title="Auto-enable for services disabled" ng-show="!nod.defaultOwner || !nod.defaultOwner.Service">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-paperclip fa-stack-1x" style="color: rgb(173, 27, 56)"></i>
+        </span>
+      </div>
+      <div class="">
         <label>Key: </label>
         <span>
           <i ng-show="nod.hasKey" style="color: green" class="fa fa-shield fa-lg"></i>
-          <i ng-show="!nod.hasKey" style="color: red" class="fa fa-close fa-lg"></i>
+          <i ng-show="!nod.hasKey" style="color: rgb(220,20,60)" class="fa fa-close fa-lg"></i>
         </span>
       </div>
-      <div class="col-sm-3">
-        <div class="col-sm-6">
-          <button data-toggle="tooltip" title="Make invisible to other organisations" ng-show="nod.visible" type="button" ng-click="editVisibility(nod.agid, false)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye fa-lg col-sm-4"></i></button>
-          <button data-toggle="tooltip" title="Make visible to other organisations"  ng-show="!nod.visible" type="button" ng-click="editVisibility(nod.agid, true)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-eye-slash fa-lg col-sm-4"></i></button>
-          <button data-toggle="tooltip" title="Rename Access point" type="button" ng-click="goToEdit(nod.agid)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-pencil fa-lg col-sm-4"></i></button>
-          <button data-toggle="tooltip" title="Modify public key" type="button" ng-click="showModal(nod.agid)" class="btn btn-default"><i style="color: blue; padding-left:10%" class="fa fa-key fa-lg col-sm-4"></i></button>
-          <button data-toggle="tooltip" title="Delete Access point" type="button" ng-click="deleteNode(nod.agid)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
-             
+      
+      <div class="">
+        <div class="">
+          <!-- <button data-toggle="tooltip" title="Make invisible for other organisations" ng-show="nod.visible" type="button" ng-click="editVisibility(nod.agid, false)" style="margin: auto; text-align: center; width: 50px;" class="btn btn-default"><i style="color: black; " class="fa fa-eye fa-lg "></i></button> -->
+          <!-- <button data-toggle="tooltip" title="Make visible for other organisations"  ng-show="!nod.visible" type="button" ng-click="editVisibility(nod.agid, true)" style="margin: auto; text-align: center; width: 50px;" class="btn btn-default"><i style="color: black;" class="fa fa-eye-slash fa-lg "></i></button> -->
+          <button data-toggle="tooltip" title="Edit Access point settings" type="button" ng-click="goToEdit(nod.agid)" style="margin: auto; text-align: center; width: 50px;" class="btn btn-default"><i style="color: black;  " class="fa fa-gear fa-lg "></i></button>
+          <!-- <button data-toggle="tooltip" title="Rename Access point" type="button" ng-click="goToEdit(nod.agid)" class="btn btn-default"><i style="color: black; padding-left:10%" class="fa fa-pencil fa-lg col-sm-4"></i></button> -->
+          <button data-toggle="tooltip" title="Modify public key" type="button" style="margin: auto; text-align: center; width: 50px;" ng-click="showModal(nod.agid)" class="btn btn-default"><i style="color: blue;" class="fa fa-key fa-lg"></i></button>
+          <!-- <button data-toggle="tooltip" title="Modify public key" type="button" ng-click="showModal(nod.agid)" class="btn btn-default"><i style="color: blue; padding-left:10%" class="fa fa-key fa-lg col-sm-4"></i></button> -->
+          <!-- <button data-toggle="tooltip" title="Delete Access point" type="button" ng-click="deleteNode(nod.agid)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button> -->
+          <button data-toggle="tooltip" title="Delete Access point" type="button" ng-click="deleteNode(nod.agid)" style="margin: auto; text-align: center; width: 50px;" class="btn btn-default"><i style="color: black;" class="fa fa-trash fa-lg "></i></button>
         </div>
         <hr>
-       
     </div>
   </div>
   <hr>
