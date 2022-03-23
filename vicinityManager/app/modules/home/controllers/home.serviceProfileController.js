@@ -141,25 +141,7 @@ function ($scope, $window, $state, imageHelpers,  $stateParams, $location, token
           });
         };
 
-  $scope.deleteItem = function(){
-    if(confirm('Are you sure?')){
-      itemsAPIService.deleteItem($scope.item.oid)
-      .then(function(response){
-        if(response.data.error){
-          console.log(response.data.message);
-          Notification.warning('Problem deleting service');
-          $state.go("root.main.allServices");
-        } else {
-          Notification.success('Service deleted');
-          $state.go("root.main.allServices");
-        }
-        })
-        .catch(function(err){
-          console.log(err);
-          Notification.error('Problem deleting service');
-        });
-      }
-    };
+
 
 // HIDE && SHOW DOM =========================
 

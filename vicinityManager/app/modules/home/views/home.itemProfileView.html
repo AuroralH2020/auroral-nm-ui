@@ -159,4 +159,23 @@
           </div>
         </div>
       </div>
+
+      <!-- MODAL -->
+<div id='keymodal' class="modal">
+  <div class="modal-dialog" style="width: 30%; height: 30%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm changes</h4>
+      </div>
+      <div class="modal-body" style="height: 10%;">
+        {{ modalText }}
+        <!-- Item will be removed from contract. Are you sure? -->
+      </div>
+      <div class="modal-footer btn-block">
+        <button class="btn btn-danger pull-left" ng-click="modalCancel()">Cancel</button>
+        <button class="btn btn-primary pull-right" ng-click="modalOk()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
 </section>

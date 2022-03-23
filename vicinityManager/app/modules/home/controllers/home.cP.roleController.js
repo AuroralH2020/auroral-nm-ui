@@ -15,7 +15,10 @@ function ($scope, $rootScope, $window, commonHelpers, $stateParams, userAPIServi
   $scope.newRoles = [];
   $scope.companyId = $stateParams.companyAccountId;
   $scope.rev = false; // Initial sorting set to alphabetical
-
+  // modal
+  $scope.modalText = "";
+  $scope.askedFunction
+  
   $scope.myInit = function(){
   userAPIService.getAll($stateParams.companyAccountId)
     .then(function(response){
@@ -108,7 +111,7 @@ function ($scope, $rootScope, $window, commonHelpers, $stateParams, userAPIServi
     $scope.deleteUser = function(i){
       $scope.selectedUser = i;
       if($scope.oneAdmin()){
-        if(confirm('Are you sure?')){ 
+          $scope.testFunction('Are you sure?', async function () {
           $scope.selectedUser = i;
           userAPIService.deleteUser($scope.selectedUser.uid)
           .then(function(response){
@@ -123,12 +126,31 @@ function ($scope, $rootScope, $window, commonHelpers, $stateParams, userAPIServi
             console.log(err);
             Notification.error(err.data.error);
           });
-        }
-      }else{
+        })
+      } else{
         Notification.warning("There must be at least one administrator");
         $scope.cancelChanges();
       }
     };
+    // MODAL
+    // ask and do
+    $scope.testFunction = function (question, fun){
+      $scope.askedFunction = fun
+      $scope.modalText = question
+      $scope.showModal()
+    }
+
+    // Modal
+    $scope.showModal = function (id) {
+        $('div#modal2').show();
+    };
+    $scope.modalOk = async function(){
+      $('div#modal2').hide();
+      await $scope.askedFunction()
+    }
+    $scope.modalCancel = function(){
+      $('div#modal2').hide();
+    } 
 
     // Ensure at least one admin in company
     $scope.oneAdmin = function(){

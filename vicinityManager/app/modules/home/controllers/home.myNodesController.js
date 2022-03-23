@@ -21,11 +21,16 @@ angular.module('VicinityManagerApp.controllers').
   $scope.loadedPage = false;
   $scope.gatewayKey = "";
   $scope.nodeUpdatingKey = "";
+  // modal
+  $scope.modalText = "";
+  $scope.askedFunction
 
   $('div#keymodal').hide();
+  $('div#modal2').hide();
   $(document).keyup(function(e) {
      if (e.keyCode == 27) {
         $('div#keymodal').hide();
+        $('div#modal2').hide();
     }
   });
 
@@ -47,7 +52,8 @@ angular.module('VicinityManagerApp.controllers').
 
 // Remove func
 $scope.deleteNode = function(agid){
-  if(confirm('Are you sure? It may take some time (Approx 1min every 100 items)')){
+
+  $scope.testFunction('Are you sure? It may take some time (Approx 1min every 100 items)', async function () {
     $scope.loadedPage = false;
     nodeAPIService.removeKey(agid)
     .then(
@@ -64,16 +70,14 @@ $scope.deleteNode = function(agid){
         console.log(err);
         Notification.error("Error deleting node");
       });
-    }
+  })
   };
-
   // Access node management
   $scope.goToEdit = function(i){
       $state.go("root.main.nodeDetail",{ nodeId: i, modify: true });
   };
 
 // MODALS
-
 $scope.showModal = function (id) {
   nodeAPIService.getKey(id) // upd status to removed of node in MONGO
   .then(
@@ -146,6 +150,21 @@ $scope.editVisibility = function (_agid, visibility) {
       Notification.error("Error updating visibility");
     });
 };
+
+// Modal YES or NO
+// ask and do
+$scope.testFunction = function (question, fun){
+  $scope.askedFunction = fun
+  $scope.modalText = question
+  $('div#modal2').show();
+}
+$scope.modalOk = async function(){
+  $('div#modal2').hide();
+  await $scope.askedFunction()
+}
+$scope.modalCancel = function(){
+  $('div#modal2').hide();
+} 
 
 $scope.copyToClipboard = function (oid) {
   navigator.clipboard.writeText(oid).then(function() {

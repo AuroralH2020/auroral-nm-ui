@@ -111,25 +111,6 @@ angular.module('VicinityManagerApp.controllers')
         }
       };
 
-      // Delete items
-      
-      $scope.deleteItem = async function() {
-        if (confirm('Are you sure?')) {
-          try {
-            await itemsAPIService.deleteItem($scope.item.oid)
-            Notification.success('Device deleted');
-            $state.go("root.main.home");
-          } catch (err) {
-            if (err.status < 500) {
-              Notification.warning('Problem deleting device');
-              $state.go("root.main.home");
-            } else {
-              Notification.error("Server error");
-            }
-          }
-        }
-      };
-
       // Access Level
 
       $scope.saveNewAccess = async function() {

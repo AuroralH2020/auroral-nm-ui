@@ -20,6 +20,10 @@ angular.module('VicinityManagerApp.controllers')
       $scope.accessLevelNew = 0;
       $scope.visibilityCaption = ["Private", "Partners with Data Under Request", "Public with Data Under Request"];
       $scope.ALcaption = "Private"
+      // modal
+      $scope.modalText = "";
+      $scope.askedFunction
+
 
     // initialize DOM
 
@@ -37,10 +41,10 @@ angular.module('VicinityManagerApp.controllers')
       $scope.$watch('item', function (value) {
         $scope.$broadcast('itemChanged', value);
       });
+      $('div#keymodal').hide();
 
     // Functions
     
-
       function initData() {
         itemsAPIService.getItemWithAdd($stateParams.itemId)
           .then(function(response) {
@@ -97,16 +101,27 @@ angular.module('VicinityManagerApp.controllers')
         try {
           if($scope.item.hasContracts.length > 0) {
             // ask if remove from contracts
-            if(confirm('Item will be removed from contract. Are you sure?')){
-              // remove from all contracts
+            // $scope.showModal()
+            $scope.testFunction('Item will be removed from contract. Are you sure?', async function () {
+              try {
               for (const ctid of ($scope.item.hasContracts)) {
-                await contractAPIService.removeContractItem(ctid, $scope.item.oid)
+                    await contractAPIService.removeContractItem(ctid, $scope.item.oid)
               };
-            }
-            // user does not want to remove from contract -> return
-            else {
-                return
-            }
+              const query = $scope.item.status === 'Enabled' ?
+                              { "status": 'Disabled' } :
+                              { "status": 'Enabled' }
+                await itemsAPIService.putOne($scope.item.oid, query)
+                Notification.success('Item status updated!!');
+                initData();
+              } catch (err) {
+                if (err.status < 500) {
+                  Notification.warning(err.data.error);
+                } else {
+                  Notification.error("Server error");
+                }
+              }
+            })
+            return
           }
           const query = $scope.item.status === 'Enabled' ?
                         { "status": 'Disabled' } :
@@ -125,7 +140,7 @@ angular.module('VicinityManagerApp.controllers')
 
       // Delete items
       $scope.deleteItem = async function() {
-        if (confirm('Are you sure?')) {
+        $scope.testFunction('Are you sure?', async function () {
           try {
             await itemsAPIService.deleteItem($scope.item.oid)
             Notification.success('Device deleted');
@@ -138,8 +153,8 @@ angular.module('VicinityManagerApp.controllers')
               Notification.error("Server error");
             }
           }
-        }
-      };
+        })
+      }
       // Contract
       $scope.requestContract = async function() {
         try {
@@ -157,26 +172,34 @@ angular.module('VicinityManagerApp.controllers')
         }
       };
       
-
       // Access Level
-
       $scope.saveNewAccess = async function() {
         if (Number($scope.accessLevelNew) !== 0) {
           try {
             // Item is contracted
             if (Number($scope.accessLevelNew) == 1 && $scope.item.hasContracts.length > 0) {
               // ask if remove from contract
-              if(confirm('Item will be removed from contract. Are you sure?')){
+              $scope.testFunction('Item will be removed from contract. Are you sure?', async function () {
                 // remove from all contracts
-                for (const ctid of ($scope.item.hasContracts)) {
-                  await contractAPIService.removeContractItem(ctid, $scope.item.oid)
-                };
-              }
-              // user does not want to remove from contract -> return
-              else {
-                  return
-              }
-              
+                try {
+                  for (const ctid of ($scope.item.hasContracts)) {
+                    await contractAPIService.removeContractItem(ctid, $scope.item.oid)
+                  }
+                  await itemsAPIService.putOne($scope.item.oid, {
+                    accessLevel: Number($scope.accessLevelNew) - 1
+                    })
+                    Notification.success("Access level updated");
+                    initData();
+                    
+                } catch (err) {
+                  if (err.status < 500) {
+                    Notification.warning(err.data.error);
+                  } else {
+                    Notification.error("Server error");
+                  }
+                }
+              })
+              return
             }
             // Changing access level
             await itemsAPIService.putOne($scope.item.oid, {
@@ -193,9 +216,25 @@ angular.module('VicinityManagerApp.controllers')
           }
         }
       };
+      // ask and do
+      $scope.testFunction = function (question, fun){
+        $scope.askedFunction = fun
+        $scope.modalText = question
+        $scope.showModal()
+      }
 
+      // Modal
+      $scope.showModal = function (id) {
+          $('div#keymodal').show();
+      };
+      $scope.modalOk = async function(){
+        $('div#keymodal').hide();
+        await $scope.askedFunction()
+      }
+      $scope.modalCancel = function(){
+        $('div#keymodal').hide();
+      } 
       // Load picture mgmt
-
       var base64String = "";
 
       $("input#input1").on('change', function(evt) {

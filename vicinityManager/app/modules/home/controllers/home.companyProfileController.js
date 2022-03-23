@@ -20,6 +20,9 @@ angular.module('VicinityManagerApp.controllers')
       $scope.services = 0;
       $scope.loaded = false;
       $scope.showInput = false;
+      // modal
+      $scope.modalText = "";
+      $scope.askedFunction
 
       // Initializa DOM elements
       $('a#loc2').show();
@@ -102,15 +105,34 @@ angular.module('VicinityManagerApp.controllers')
       
 
       $scope.cancelNeighbourship = function() {
-        if (confirm('Are you sure? May affect existing contracts.')) {
+        $scope.testFunction('Are you sure? May affect existing contracts.', async function () {
           userAccountAPIService.cancelNeighbourship($stateParams.companyAccountId)
             .then(function(response) {
               Notification.success("Partnership canceled!");
               onlyRefreshAccount();
             })
             .catch(errorCallback);
-        }
+        })
       };
+      // MODAL
+
+      // ask and do
+      $scope.testFunction = function (question, fun){
+        $scope.askedFunction = fun
+        $scope.modalText = question
+        $scope.showModal()
+      }
+      // Modal
+      $scope.showModal = function (id) {
+          $('div#keymodal').show();
+      };
+      $scope.modalOk = async function(){
+        $('div#keymodal').hide();
+        await $scope.askedFunction()
+      }
+      $scope.modalCancel = function(){
+        $('div#keymodal').hide();
+      } 
 
       // Refresh $scope =================
 
@@ -229,7 +251,7 @@ angular.module('VicinityManagerApp.controllers')
       };
 
       $scope.removeOrg = async function() {
-        if (confirm('Are you sure?')) {
+        $scope.testFunction('Are you sure? May affect existing contracts.', async function () {
           try {
             await userAccountAPIService.removeOrganisation()
             Notification.success('Organisation successfully removed!')
@@ -239,7 +261,7 @@ angular.module('VicinityManagerApp.controllers')
             console.log(err)
             Notification.error('Problem removing organisation, contact with the admins')
           }
-        }
+        })
       }
 
       // Avatar change functions ==============
@@ -281,7 +303,6 @@ angular.module('VicinityManagerApp.controllers')
           })
           .then(
             function(response) {
-              console.log(response)
               $scope.avatar = response.config.data.avatar;
               $rootScope.$broadcast('refreshOrganisationAvatar', {avatar: $scope.avatar});
               $('#editCancel1').fadeOut('slow');
