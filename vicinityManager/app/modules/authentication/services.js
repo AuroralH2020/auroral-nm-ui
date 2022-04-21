@@ -13,7 +13,7 @@ angular.module('Authentication')
           };
 
           service.refresh = function(data) {
-            return $http.post(configuration.apiUrl + '/login/refresh',data);
+            return $http.post(configuration.apiUrl + '/login/refresh', data);
           };
 
           service.resetPwd = function(id, data) {
@@ -46,7 +46,7 @@ angular.module('Authentication')
               $window.sessionStorage.username = (tok.iss) || {};
               $window.sessionStorage.userAccountId = (tok.uid) || {};
               $window.sessionStorage.companyAccountId = (tok.org) || {};
-              $http.defaults.headers.common['x-access-token'] = $window.sessionStorage.token;
+              // $http.defaults.headers.common['x-access-token'] = $window.sessionStorage.token;
             }
           };
 
@@ -92,6 +92,10 @@ angular.module('Authentication')
               }
               return false;
             };
+
+          service.test = function(){
+            console.log('this is a test')
+          } 
 
           service.SetRememberMeCookie = function(){
             $http.get(configuration.apiUrl + '/login/remember').then(
@@ -153,4 +157,133 @@ angular.module('Authentication')
       };
       return dT;
     }]
-  );
+  )
+
+.factory('HttpInterceptor', 
+    ['$q', '$window', '$injector',
+    function($q, $window, $injector) {
+      return {
+      'request': function(config) {
+          config.headers = config.headers || {};
+          if ($window.sessionStorage.token) {
+            config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+          }
+          return config;
+        },
+        'response': function(response) {
+          // console.log('responding something here...')
+          return response;
+        }
+    };
+}])
+
+// Request and response pre-processing -- I.e. Sends JWT in every request or do refresh token
+.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.interceptors.push('HttpInterceptor');
+}]);
+
+// // module is your angular module
+
+// module.config(authInterceptorConfig);
+
+// /* @ngInject*/
+// function authInterceptorConfig($httpProvider) {
+//   $httpProvider.interceptors.push('authInterceptor');
+// }
+
+// module.factory('authInterceptor', authInterceptor);
+
+// /* @ngInject */
+// function authInterceptor($q, $injector, $location, $cookies) {
+
+//   var replays = [];
+//   var refreshTokenPromise;
+
+//   var factory = {
+//     request: request,
+//     responseError: responseError
+//   };
+
+//   return factory;
+
+//   //////////
+
+//   // Add authorization token to headers
+//   function request(config) {
+//     config.headers = config.headers || {};
+//     if ($cookies.get('token')) {
+//       config.headers.Authorization = 'Bearer ' + $cookies.get('token');
+//     }
+
+//     return config;
+//   }
+
+//   // Intercept 401s and redirect you to login
+//   function responseError(response) {
+//     if (response.status === 401 && $cookies.get('token')) {
+//       return checkAuthorization(response);
+//     }
+
+//     return $q.reject(response);
+
+//     /////////
+
+//     function checkAuthorization(res) {
+//       return $q(function(resolve, reject) {
+
+//         var replay = {
+//           success: function(){
+//             $injector.get('$http')(res.config).then(resolve, reject);
+//           },
+
+//           cancel: function(){
+//             reject(res);
+//           }
+//         };
+
+//         replays.push(replay);
+
+//         if (!refreshTokenPromise) {
+//           refreshTokenPromise = $injector.get('Auth') // REFRESH TOKEN HERE
+//             .refreshToken()
+//             .then(clearRefreshTokenPromise)
+//             .then(replayRequests)
+//             .catch(cancelRequestsAndRedirect);
+//         }
+//       });
+
+//       ////////////
+
+//       function clearRefreshTokenPromise(auth) {
+//         refreshTokenPromise = null;
+//         return auth;
+//       }
+
+//       function replayRequests(auth) {
+//         replays.forEach(function(replay) {  
+//           replay.success();
+//         });
+
+//         replays.length = 0;
+
+//         return auth;
+//       }
+
+//       function cancelRequestsAndRedirect() {
+
+//         refreshTokenPromise = null;
+//         replays.forEach(function(replay) {  
+//           replay.cancel();
+//         });
+
+//         replays.length = 0;
+
+//         $cookies.remove('token');
+//         var $state = $injector.get('$state');
+
+//         // SET YOUR LOGIN PAGE
+//         $state.go('login');
+//       }
+//     }
+//   }
+// }

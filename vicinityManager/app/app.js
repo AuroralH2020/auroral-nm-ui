@@ -551,12 +551,6 @@ angular.module('VicinityManagerApp', [
 
 })
 
-// Request pre-processing -- Sends JWT in every request
-
-// .config(['$httpProvider', function($httpProvider) {
-//   $httpProvider.interceptors.push('jwtTokenHttpInterceptor');
-// }])
-
 //Angular UI Notification configuration;
 .config(function (NotificationProvider) {
     NotificationProvider.setOptions({
