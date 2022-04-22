@@ -48,7 +48,7 @@
                   <!-- Add the bg color to the header using any of the bg-* classes -->
                   <div class="widget-user-header "ng-class="{'Private':'bg-olive', 'Community':'bg-yellow'}[contract.type]" >
                     <div class="widget-user-image">
-                        <img  style="cursor: pointer" onmouseover="" ui-sref="root.main.contractProfile.items({contractId: contract.ctid})" class="img-circle"  ng-src="{{contract.avatar}}" alt="Contract Avatar">
+                        <img  style="object-fit: contain; width: 65px; height: 65px; cursor: pointer; background-color: white" " onmouseover="" ui-sref="root.main.contractProfile.items({contractId: contract.ctid})" class="img-circle"  ng-src="{{contract.avatar}}" alt="Contract Avatar">
                     </div>
                     <!-- /.widget-user-image -->
                     <h3 class="widget-user-username">{{ contract.displayName | limitTo: 20 }}{{contract.displayName.length > 20 ? '...' : ''}}</h3>

@@ -18,13 +18,13 @@
           <!-- <img class="profile-user-img img-responsive img-circle" ng-src="{{avatar}}" alt="Company profile picture"> -->
 
           <div ng-show="!imAdmin" style="width: 200px; text-align: center; margin: 0 auto">
-            <img ng-src="{{avatar}}" class="img-circle" alt="User profile picture" style="height:200px; width:200px;  text-align: center; border: 3px solid; border-color: #d2d6de">
+            <img ng-src="{{avatar}}" class="img-circle" alt="User profile picture" style="object-fit: contain; height:200px; width:200px;  text-align: center; border: 3px solid; border-color: #d2d6de">
           </div>
 
-          <div ng-show="imAdmin" id="changeAvatar" style="width: 200px; text-align: center; margin: 0 auto">
+          <div ng-show="imAdmin" id="changeAvatar" style="object-fit: contain; width: 200px; text-align: center; margin: 0 auto">
             <span style="position: absolute">+Change avatar</span>
             <a href="" ng-click="showLoadPic()" style="cursor: pointer">
-              <img id="pic" ng-src="{{avatar}}" class="img-circle" alt="User profile picture" style="height:200px; width:200px; text-align: center; border: 3px solid; border-color: #d2d6de">
+              <img id="pic" ng-src="{{avatar}}" class="img-circle" alt="User profile picture" style="object-fit: contain; height:200px; width:200px; text-align: center; border: 3px solid; border-color: #d2d6de">
             </a>
           </div>
 

@@ -274,7 +274,7 @@ angular.module('VicinityManagerApp.controllers')
           var img = new Image;
           img.src = URL.createObjectURL(tgt.files[0]);
           img.onload = function() {
-            base64String = imageHelpers.resizeImage(img, 120, 120, 0); //HERE IS WHERE THE FUNCTION RESIZE IS CALLED!!!!
+            base64String = imageHelpers.resizeImage(img, 256, 256, 0); //HERE IS WHERE THE FUNCTION RESIZE IS CALLED!!!!
             $("img#pic").prop("src", base64String);
           }
       });

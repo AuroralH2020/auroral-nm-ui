@@ -1,0 +1,29 @@
+<div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+  <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+</div>
+
+<div class="active tab-pane" id="activity" >
+  <div class="row" ng-show="loaded">
+    <div ng-repeat="node in nodes" class="col-md-6 col-lg-4">
+      <div class="box box-widget widget-user-2" style="cursor: pointer" ui-sref="root.main.nodeDetail({nodeId: node.agid})">
+        <div style="" class="widget-user-header2" ng-class="getBackgroundColor(node)">
+          <h3 class="widget-user-username2"><a style="color: #FFF" href="">Access point</a></h3>
+          <h5 class="widget-user-desc"><a style="color: #FFF" href="">Owner: {{node.name}}</a></h5>
+          <h5 class="widget-user-desc"><a style="color: #FFF" href="">AGID: {{node.agid}}</a></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="centered" ng-show="!allItemsLoaded && loaded">
+  <h3 ng-click="loadMore()" class="well" style="cursor: pointer">Load more items</h3>
+</div>
+
+<div class="centered" ng-show="allItemsLoaded && !noItems">
+  <h3 class="well">All items loaded!</h3>
+</div>
+
+<div class="centered" ng-show="noItems" >
+   <h3 class="well">No items found...</h3>
+</div>
