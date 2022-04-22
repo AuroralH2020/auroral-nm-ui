@@ -167,13 +167,16 @@ angular.module('Authentication')
           config.headers = config.headers || {};
           if ($window.sessionStorage.token) {
             config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
-            // TBD renew token if expiring soon
+            // TBD renew token if expiring soon (Consider using timeout instead)
           }
           return config;
         },
-        'response': function(response) {
-        },
+        // 'response': function(response) {
+        //   // console.log(response.data.message)
+        //   return response;
+        // },
         'responseError': function(response) {
+          console.log(response.status)
           if (response.status === 401) {
             $injector.get('Notification').error(response.statusText + ': ' + response.data.error)
             $injector.get('AuthenticationService').signout()

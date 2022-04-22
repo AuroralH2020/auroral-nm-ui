@@ -131,6 +131,17 @@ angular.module('VicinityManagerApp', [
           }
         })
 
+        .state('root.main.allSessions', {
+          url: '/allSessions',
+          views: {
+            'mainContentView@root':
+              {
+                templateUrl: 'modules/home/views/home.sessions.html',
+                controller: 'sessionsController'
+              }
+          }
+        })
+
         .state('root.main.myNodes', {
           url: '/myNodes',
           views: {

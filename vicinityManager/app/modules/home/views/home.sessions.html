@@ -1,0 +1,71 @@
+<section class="content-header">
+    <h1>Sessions table</h1>
+</section>
+
+<div class="coll-md-1" ng-hide="loadedPage" style="margin: auto; width:60%">
+  <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+</div>
+
+<section class="content" ng-show="loadedPage && !imMobile">
+<div class="box">
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table id="RegTable" class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Username<i ng-click="orderByMe('created')" class="fa fa-fw fa-sort"/></th>
+        <th>Logged Since<i ng-click="orderByMe('companyName')" class="fa fa-fw fa-sort"/></th>
+        <th>Session IP<i ng-click="orderByMe('email')" class="fa fa-fw fa-sort"/></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="session in sessionsList | orderBy:myOrderBy:rev">
+        <td>{{session.uid}}</td>
+        <td>{{session.username}}</td>
+        <td>{{session.session_start}}</td>
+        <td>{{session.ip}}</td>
+        <td>
+          <i ng-click="removeAction(session.uid)" style="color: red; padding-left:10%" class="fa fa-times fa-lg col-sm-4"></i>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+          <!-- /.box -->
+</section>
+
+<!-- MOBILE VERSION -->
+<section ng-show="loadedPage && imMobile" style="margin: auto; width:80%">
+  <hr>
+  <span>
+    <i ng-click="onSort(false)"  class="fa fa-sort-alpha-asc btn btn-default" aria-hidden="true"></i>
+    <i ng-click="onSort(true)"  class="fa fa-sort-alpha-desc btn btn-default" aria-hidden="true"></i>
+  </span>
+  <hr>
+  <div class="box-body box" ng-repeat="session in sessionsList | orderBy:'session_start':rev">
+    <div>
+      <label>UID: </label>
+      <span>{{session.uid}}</span>
+    </div>
+    <div>
+      <label>Username: </label>
+      <span>{{session.username}}</span>
+    </div>
+    <div>
+      <label>Logged since: </label>
+      <span>{{session.session_start}}</span>
+    </div>
+    <div>
+      <label>IP: </label>
+      <span>{{session.ip}}</span>
+    </div>
+    <div class="centered" style="padding:5%">
+      <button ng-click="removeAction(session.uid)" class="btn btn-block btn-danger pull-right">Remove</button>
+    </div>
+  </div>
+  <hr>
+</section>
