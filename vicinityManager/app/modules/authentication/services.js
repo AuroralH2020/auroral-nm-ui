@@ -9,11 +9,11 @@ angular.module('Authentication')
           var service = {};
 
           service.recover = function(data) {
-            return $http.post(configuration.apiUrl + '/login/recovery',data);
+            return $http.post(configuration.apiUrl + '/login/recovery', data);
           };
 
-          service.refresh = function(data) {
-            return $http.post(configuration.apiUrl + '/login/refresh', data);
+          service.refresh = function() {
+            return $http.post(configuration.apiUrl + '/login/refresh', { refreshToken: $window.sessionStorage.refreshToken });
           };
 
           service.resetPwd = function(id, data) {
@@ -31,30 +31,34 @@ angular.module('Authentication')
             return $http.post(configuration.apiUrl + '/login/passwordless/' + token);
           };
 
-          
-
           service.signout = function(){
             service.ClearCredentialsAndInvalidateToken();
             $location.url('/login');
             $cookies.remove("r_12fg"); // If log out remove rememberMe cookie
           };
 
-          service.SetCredentials = function(token){
-            if (token) {
-              $window.sessionStorage.token = token;
+          service.SetCredentials = function(data){
+            if (data) {
+              $window.sessionStorage.token = data.token;
+              $window.sessionStorage.refreshToken = data.refreshToken;
               var tok = tokenDecoder.deToken();
-              $window.sessionStorage.username = (tok.iss) || {};
-              $window.sessionStorage.userAccountId = (tok.uid) || {};
-              $window.sessionStorage.companyAccountId = (tok.org) || {};
+              $window.sessionStorage.username = tok.iss || {};
+              $window.sessionStorage.userAccountId = tok.uid || {};
+              $window.sessionStorage.companyAccountId = tok.org || {};
+              $window.sessionStorage.expiration = tok.exp || {};
+              // Renew token
+              $timeout(service.refreshToken, 60000*60) // Refresh token every hour
               // $http.defaults.headers.common['x-access-token'] = $window.sessionStorage.token;
             }
           };
 
           service.ClearCredentials = function(){
             $window.sessionStorage.removeItem('token');
+            $window.sessionStorage.removeItem('refreshToken');
             $window.sessionStorage.removeItem('username');
             $window.sessionStorage.removeItem('userAccountId');
             $window.sessionStorage.removeItem('companyAccountId');
+            $window.sessionStorage.removeItem('expiration');
             // $http.defaults.headers.common['x-access-token'] = "";
           };
 
@@ -93,15 +97,19 @@ angular.module('Authentication')
               return false;
             };
 
-          service.test = function(){
-            console.log('this is a test')
-          } 
-
           service.SetRememberMeCookie = function(){
             $http.get(configuration.apiUrl + '/login/remember').then(
               function successCallback(response){
                 $cookies.remove("r_12fg");
                 $cookies.putObject("r_12fg", response.data.message);
+              }
+            );
+          };
+
+          service.refreshToken = function(){
+            service.refresh().then(
+              function successCallback(response){
+                service.SetCredentials(response.data.message)
               }
             );
           };
@@ -122,9 +130,7 @@ angular.module('Authentication')
               function toSolidBytes(match, p1) {
                   return String.fromCharCode('0x' + p1);
           }));
-
         },
-
         decode: function (str) {
           // Base64 decoder
           // Going backwards: from bytestream, to percent-encoding, to original string.
@@ -137,33 +143,29 @@ angular.module('Authentication')
 
 // ======= Decode token as a service =======
 
-.factory('tokenDecoder',
-        ['Base64', '$window',
-        function(Base64, $window){
-          var dT = {};
-          dT.deToken = function(){
-            var token = $window.sessionStorage.token;
-            //var header = token.split('.')[0];
-            var payload = token.split('.')[1];
-            //var decodedHeader = Base64.decode(header);
-            var decodedPayload = Base64.decode(payload);
-            var decodedPayload2 = decodedPayload.split('}')[0] + '}';
-            // var headerObj = JSON.parse(decodedHeader);
-            var payloadObj = JSON.parse(decodedPayload2, function(key, value){
-              //console.log(key);
-              return value;
-            });
-          return payloadObj;
-      };
-      return dT;
-    }]
-  )
+.factory('tokenDecoder', ['Base64', '$window',
+    function(Base64, $window){
+      return {
+        deToken: () => {
+        var token = $window.sessionStorage.token;
+        //var header = token.split('.')[0];
+        var payload = token.split('.')[1];
+        //var decodedHeader = Base64.decode(header);
+        var decodedPayload = Base64.decode(payload);
+        decodedPayload = decodedPayload.split('}')[0] + '}';
+        // var headerObj = JSON.parse(decodedHeader);
+        var payloadObj = JSON.parse(decodedPayload)
+        return payloadObj;
+      }
+    }
+  }]
+)
 
 .factory('HttpInterceptor', 
     ['$q', '$window', '$injector',
     function($q, $window, $injector) {
       return {
-      'request': function(config) {
+      'request': (config) => {
           config.headers = config.headers || {};
           if ($window.sessionStorage.token) {
             config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
@@ -175,7 +177,7 @@ angular.module('Authentication')
         //   // console.log(response.data.message)
         //   return response;
         // },
-        'responseError': function(response) {
+        'responseError': (response) => {
           console.log(response.status)
           if (response.status === 401) {
             $injector.get('Notification').error(response.statusText + ': ' + response.data.error)

@@ -27,7 +27,7 @@ angular.module('VicinityManagerApp.controllers').
           (it) => { return {
               ...it,
               fullname: it.name + " " + it.surname,
-              date: new Date(it.created).toISOString()
+              date: new Date(it.created).toLocaleString()
             }
           }
         );

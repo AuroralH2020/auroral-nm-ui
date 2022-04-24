@@ -29,7 +29,7 @@ angular.module('VicinityManagerApp.controllers').
             return {
               uid: session[0],
               username: session[1],
-              session_start: new Date(Number(session[2])*1000).toISOString(),
+              session_start: new Date(Number(session[2])*1000).toLocaleString(),
               ip: session[3]
             }
           }
