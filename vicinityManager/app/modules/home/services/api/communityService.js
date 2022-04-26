@@ -18,7 +18,8 @@ factory('communityService', ['$http', 'configuration', '$window', function($http
       });
     }
     //type
-    if(type && Array.isArray(type)){
+    if(type){
+      type = Array.isArray(type)? type : [type]
       type.forEach(d => {
         url+='type='+d + '&'
       });

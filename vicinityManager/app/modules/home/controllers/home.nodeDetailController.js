@@ -6,6 +6,7 @@ angular.module('VicinityManagerApp.controllers').
             $window,
             commonHelpers,
             nodeAPIService,
+            communityService,
             userAPIService,
             Notification) {
 
@@ -28,15 +29,15 @@ angular.module('VicinityManagerApp.controllers').
     $scope.defaultOwner = { Device: null, Service: null, Marketplace: null}
     $scope.selectedServiceUser = { uid: null, name: "disabled" }
     $scope.selectedDeviceUser = { uid: null, name: "disabled"} 
-    // $scope.deviceUsers=[{uid: null, name: "disabled"},{uid:"123", name: "ATA"}, {uid:"321", name: "BETA"}]
-    // $scope.serviceUsers=[{uid: null, name: "disabled"},{uid:"123", name: "ATA"}, {uid:"321", name: "BETA"}]
-
-    $scope.creatingNew = true;
+    $scope.selectedParties =  []
+    $scope.availibleParties =  []
+    
     $scope.nodeId = $state.params.nodeId
     $scope.modify = $state.params.modify
-    $scope.myNode = "Creating new Access Point";
+    
 
     if($scope.nodeId !== '0'){
+      // view already registered node
       $scope.creatingNew = false;
       nodeAPIService.getOne($state.params.nodeId)
       .then(function(response){
@@ -80,7 +81,12 @@ angular.module('VicinityManagerApp.controllers').
           Notification.error("Server error");
         });
     } else {
+      // creating new node
       $scope.nAgentType = "Auroral";
+      $scope.creatingNew = true;
+      $scope.myNode = "Creating new Access Point";
+      // get all availible partnerships
+      getAvailibleParties()
     }
 
 // ======== Main functions =========
@@ -97,6 +103,7 @@ angular.module('VicinityManagerApp.controllers').
               } else {
                 nodeAPIService.updateDefaultOwner($state.params.nodeId,$scope.buildDefaultOwnerUpdate()).then(
                   function successCallback(response){
+                    $scope.selectedParties = []
                     Notification.success("Access Point successfully modified!!");
                   }, 
                   function errorCallback(err){
@@ -114,19 +121,26 @@ angular.module('VicinityManagerApp.controllers').
         }
       if($scope.nPass === $scope.nPass2){
         // Create new node
+
+        // get selected parties
+        $scope.selectedParties = $scope.availibleParties.map((party)=> party.checked? party.commId: undefined)
         if ($scope.creatingNew) {
           var query = {
             name: $scope.nName,
             type: $scope.nAgentType,
-            password: $scope.nPass
+            password: $scope.nPass,
+            communities: $scope.selectedParties
           };
         nodeAPIService.postOne(query)
         .then(function(response){
           if(response.error) {
             Notification.success("Error creating Access Point");
+            $scope.selectedParties = []
             $scope.backToList();
           } else {
             Notification.success("Access Point successfully created!!");
+            // add to communities (Parties)
+            $scope.selectedParties = []
             $scope.backToList();
           }
         })
@@ -141,6 +155,27 @@ angular.module('VicinityManagerApp.controllers').
         $scope.nPass = $scope.nPass2 = "";
       }
     };
+
+    async function getAvailibleParties() {
+      let offset=0
+      $scope.availibleParties = []
+      try {
+        while (true) {
+         const result =  await communityService.getAllCommunities('Partnership', offset, undefined, undefined)
+         result.data.message.forEach((party) => {
+           $scope.availibleParties.push(party)
+         })
+          offset+=12
+          if(result.data.message.length < 12){
+            break;
+          }
+         }
+      } catch (error) {
+        Notification.error('Error communicating with server')
+        console.log(error)
+      }
+      $scope.loaded = true
+    }
 
     $scope.buildDefaultOwnerUpdate = function(){
       let update = {}

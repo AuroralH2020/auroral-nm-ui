@@ -73,6 +73,17 @@
         <span class="help-block" style="color: green" ng-show="nPass===nPass2 && nPass2"><i class="fa fa-check"></i> Passwords match!</span>
         <span class="help-block" style="color: red" ng-show="nPass!==nPass2 && nPass2"><i class="fa fa-times"></i> Passwords do not match</span>
       </div>
+
+      <!-- add to partnership group (community) -->
+      <div class="form-group">
+        <label>Add to Partnership groups</label>
+        <div ng-repeat="party in availibleParties">
+          <input class="form-check-input" ng-model="party.checked" class="form-control" type="checkbox" value="false" id="party.commId">
+          <label class="form-check-label" for="flexCheckDefault" style="font-weight: normal !important;">
+            {{party.description}}
+          </label>
+        </div>
+      </div>
       </div>
 
   <div class="box-footer">
