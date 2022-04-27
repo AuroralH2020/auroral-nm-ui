@@ -100,7 +100,7 @@
           <!-- Add the bg color to the header using any of the bg-* classes -->
           <div class="widget-user-header" ng-class="{'Device':'bg-aqua', 'Service':'bg-yellow'}[dev.type]">
             <div class="widget-user-image">
-              <img class="img-circle" style="background-color: white" ng-src="{{dev.avatar}}" alt="Device Avatar">
+              <img class="img-circle" style="object-fit: contain; width: 65px; height: 65px; background-color: white" ng-src="{{dev.avatar}}" alt="Device Avatar">
             </div>
             <!-- /.widget-user-image -->
             <span ng-if="dev.online" class="pull-right"><i class="fa fa-circle text-success"></i></span>

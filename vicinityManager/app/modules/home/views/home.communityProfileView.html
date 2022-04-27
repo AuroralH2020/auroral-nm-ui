@@ -1,0 +1,74 @@
+<section class="content-header">
+  <h1>Community profile</h1>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+      <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block" />
+    </div>
+
+    <div class="col-md-3" ng-show="loaded">
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          <!-- Community details -->
+          <h3 class="profile-username text-center" style="margin-top: 15px">{{community.name}}</h3>
+          <h5 data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(community.commId,'community ID')"
+            class="text-muted text-center" style="margin-top: 15px">Community ID: {{community.commId}}</h5>
+
+          <!-- Community info -->
+          <ul class="list-group list-group-unbordered">
+            <!-- Parties -->
+            <li class="list-group-item">
+              <i class="fa fa-users margin-r-5"></i>
+              <strong>Parties</strong>
+              <div ng-repeat="org in community.organisations">
+                <a ui-sref="root.main.companyProfile.items({companyAccountId: org.cid})">{{org.name}}</a>
+              </div>
+            </li>
+            <!-- Details -->
+            <li class="list-group-item">
+              <p>
+                <strong>Description:</strong>
+              <p class=" text-muted">{{community.description}}</p>
+              
+              </p>
+              <p>
+                <strong>Type:</strong> {{community.type}}
+              </p>
+              <p>
+                <strong>Domain:</strong> {{community.domain}}
+              </p>
+              <p>
+                <strong>Organisations:</strong> {{community.organisations.length}}
+              </p>
+              <p>
+                <strong>Nodes:</strong> {{community.nodesNum}}
+              </p>
+              <p>
+                <a ng-show="inCommunity" ng-click="leaveCommunity(community.commId)"
+                  class="pull-center btn-sm btn-danger" style="margin-left: 5px"> Leave community </a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <div class="col-md-9" ng-show="loaded">
+      <div class="nav-tabs-custom">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+          <li ui-sref-active="active"><a ui-sref="root.main.communityProfile.nodes"><i
+                class="fa fa-cube"></i>&nbsp;Nodes in community</a></li>
+          <li ui-sref-active="active"><a ui-sref="root.main.communityProfile.edit"><i
+                class="fa fa-check-square-o"></i>&nbsp;Update my nodes</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" ui-view="tabPanel">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

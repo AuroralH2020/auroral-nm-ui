@@ -120,6 +120,17 @@ angular.module('VicinityManagerApp', [
           }
         })
 
+        .state('root.main.allCommunities', {
+          url: '/allCommunities',
+          views: {
+            'mainContentView@root':
+              {
+                templateUrl: 'modules/home/views/home.allCommunitiesView.html',
+                controller: 'allCommunitiesController'
+              }
+          }
+        })
+
         .state('root.main.allRegistrations', {
           url: '/allRegistrations',
           views: {
@@ -481,6 +492,37 @@ angular.module('VicinityManagerApp', [
             {
               templateUrl: 'modules/home/views/home.conProfile.EditView.html',
               controller:  'conProfileEditController'
+            }
+          }
+        })
+
+        .state('root.main.communityProfile', {
+          url: '/profile/communitu/:commId',
+          views: {
+            'mainContentView@root':
+            {
+              templateUrl: 'modules/home/views/home.communityProfileView.html',
+              controller:  'communityProfileController'
+            }
+          }
+        })
+        .state('root.main.communityProfile.nodes', {
+          url: '/nodes',
+          views: {
+            'tabPanel@root.main.communityProfile':
+            {
+              templateUrl: 'modules/home/views/home.communityProfile.nodesView.html',
+              controller:  'communityProfileNodesController'
+            }
+          }
+        })
+        .state('root.main.communityProfile.edit', {
+          url: '/edit',
+          views: {
+            'tabPanel@root.main.communityProfile':
+            {
+              templateUrl: 'modules/home/views/home.communityProfile.editView.html',
+              controller:  'communityProfileEditController'
             }
           }
         })

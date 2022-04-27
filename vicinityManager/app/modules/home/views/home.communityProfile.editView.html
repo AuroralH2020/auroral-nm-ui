@@ -1,0 +1,35 @@
+<div class="coll-md-1" ng-hide="loaded" style="margin: auto; width:60%">
+  <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block"/>
+</div>
+<!-- Edit table -->
+<div ng-show="!noNodes" class="box ">
+  <div class="box-body">
+    <table id="RegTable" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Name<i ng-click="orderByMe('name')" class="fa fa-fw fa-sort"/></th>
+          <th>AGID<i ng-click="orderByMe('agid')" class="fa fa-fw fa-sort"/></th>
+          <th>In community<i class="fa fa-fw "/></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="node in nodes | orderBy:myOrderBy:rev">
+          <td class="col-sm-2">
+            <a ui-sref="root.main.nodeDetail({nodeId: node.agid})"><span>{{node.name}}</span><br></a>
+          </td>
+          <td class="col-sm-2">
+            </a><span data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(node.agid)" >{{node.agid}}</span>
+          </td>
+          <td class="col-sm-1">
+            <button ng-show="node.hasCommunities.includes(commId)" data-toggle="tooltip" title="Remove from community"  type="button" ng-click="shareNode(node.agid, false)" class="btn btn-default"><i style="color: green; padding-left:10%" class="fa fa-check-circle-o fa-lg col-sm-4"></i></button>
+            <button ng-show="!node.hasCommunities.includes(commId)" data-toggle="tooltip" title="Share in community"  type="button" ng-click="shareNode(node.agid, true)" class="btn btn-default"><i style="color: red; padding-left:10%" class="fa fa-close fa-lg col-sm-4"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="centered" ng-show="noNodes">
+   <h3 class="well">No nodes found...</h3>
+</div>

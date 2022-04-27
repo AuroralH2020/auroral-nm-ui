@@ -16,14 +16,14 @@
 
               <!-- Profile Image -->
               <!--  IMAGE -->
-              <div ng-show="!isMyItem" style="width: 200px; text-align: center; margin: 0 auto">                 <!--      class="profile-user-img img-responsive img-circle" -->
-                <img ng-src="{{item.avatar}}" class="img-circle" alt="Device profile picture" style="height:120px; width:120px; text-align: center; border: 3px solid; border-color: #d2d6de">
+              <div ng-show="!isMyItem" style="object-fit: contain; width: 200px; text-align: center; margin: 0 auto">                 <!--      class="profile-user-img img-responsive img-circle" -->
+                <img ng-src="{{item.avatar}}" class="img-circle" alt="Device profile picture" style="object-fit: contain; height:120px; width:120px; text-align: center; border: 3px solid; border-color: #d2d6de">
               </div>
 
-              <div ng-show="isMyItem" id="changeAvatar" style="width: 200px; text-align: center; margin: 0 auto">
+              <div ng-show="isMyItem" id="changeAvatar" style="object-fit: contain; width: 200px; text-align: center; margin: 0 auto">
                 <span style="position: absolute">+ Change avatar</span>
                 <a href="" ng-click="showLoadPic()">
-                  <img id="pic" class="img-circle" ng-src="{{item.avatar}}" alt="Device profile picture" style="height:120px; width:120px;  text-align: center; border: 3px solid; border-color: #d2d6de">
+                  <img id="pic" class="img-circle" ng-src="{{item.avatar}}" alt="Device profile picture" style="object-fit: contain; height:120px; width:120px;  text-align: center; border: 3px solid; border-color: #d2d6de">
                 </a>
               </div>
 
