@@ -92,7 +92,7 @@
             ng-class="{'Partnership':'bg-olive', 'Community':'bg-yellow'}[community.type]">
             <div class="widget-user-image">
               <img style="cursor: pointer; background-color: white; object-fit: contain; height:65px; width:65px;" onmouseover=""
-                ui-sref="root.main.communityProfile({commId: community.commId})" class="img-circle"
+                ui-sref="root.main.communityProfile.nodes({commId: community.commId})" class="img-circle"
                 ng-src="{{community.avatar}}" alt="Community Avatar">
             </div>
             <span class='pull-right' ng-show="community.domain.length > 0">
@@ -109,7 +109,7 @@
 
           </div>
           <a href="" class="widget-user-footer-moreinfo"
-            ui-sref="root.main.communityProfile({commId: community.commId})">More info<i
+            ui-sref="root.main.communityProfile.nodes({commId: community.commId})">More info<i
               class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -132,11 +132,11 @@
               <tr ng-repeat="community in communities ">
                 <td class="col-sm-4">
                   <a style="color: #000; z-index: -1" href=""
-                    ui-sref="root.main.communityProfile({commId: community.commId})">{{ community.name }}</a>
+                    ui-sref="root.main.communityProfile.nodes({commId: community.commId})">{{ community.name }}</a>
                 </td>
                 <td class="col-sm-4">
                   <a style="color: #000; z-index: -1" href=""
-                    ui-sref="root.main.communityProfile({commId: community.commId})">{{ community.type }}</a>
+                    ui-sref="root.main.communityProfile.nodes({commId: community.commId})">{{ community.type }}</a>
                 </td>
                 <td class="col-sm-2">
                   <span>{{ community.domain }}</span>
@@ -167,15 +167,15 @@
       <h3 class="well">All items loaded!</h3>
     </div>
 
-    <div id="addCommunityModal" class="modal">
-      <div class="modal-dialog" >
-        <div class="modal-content">
+    <div id="addCommunityModal" class="modal" >
+      <div class="modal-dialog" style="">
+        <div class="modal-content" style="height: 100%; ">
           <div class="modal-header">
             <button type="button" class="close" ng-click="closeModal()" aria-label="Close">
               <span aria-hidden="true">×</span></button>
             <h4 class="modal-title">Creating new community</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" style="height: 100%;">
             <div class="">
               <label>Name</label>
               <input type="text" class="form-control" ng-model="newCommunityName" placeholder="My new community">
@@ -203,7 +203,7 @@
               </ul>
             </div>
             <div class="modal-footer btn-block">
-              <button type="button" class="btn btn-danger pull-left" ng-click="removeModal()">Cancel</button>
+              <button type="button" class="btn btn-danger pull-left" ng-click="closeModal()">Cancel</button>
               <button type="button" class="btn btn-primary" ng-click="saveModal()">Create community</button>
             </div>
           </div>
@@ -211,6 +211,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+    </div>
 
 </section>
 <script>
