@@ -178,7 +178,6 @@ angular.module('Authentication')
         //   return response;
         // },
         'responseError': (response) => {
-          console.log(response.status)
           if (response.status === 401) {
             $injector.get('Notification').error(response.statusText + ': ' + response.data.error)
             $injector.get('AuthenticationService').signout()
