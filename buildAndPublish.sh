@@ -28,11 +28,22 @@ echo Build and push image ${IMAGE_NAME} with tag ${ENV}
 # Do login
 docker login ${REGISTRY}
 
-# Build depending on env
-docker build --build-arg MY_ENV=${ENV} --tag ${IMAGE_NAME} -f Dockerfile .
 
-# Tag the image
-docker image tag ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}:${ENV}
+# Multiarch builder
+docker buildx use multiplatform
 
-# Push image
-docker push ${REGISTRY}/${IMAGE_NAME}:${ENV}
+# Build images & push to private registry
+docker buildx build --platform linux/amd64 \
+                    --tag ${REGISTRY}/${IMAGE_NAME}:${ENV} \
+                    --build-arg MY_ENV=${ENV} \
+                    -f Dockerfile . --push
+
+
+# # Build depending on env
+# docker build --build-arg MY_ENV=${ENV} --tag ${IMAGE_NAME} -f Dockerfile .
+
+# # Tag the image
+# docker image tag ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}:${ENV}
+
+# # Push image
+# docker push ${REGISTRY}/${IMAGE_NAME}:${ENV}
