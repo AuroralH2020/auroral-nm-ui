@@ -497,7 +497,7 @@ angular.module('VicinityManagerApp', [
         })
 
         .state('root.main.communityProfile', {
-          url: '/profile/communitu/:commId',
+          url: '/profile/community/:commId',
           views: {
             'mainContentView@root':
             {
@@ -512,7 +512,7 @@ angular.module('VicinityManagerApp', [
             'tabPanel@root.main.communityProfile':
             {
               templateUrl: 'modules/home/views/home.communityProfile.nodesView.html',
-              controller:  'communityProfileNodesController'
+              controller:  'comProfNodesController'
             }
           }
         })
@@ -522,7 +522,7 @@ angular.module('VicinityManagerApp', [
             'tabPanel@root.main.communityProfile':
             {
               templateUrl: 'modules/home/views/home.communityProfile.editView.html',
-              controller:  'communityProfileEditController'
+              controller:  'comProfEditController'
             }
           }
         })

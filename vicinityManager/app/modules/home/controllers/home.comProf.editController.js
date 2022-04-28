@@ -7,7 +7,7 @@ Filters the items based on the following rules:
   . are flagged as public
   . if I am partner of the company, also items flagged for friends
 */
-.controller('communityProfileEditController',
+.controller('comProfEditController',
 function ($scope, $window, commonHelpers, $stateParams, $state, communityService, nodeAPIService,  Notification, configuration) {
 
   // ====== Triggers window resize to avoid bug =======
