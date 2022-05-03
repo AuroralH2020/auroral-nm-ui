@@ -28,9 +28,11 @@
 
           <!-- SEARCH TEMPORARILY DISABLED -->
           <!-- <form ui-view="searchUp" action="" method="get" class="navbar-form navbar-left bvr-navbar-form">
-          </form> -->
+          </form>  -->
 
           <ul class="nav navbar-nav">
+            <li class="dropdown notifications-menu" ui-view="searchUp">
+            </li>
             <!-- <li class="dropdown messages-menu" ui-view="messagesMenuView"/> -->
             <!-- Notifications Menu -->
             <li class="dropdown notifications-menu" ui-view="notificationsMenuView">
@@ -60,33 +62,42 @@
     <aside class="main-sidebar">
 
       <div class="sidebar">
-
-      <div class="sidebar-menu" ui-view="companyAccountView"></div>
-
-        <ul class="sidebar-menu">
+        <div class="sidebar-menu" ui-view="companyAccountView"></div>
+        <!-- NORMAL -->
+        <ul ng-show="!imMobile"class="sidebar-menu">
           <li onload="myInit()" class="header">MENU</li>
           <!-- Optionally, you can add icons to the links -->
 
           <!-- tabindex="0" in li ?? -->
           <!-- checkbox hack -->
           <!-- JS -->
-
-          <!-- <li><a ui-sref="root.main.neighbourhood" ><i class="fa fa-link"></i> <span >Neighbourhood</span></a></li> -->
-          <!-- <li><a ui-sref="root.main.mydevices"><i class="fa fa-link"></i> <span>My devices</span></a></li> -->
-          <!-- <li><a ui-sref="root.main.partneredEntities"><i class="fa fa-link"></i> <span>Partnered entities</span></a></li> -->
-          <!-- <li><a ui-sref="root.main.myServices"><i class="fa fa-link"></i> <span>My services</span></a></li> -->
           <li><a ui-sref="root.main.allItems" ><i class="fa fa-cube"></i> <span>Items</span></a></li>
           <li><a ui-sref="root.main.allMarketplaces"><i class="fa fa-shopping-basket"></i> <span>Marketplaces</span></a></li>
           <li><a ui-sref="root.main.allContracts"><i class="fa fa-handshake-o  "></i> <span>Contracts</span></a></li>
           <li><a ui-sref="root.main.allCommunities"><i class="fa fa-th-large  "></i> <span>Communities</span></a></li>
           <li><a ui-sref="root.main.allEntities"><i class="fa fa-users"></i> <span>Organisations</span></a></li>
           <li><a ng-show="isIntegrator" ui-sref="root.main.myNodes"><i class="fa fa-plug"></i> <span>Access Points</span></a></li>
-          <!-- <li><a ng-show="isIntegrator || isDevOwn || isServProv" ui-sref="root.main.contracts"><i class="fa fa-link"></i> <span>Contracts</span></a></li> -->
-          <!-- <li><a ng-show="isAdmin" ui-sref="root.main.counters"><i class="fa fa-link"></i> <span>Counters</span></a></li> -->
           <li><a ng-show="isDev" ui-sref="root.main.allRegistrations"><i class="fa fa-user-plus" ></i> <span>Registrations</span></a></li>
           <li><a ng-show="isDev" ui-sref="root.main.allSessions"><i class="fa fa-sign-in" ></i> <span>Sessions</span></a></li>
+          <!-- <li><a ui-sref="root.main.neighbourhood" ><i class="fa fa-link"></i> <span >Neighbourhood</span></a></li> -->
+          <!-- <li><a ui-sref="root.main.mydevices"><i class="fa fa-link"></i> <span>My devices</span></a></li> -->
+          <!-- <li><a ui-sref="root.main.partneredEntities"><i class="fa fa-link"></i> <span>Partnered entities</span></a></li> -->
+          <!-- <li><a ui-sref="root.main.myServices"><i class="fa fa-link"></i> <span>My services</span></a></li> -->
+          <!-- <li><a ng-show="isIntegrator || isDevOwn || isServProv" ui-sref="root.main.contracts"><i class="fa fa-link"></i> <span>Contracts</span></a></li> -->
+          <!-- <li><a ng-show="isAdmin" ui-sref="root.main.counters"><i class="fa fa-link"></i> <span>Counters</span></a></li> -->
         </ul>
-
+        <!-- mobile -->
+        <ul ng-show="imMobile" class="sidebar-menu">
+          <li onload="myInit()" class="header">MENU</li>
+          <li><a data-toggle="offcanvas" ui-sref="root.main.allItems" ><i class="fa fa-cube"></i> <span>Items</span></a></li>
+          <li><a data-toggle="offcanvas" ui-sref="root.main.allMarketplaces"><i class="fa fa-shopping-basket"></i> <span>Marketplaces</span></a></li>
+          <li><a data-toggle="offcanvas" ui-sref="root.main.allContracts"><i class="fa fa-handshake-o  "></i> <span>Contracts</span></a></li>
+          <li><a data-toggle="offcanvas" ui-sref="root.main.allCommunities"><i class="fa fa-th-large  "></i> <span>Communities</span></a></li>
+          <li><a data-toggle="offcanvas" ui-sref="root.main.allEntities"><i class="fa fa-users"></i> <span>Organisations</span></a></li>
+          <li><a data-toggle="offcanvas" ng-show="isIntegrator" ui-sref="root.main.myNodes"><i class="fa fa-plug"></i> <span>Access Points</span></a></li>
+          <li><a data-toggle="offcanvas" ng-show="isDev" ui-sref="root.main.allRegistrations"><i class="fa fa-user-plus" ></i> <span>Registrations</span></a></li>
+          <li><a data-toggle="offcanvas" ng-show="isDev" ui-sref="root.main.allSessions"><i class="fa fa-sign-in" ></i> <span>Sessions</span></a></li>
+        </ul>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->

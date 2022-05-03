@@ -25,6 +25,11 @@ function ($rootScope, $scope, $window, Base64, tokenDecoder, commonHelpers, $int
   $rootScope.skinColor = 'blue'; //Default on error
   $rootScope.myColor = 'my-blue';
   $rootScope.bckColor = 'bck-blue';
+
+  $rootScope.imMobile = Number($window.innerWidth) < 768;
+  $(window).on('resize',function(){
+    $rootScope.imMobile = Number($window.innerWidth) < 768;
+  });
   userAccountAPIService.getConfigurationParameters($window.sessionStorage.companyAccountId)
     .then(
       function successCallback(response){

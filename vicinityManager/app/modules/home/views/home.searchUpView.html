@@ -1,7 +1,70 @@
-<div id="ramik" class="input-group">
-  <input id="bvr-search-input" type="text" name="q" class="form-control" placeholder="Search..." ng-model="searchTerm"/>
-  <span class="input-group-btn">
-    <button type="submit" name="search" id="search-btn" class="btn btn-flat" ui-sref="root.main.searchresults({searchTerm: searchTerm})" ng-disabled="searchTerm.length < 2"><i class="fa fa-search"></i>
-    </button>
-  </span>
-</div>
+<!-- TODO place to navbar in large views -->
+<a href="" ng-click="init()" class="dropdown-toggle" data-toggle="dropdown" >
+  <i class="fa fa-search"></i>
+</a>
+ <ul class="dropdown-menu animated-dropdown-menu outerMenu" ng-change="console.log('test')">
+  <div class="searchBoxDiv">
+    <input id="searchInput" ng-model='searchText' ng-change="refreshSearch()" type="text" class="form-control" placeholder="Search...">
+    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+  </div>
+    <ul class="menu">
+      <li ng-show="searchText.length === 0">Start typing to search</li>
+      <li ng-show="searchText.length !== 0  &&searchText.length < 3">Please include at least three character</li>
+      <div ng-show="loading" class="overlay centered" >
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+      <li ng-repeat="result in searchResults">
+          <!-- Item -->
+          <div ng-show="result.type==='Item' " class="bg-aqua" style="margin: 5px;">
+            <div  style="cursor: pointer; " >
+              <h3 ui-sref="root.main.itemProfile.description({itemId: result.id})" class="">{{result.name}}</h3>
+              <h5 style="color: black;" class="widget-user-desc" >Type: {{result.type}}</h5>
+              <h5 style="color: black;" class="widget-user-desc" >OID: {{result.id}}</h5>
+            </div>
+          </div>
+          <!-- Community -->
+          <div ng-show="result.type==='Community'"class="bg-yellow" style="margin: 5px;">
+            <div style="cursor: pointer;" ui-sref="root.main.communityProfile.nodes({commId: result.id})">
+              <h3 class="">{{result.name}}</h3>
+              <h5 style="color: black;" class="widget-user-desc" >Type: {{result.type}}</h5>
+              <h5 style="color: black;" class="widget-user-desc" >CommID: {{result.id}}</h5>
+            </div>
+          </div>
+           <!-- Partnership -->
+           <div ng-show="result.type === 'Partnership' "class="bg-olive" style="margin: 5px;">
+            <div style="cursor: pointer;" ui-sref="root.main.communityProfile.nodes({commId: result.id})">
+              <h3 class="">{{result.name}}</h3>
+              <h5 style="color: black;" class="widget-user-desc" >Type: {{result.type}}</h5>
+              <h5 style="color: black;" class="widget-user-desc" >CommID: {{result.id}}</h5>
+            </div>
+          </div>
+          <!-- Node -->
+          <div ng-show="result.type==='Node'"class="bg-blue" style="margin: 5px;">
+            <div style="cursor: pointer;" ui-sref="root.main.communityProfile.nodes({commId: result.id})">
+              <h3 class="">{{result.name}}</h3>
+              <h5 style="color: black;" class="widget-user-desc" >Type: {{result.type}}</h5>
+              <h5 style="color: black;" class="widget-user-desc" >AGID: {{result.id}}</h5>
+            </div>
+          </div>
+          <!-- Organisation -->
+          <div ng-show="result.type==='Organisation'" class="" style="background-color: #9ACD32;margin: 5px;">
+            <div style="cursor: pointer;" ui-sref="root.main.companyProfile.items({companyAccountId: result.id})">
+              <h3 style="color: white;" class="">{{result.name}}</h3>
+              <h5 style="color: black;" class="widget-user-desc" >Type: {{result.type}}</h5>
+              <h5 style="color: black;" class="widget-user-desc" >CID: {{result.id}}</h5>
+            </div>
+          </div>
+          <!-- Users -->
+          <div ng-show="result.type==='User'" class="bg-user" style="margin: 5px;">
+            <div style="cursor: pointer;" ui-sref="root.main.userProfile.items({userAccountId: result.id})">
+              <h3 style="color: white;" class="">{{result.name}}</h3>
+              <h5 style="color: black;" class="widget-user-desc" >Type: {{result.type}}</h5>
+              <h5 style="color: black;" class="widget-user-desc" >UID: {{result.id}}</h5>
+            </div>
+            </div>
+        </div>
+         
+      </li>
+    </ul>
+    <li ng-show="!everythingLoaded &&  searchResults.length > 0">There are more results. Please be more specific</li>
+</ul>
