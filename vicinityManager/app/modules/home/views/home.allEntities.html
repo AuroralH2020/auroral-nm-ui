@@ -40,7 +40,7 @@
             <img ng-show="activeCompanyID === result.cid" ng-src="{{result.avatar}}" alt="Comapany Avatar" class="img-circle" alt="Device profile picture" style="object-fit: contain; height:65px; width:65px; text-align: center;  background-color: white;" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">
 
             <!-- <img ng-show="activeCompanyID === result.cid" style="object-fit: contain; background-color: white;  width:65px; heigth:65px; cursor: pointer" onmouseover="" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})" class="img-circle" ng-src="{{result.avatar}}" alt="Comapany Avatar"> -->
-            <img ng-show="!(activeCompanyID === result.cid)" style="object-fit: contain; background-color: white;  width:65px; heigth:65px; cursor: pointer" onmouseover="" ui-sref="root.main.companyProfile.items({companyAccountId: result.cid})" class="img-circle" ng-src="{{result.avatar}}" alt="Comapany Avatar">
+            <img ng-show="!(activeCompanyID === result.cid)" style="object-fit: contain; width: 65px; height: 65px; background-color: white; cursor: pointer" onmouseover="" ui-sref="root.main.companyProfile.items({companyAccountId: result.cid})" class="img-circle" ng-src="{{result.avatar}}" alt="Comapany Avatar">
           </div>
 
           <i data-toggle="tooltip" title="You are partners" ng-if="myFriends.indexOf(result.cid) !== -1" class="tooltip2 fa fa-users push-right" aria-hidden="true"></i>
