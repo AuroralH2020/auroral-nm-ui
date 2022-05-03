@@ -33,7 +33,7 @@ angular.module('VicinityManagerApp.controllers').
       } else {
         $scope.searchResults = []
       }
-      // console.log($scope.searchResults)
+      console.log($scope.searchResults)
     }
 
     $scope.openLargeSearch = function (param) {
