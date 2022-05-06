@@ -31,11 +31,11 @@
 
 <!-- WIDGET VIEW-->
 <div class="row" ng-if="!listView || imMobile">
-    <div class="col-md-4" ng-repeat="result in resultsList" >
+    <div class="col-md-6 col-lg-4" ng-repeat="result in resultsList" >
       <!-- Widget: user widget style 1 -->
-      <div class="box box-widget widget-user-2">
+      <div  class="box box-widget widget-user-2">
         <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-gold">
+        <div style="" class="widget-user-header bg-gold">
           <div class="widget-user-image">
             <img ng-show="activeCompanyID === result.cid" ng-src="{{result.avatar}}" alt="Comapany Avatar" class="img-circle" alt="Device profile picture" style="object-fit: contain; height:65px; width:65px; text-align: center;  background-color: white;" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">
 
@@ -44,10 +44,12 @@
           </div>
 
           <i data-toggle="tooltip" title="You are partners" ng-if="myFriends.indexOf(result.cid) !== -1" class="tooltip2 fa fa-users push-right" aria-hidden="true"></i>
-
           <!-- /.widget-user-image -->
-          <h3 ng-show="activeCompanyID === result.cid" class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">{{result.name}}</a></h3>
-          <h3 ng-show="!(activeCompanyID === result.cid)" class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.items({companyAccountId: result.cid})">{{result.name}}</a></h3>
+          <!-- <h3 ng-show="activeCompanyID === result.cid" class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})"> A{{result.name}}</a></h3> -->
+          <!-- <h3 ng-show="!(activeCompanyID === result.cid)" class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.items({companyAccountId: result.cid})">B{{result.name}}</a></h3> -->
+          <!-- style="white-space: nowrap;" -->
+          <h3  ui-sref="root.main.companyProfile.items({companyAccountId: result.cid})" style="cursor: pointer; text-overflow: ellipsis; overflow:hidden; white-space: pre; color: #FFF;" " class="widget-user-username"><a style="color: #FFF" >{{result.name}}</h3>
+          <!-- <h3  class="widget-user-username"><a style="color: #FFF" ui-sref="root.main.companyProfile.items({companyAccountId: result.cid})">B{{result.name}}</a></h3> -->
           <h5 class="widget-user-desc"><i class="fa fa-map-marker margin-r-5"></i> {{result.location}}</h5>
         </div>
         <a ng-show="activeCompanyID === result.cid" href="" class="widget-user-footer-moreinfo" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">More info <i class="fa fa-arrow-circle-right"></i></a>

@@ -98,16 +98,16 @@
         <!-- Widget: user widget style 1 -->
         <div class="box box-widget widget-user-2" >
           <!-- Add the bg color to the header using any of the bg-* classes -->
-          <div class="widget-user-header" ng-class="{'Device':'bg-aqua', 'Service':'bg-yellow'}[dev.type]">
+          <div style="min-height: 160px; " class="widget-user-header" ng-class="{'Device':'bg-aqua', 'Service':'bg-yellow'}[dev.type]">
             <div class="widget-user-image">
               <img class="img-circle" style="object-fit: contain; width: 65px; height: 65px; background-color: white" ng-src="{{dev.avatar}}" alt="Device Avatar">
             </div>
             <!-- /.widget-user-image -->
             <span ng-if="dev.online" class="pull-right"><i class="fa fa-circle text-success"></i></span>
             <span ng-if="!dev.online" class="pull-right"><i class="fa fa-circle text-muted"></i></span>
-            <h3 class="widget-user-username">{{ dev.name | limitTo: 20 }}{{dev.name.length > 20 ? '...' : ''}}</h3>
+            <h3  style="text-overflow: ellipsis; overflow:hidden; white-space: pre;"  class="widget-user-username">{{ dev.name }}</h3>
             <h5 class="widget-user-desc" >{{dev.type}}</h5>
-            <h5 class="widget-user-desc">{{ dev.companyName | limitTo: 20 }}{{dev.companyName.length > 20 ? '...' : ''}}</h5>
+            <h5 class="widget-user-desc" style="text-overflow: ellipsis; overflow:hidden; white-space: pre;">{{ dev.companyName }}</h5>
             <h5 class="widget-user-desc" ng-if="dev.status === 'Disabled'">{{dev.status}}</h5>
             <h5 class="widget-user-desc" ng-if="dev.status !== 'Disabled'">{{dev.privacyCaption}}</h5>
           </div>

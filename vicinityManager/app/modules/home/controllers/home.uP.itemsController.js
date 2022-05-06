@@ -45,7 +45,7 @@ function ($scope, $window, configuration, commonHelpers, $stateParams, itemsAPIS
       $scope.things.push(response.data.message[i]);
     }
     $scope.noItems = ($scope.things.length === 0);
-    $scope.allItemsLoaded = response.data.message.length < 12;
+    $scope.allItemsLoaded = response.data.message.length < 24;
     $scope.loaded = true;
     $scope.loadedPage = true;
   }

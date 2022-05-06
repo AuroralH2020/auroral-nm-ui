@@ -61,7 +61,7 @@ angular.module('VicinityManagerApp.controllers').controller('allItemsController'
           $scope.items.push(addCaptionAndAvatar(it))
         })
         $scope.noItems = ($scope.items.length === 0);
-        $scope.allItemsLoaded = responseItem.data.message.length < 12;
+        $scope.allItemsLoaded = responseItem.data.message.length < 24;
         $scope.loaded = true;
         $scope.loadedPage = true;
       } catch (err) {
@@ -79,7 +79,7 @@ angular.module('VicinityManagerApp.controllers').controller('allItemsController'
           return addCaptionAndAvatar(it)
         })
         $scope.noItems = ($scope.items.length === 0);
-        $scope.allItemsLoaded = response.data.message.length < 12;
+        $scope.allItemsLoaded = response.data.message.length < 24;
         $scope.loaded = true;
         $scope.loadedPage = true;
         changeHeader($scope.selectedFilter.access.id);
@@ -169,7 +169,7 @@ $scope.onFilterChange = function(item){
 
   $scope.loadMore = function(){
       $scope.loaded = false;
-      $scope.offset += 12;
+      $scope.offset += 24;
       init();
   };
 

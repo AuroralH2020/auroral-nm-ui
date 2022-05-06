@@ -51,7 +51,7 @@
                         <img  style="object-fit: contain; width: 65px; height: 65px; cursor: pointer; background-color: white" " onmouseover="" ui-sref="root.main.contractProfile.items({contractId: contract.ctid})" class="img-circle"  ng-src="{{contract.avatar}}" alt="Contract Avatar">
                     </div>
                     <!-- /.widget-user-image -->
-                    <h3 class="widget-user-username">{{ contract.displayName | limitTo: 20 }}{{contract.displayName.length > 20 ? '...' : ''}}</h3>
+                    <h3 style="cursor: pointer; text-overflow: ellipsis; overflow:hidden; white-space: pre; "  class="widget-user-username">{{ contract.displayName }}</h3>
                     <!-- /.widget-user-image -->
                     <h5 class="widget-user-desc" >{{ contract.type }} contract</h5>
                     <h5 class="widget-user-desc" >Items: {{ contract.itemsNumber }} </h5>

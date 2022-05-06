@@ -43,7 +43,7 @@ angular.module('VicinityManagerApp.controllers').
             }
           });
           $scope.resultsList = $scope.resultsList.concat(newOrgs)
-          $scope.allItemsLoaded = response.data.message.length < 12;
+          $scope.allItemsLoaded = response.data.message.length < 24;
           $scope.loaded = true;
         })
         .catch(function(err){
@@ -78,7 +78,7 @@ angular.module('VicinityManagerApp.controllers').
 
       $scope.loadMore = function(){
           $scope.loaded = false;
-          $scope.offset += 12;
+          $scope.offset += 24;
           init();
       };
 

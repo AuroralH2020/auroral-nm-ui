@@ -99,11 +99,11 @@
               <span class="label label-default paddedSides">{{community.domain}}</span>
             </span>
             <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">{{ community.name | limitTo: 20 }}{{community.name.length > 20 ? '...' :
+            <h3 style="cursor: pointer; text-overflow: ellipsis; overflow:hidden; white-space: pre; color: #FFF;" class="widget-user-username">{{ community.name | limitTo: 20 }}{{community.name.length > 20 ? '...' :
               ''}}</h3>
             <!-- /.widget-user-image -->
             <h5 ng-show="community.type ==='Community'" class="widget-user-desc">{{ community.type }}</h5>
-            <h5 ng-show="community.type ==='Partnership'" class="widget-user-desc">{{community.description}}</h5>
+            <h5 style="cursor: pointer; text-overflow: ellipsis; overflow:hidden; white-space: pre; " ng-show="community.type ==='Partnership'" class="widget-user-desc">{{community.description}}</h5>
             <h5 class="widget-user-desc">Organisations: {{ community.organisationsNum }} </h5>
             <h5 class="widget-user-desc">Nodes: {{ community.nodesNum }} </h5>
 
