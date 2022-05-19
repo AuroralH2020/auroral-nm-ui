@@ -9,7 +9,8 @@
       <div class="box box-widget widget-user-2" style="cursor: pointer" onmouseover="" ui-sref="root.main.itemProfile.description({itemId: device.oid})">
         <div style="z-index: -2" class="widget-user-header2" ng-class="{'Device':'bg-aqua', 'Service':'bg-yellow'}[device.type]">
           <div class="widget-user-image">
-            <img class="img-circle" style="background-color: white" ng-src="{{device.avatar}}" alt="Device Avatar">
+            <!-- <img ng-src="{{friend.avatar}}" alt="Comapany Avatar" class="img-circle" alt="Device profile picture" style="object-fit: contain; height:65px; width:65px; text-align: center;  background-color: white;" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})"> -->
+            <img class="img-circle" style="object-fit: contain; height:65px; width:65px; text-align: center;  background-color: white;" ng-src="{{device.avatar}}" alt="Device Avatar">
           </div>
           <span class="pull-right" id="circle_gray" ><a style="cursor:default" title="Unknown" alt="Unknown"> &nbsp; &nbsp; &nbsp;</a></span>
           <h3 class="widget-user-username2"><a style="object-fit: contain; width: 65px; height: 65px; color: white; cursor: pointer" href="">{{device.name}}</a></h3>

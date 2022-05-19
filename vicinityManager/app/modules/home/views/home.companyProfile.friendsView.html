@@ -10,7 +10,7 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-gold">
                     <div class="widget-user-image">
-                        <img class="img-circle" ng-src="{{friend.avatar}}" alt="User Avatar">
+                        <img ng-src="{{friend.avatar}}" alt="Comapany Avatar" class="img-circle" alt="Device profile picture" style="object-fit: contain; height:65px; width:65px; text-align: center;  background-color: white;" ui-sref="root.main.companyProfile.friends({companyAccountId: result.cid})">
                     </div>
                     <!-- /.widget-user-image -->
                     <h3 style="cursor: pointer; text-overflow: ellipsis; overflow:hidden; white-space: pre; color: #FFF;"class="widget-user-username"><a style="color: #FFF" href="">{{friend.name}}</a></h3>       <!-- {{friend.accountOf.name}}-->

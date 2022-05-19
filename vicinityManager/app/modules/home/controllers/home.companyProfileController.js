@@ -317,6 +317,14 @@ angular.module('VicinityManagerApp.controllers')
           .catch(errorCallback);
       };
 
+      $scope.copyToClipboard = function (oid, id='ID') {
+        navigator.clipboard.writeText(oid).then(function() {
+          Notification.success(id + " has been copied");
+        }, function(err) {
+          Notification.error("Could not copy text");
+        });
+      }
+
       function errorCallback(err) {
         if (err.status === 404) {
           console.log(err);
