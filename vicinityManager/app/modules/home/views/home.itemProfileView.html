@@ -13,7 +13,18 @@
 
           <div class="box box-primary">
             <div class="box-body box-profile">
-
+              <span data-toggle="tooltip" title="Last updated: {{item.lastSeen}}" class='pull-center' ng-show="item.online">
+                <span class="label label-default paddedSides bg-green">
+                  <i class="fa fa-signal margin-r-5"></i>
+                  Online
+                  </span>
+              </span>
+              <span data-toggle="tooltip" title="Last updated: {{item.lastSeen}}" class='pull-center' ng-show="!item.online">
+                <span class="label label-default paddedSides ">
+                  <i class="fa fa-times margin-r-5"></i>
+                  Offline
+                  </span>
+              </span>
               <!-- Profile Image -->
               <!--  IMAGE -->
               <div ng-show="!isMyItem" style="object-fit: contain; width: 200px; text-align: center; margin: 0 auto">                 <!--      class="profile-user-img img-responsive img-circle" -->
@@ -77,22 +88,22 @@
                     <br>
                   </div>
                   <span ng-show="isMyOrgItem && item.hasContracts.length === 0"> Not included</span> 
-
+                  
                 </li>
-
-                  <!-- Ownership -->
-                  <li class="list-group-item">
-                    <i class="fa fa-user margin-r-5"></i>
-                    <strong>Owner</strong>
+               
+                <!-- Ownership -->
+                <li class="list-group-item">
+                  <i class="fa fa-user margin-r-5"></i>
+                  <strong>Owner</strong>
+                  <br>
+                  <a ui-sref="root.main.companyProfile.items({companyAccountId: item.cid})">{{item.companyName}}</a>
+                  <p>
+                    {{item.owner.name}}
                     <br>
-                    <a ui-sref="root.main.companyProfile.items({companyAccountId: item.cid})">{{item.companyName}}</a>
-                    <p>
-                      {{item.owner.name}}
-                      <br>
-                      <a ng-show="itemEnabled" ui-sref="root.main.userProfile.items({companyAccountId: item.cid, userAccountId: item.uid})">{{item.owner.email}}</a>
-                      <a class="text-muted" ng-show="!itemEnabled">Unassigned</a>
-                    </p>
-                  </li>
+                    <a ng-show="itemEnabled" ui-sref="root.main.userProfile.items({companyAccountId: item.cid, userAccountId: item.uid})">{{item.owner.email}}</a>
+                    <a class="text-muted" ng-show="!itemEnabled">Unassigned</a>
+                  </p>
+                </li>
 
                   <!-- Infrastructure -->
                   <li class="list-group-item" ng-show="isMyOrgItem">

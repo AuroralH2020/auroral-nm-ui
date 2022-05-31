@@ -53,6 +53,11 @@ angular.module('VicinityManagerApp.controllers')
             $scope.loaded = false;
             try {
               $scope.item = response.data.message;
+              // calculate lastSeen
+              const d = new Date()
+              d.setSeconds(d.getSeconds() - 900 + $scope.item.ttl)
+              $scope.item.lastSeen = d.toUTCString()
+
               $scope.item.uid = $scope.item.uid === undefined ? {} : $scope.item.uid; // Case device disabled
               $scope.itemEnabled = $scope.item.status === 'Enabled';
               $scope.ALcaption = $scope.visibilityCaption[$scope.item.accessLevel];
