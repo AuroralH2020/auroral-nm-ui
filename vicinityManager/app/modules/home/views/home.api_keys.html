@@ -1,0 +1,167 @@
+<section class="content-header">
+  <h1>API keys</h1>
+</section>
+
+
+<div class="coll-md-1" ng-hide="loadedPage" style="margin: auto; width:60%">
+  <i class="fa fa-refresh fa-spin fa-4x" style="text-align: center; display: block" />
+</div>
+
+<section class="content" ng-show="loadedPage ">
+  <span class=" pull-right">
+    <div>
+      <button class="btn btn-default" ng-click="openAddNewKey()">
+        <span class="glyphicon glyphicon-plus">
+        </span>New API key</button>
+    </div>
+  </span>
+  <hr>
+  <div class="box">
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table id="RegTable" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th class="col-sm-2">Name</th>
+            <th class="col-sm-3">Keyid<i ng-click="orderByMe('keyid')" class="fa fa-fw fa-sort" /></th>
+            <th class="col-sm-2">Created<i ng-click="orderByMe('created')" class="fa fa-fw fa-sort" /></th>
+            <th class="col-sm-1">Permissions</th>
+            <th class="col-sm-1">Remove </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="key in api_keys ">
+            <td>{{key.name}}</td>
+            <td>
+              <p data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(key.keyid,'keyid')">{{key.keyid}}
+              </p>
+            </td>
+            <td>{{key.created}}</td>
+            <td>
+              <a ng-show="key.ACL.cid.length > 0" ng-click="showACLDetail(key.keyid)">Whole organisation</a>
+              <a ng-show="key.ACL.agid.length > 0" ng-click="showACLDetail(key.keyid)">Some nodes</a>
+              <a ng-show="key.ACL.oid.length > 0" ng-click="showACLDetail(key.keyid)">Some items</a>
+            </td>
+            <td>
+              <i ng-click="removeKey(key.keyid)" style="color: red; padding-left:10%" class="fa fa-times fa-lg"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</section>
+
+<div id="modalACLDetail" class="modal">
+  <div class="modal-content">
+    <div class="modal-header" id="ACLDetailHeader">
+      API key: {{ACLDetailInfo.name}}
+      <span ng-click="closeACLDetail()" id="closing" class="close">×</span>
+    </div>
+    <div class="modal-body">
+      <!-- ID -->
+      <div ng-show="ACLDetailInfo.keyid ">
+        <h4>API keyid:</h4>
+        <p data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(ACLDetailInfo.keyid,'keyid')">
+          {{ACLDetailInfo.keyid}}</p>
+      </div>
+      <!-- SECRET -->
+      <div ng-show="ACLDetailInfo.secretKey">
+        <h4>API secret-key:</h4>
+        <p data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(ACLDetailInfo.secretKey,'secret key')""> {{ACLDetailInfo.secretKey}}</p>
+       <p style=" color: red;"> Please store your secret key. It is not possible to view it later</p>
+      </div>
+
+      <div ng-show="ACLDetailInfo.ACL.cid.length>0">
+        <h4>Organisation permissions:</h4>
+        <li ng-repeat="org in ACLDetailInfo.ACL.cid">
+          {{org}}
+        </li>
+      </div>
+      <div ng-show="ACLDetailInfo.ACL.oid.length>0">
+        Items permissions:
+        <li ng-repeat="item in ACLDetailInfo.ACL.oid">
+          {{item}}
+        </li>
+      </div>
+      <div ng-show="ACLDetailInfo.ACL.agid.length>0">
+        Nodes permissions:
+        <li ng-repeat="node in ACLDetailInfo.ACL.agid">
+          {{node}}
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalNewApiKey" class="modal">
+  <div class="modal-dialog" style="">
+    <div class="modal-content" style="height: 100%; ">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="closeAddNewKey()" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Creating new API key</h4>
+      </div>
+      <div class="modal-body" style="height: 100%;">
+        <div class="">
+          <label>Name</label>
+          <input type="text" class="form-control" ng-model="newApiKeySelected.name" placeholder="API key name">
+        </div>
+        <div class="form-check form-check-inline">
+          <label>Filtering permission:</label>
+          <br />
+          <input ng-disabled="!isAdmin" type="radio" ng-model="newApiKeySelected.type" value="cid" id="radio.cid">
+          <label ng-class="{'text-muted': !isAdmin}" style="font-weight: normal;" for="radio.cid">Whole
+            organisation</label>
+          <br />
+          <input ng-disabled="!isIntegrator" type="radio" ng-model="newApiKeySelected.type" value="agid"
+            id="radio.agid">
+          <label ng-class="{'text-muted': !isIntegrator}" style="font-weight: normal;" for="radio.agid">By node</label>
+          <br />
+          <input ng-disabled="!isServProv && !isDevOwn" type="radio" ng-model="newApiKeySelected.type" value="oid"
+            id="radio.oid">
+          <label ng-class="{'text-muted': !isServProv && !isDevOwn}" style="font-weight: normal;" for="radio.oid">By
+            item</label>
+          <br />
+        </div>
+        <!--  by item -->
+        <div ng-show="newApiKeySelected.type === 'oid'">
+          <div class="form-check form-check-inline">
+            <label>Item filtering:</label>
+            <br />
+            <input type="radio" ng-model="newApiKeySelected.oid.type" id="radio.oid.all" value="all">
+            <label style="font-weight: normal;" for="radio.oid.all"> your items</label>
+            <br />
+            <input ng-disabled="true" type="radio" ng-model="newApiKeySelected.oid.type" id="radio.oid.selected"
+              value="selected">
+            <label data-toggle="tooltip" title="Not implemented" style="font-weight: normal;" class="text-muted"
+              for="radio.oid.selected">Manual selection</label>
+            <br />
+          </div>
+        </div>
+        <!-- by node -->
+        <div ng-show="newApiKeySelected.type === 'agid'">
+          <label class="form-check-label" for="flexCheckDefault">Nodes</label>
+          <br>
+          <ul>
+            <li ng-repeat="node in newApiKeySelected.agid.nodes">
+              <label>{{node.name}}</label>
+              <button ng-click="removeNode(node)" type="button" class=""><i class="fa fa-minus"></i></button>
+            </li>
+            <select ng-model="selectedNewNode"
+              ng-options="node as node.name for node in availibleNodes track by node.agid"></select>
+            <button ng-click="addNode()" type="button" class=" "><i class="fa fa-plus"></i></button>
+          </ul>
+        </div>
+        <div class="modal-footer btn-block">
+          <button type="button" class="btn btn-danger pull-left" ng-click="closeAddNewKey()">Cancel</button>
+          <button type="button" class="btn btn-primary" ng-click="storeAddNewKey()">Add new key</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</div>

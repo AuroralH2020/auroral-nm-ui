@@ -153,6 +153,17 @@ angular.module('VicinityManagerApp', [
           }
         })
 
+        .state('root.main.api_keys', {
+          url: '/apiKeys',
+          views: {
+            'mainContentView@root':
+              {
+                templateUrl: 'modules/home/views/home.api_keys.html',
+                controller: 'api_keysController'
+              }
+          }
+        })
+
         .state('root.main.myNodes', {
           url: '/myNodes',
           views: {
