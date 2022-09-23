@@ -5,11 +5,11 @@
 <div class="active tab-pane" id="activity" >
   <div class="row" ng-show="loaded">
     <div ng-repeat="node in nodes" class="col-md-6 col-lg-4">
-      <div class="box box-widget widget-user-2" style="cursor: pointer" ui-sref="root.main.nodeDetail({nodeId: node.agid})">
-        <div style="" class="widget-user-header2" ng-class="getBackgroundColor(node)">
+      <div class="box box-widget widget-user-2" style="cursor: pointer">
+        <div class="widget-user-header2" ng-class="getBackgroundColor(node)">
           <h3 class="widget-user-username2"><a style="color: #FFF" href="">Access point</a></h3>
           <h5 class="widget-user-desc"><a style="color: #FFF" href="">Owner: {{node.name}}</a></h5>
-          <h5 class="widget-user-desc"><a style="color: #FFF" href="">AGID: {{node.agid}}</a></h5>
+          <h5 class="widget-user-desc"><a data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(node.agid,'AGID')" style="color: #FFF">AGID: {{node.agid}}</a></h5>
         </div>
       </div>
     </div>

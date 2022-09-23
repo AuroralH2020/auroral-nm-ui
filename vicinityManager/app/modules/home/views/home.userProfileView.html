@@ -59,7 +59,9 @@
         <input id="editSurnameInput" style="display: block; margin-top: 5px; margin-left: 0px" class="style-1" type="text" ng-model="surname"></input>
 
         <hr>
-
+        <!-- company -->
+        <strong><i class="fa fa-users margin-r-5"></i> Company</strong>
+        <p ui-sref="root.main.companyProfile.friends({companyAccountId: cid})" class="text-muted">{{companyName}}</p>
         <!-- Email -->
         <strong><i class="fa fa-at margin-r-5"></i> Email</strong>
         <p class="text-muted">{{email}}</p>
