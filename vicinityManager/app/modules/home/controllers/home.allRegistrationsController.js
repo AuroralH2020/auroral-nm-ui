@@ -45,7 +45,7 @@ angular.module('VicinityManagerApp.controllers').
 // Functions
   $scope.loadMore = function(){
     $scope.loaded = false;
-    $scope.offset += 2;
+    $scope.offset += 24;
     init();
   };
 
