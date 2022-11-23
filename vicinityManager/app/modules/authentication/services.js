@@ -9,26 +9,26 @@ angular.module('Authentication')
           var service = {};
 
           service.recover = function(data) {
-            return $http.post(configuration.apiUrl + '/login/recovery', data);
+            return $http.post(configuration.apiUrl + '/auth/password/recovery', data);
           };
 
           service.refresh = function() {
-            return $http.post(configuration.apiUrl + '/login/refresh', { refreshToken: $window.sessionStorage.refreshToken });
+            return $http.post(configuration.apiUrl + '/auth/token/refresh', { refreshToken: $window.sessionStorage.refreshToken });
           };
 
           service.resetPwd = function(id, data) {
-            return $http.put(configuration.apiUrl + '/login/recovery/' + id ,data);
+            return $http.put(configuration.apiUrl + '/auth/password/recovery/' + id ,data);
           };
 
           service.Login = function(username, password) {
-            return $http.post(configuration.apiUrl + '/login/authenticate', { username: username, password: password});
+            return $http.post(configuration.apiUrl + '/auth/token', { username: username, password: password});
           };
 
           service.Passwordless = function(username) {
-            return $http.post(configuration.apiUrl + '/login/passwordless', { username });
+            return $http.post(configuration.apiUrl + '/auth/login/passwordless', { username });
           };
           service.PasswordlessLogin = function(token) {
-            return $http.post(configuration.apiUrl + '/login/passwordless/' + token);
+            return $http.post(configuration.apiUrl + '/auth/login/passwordless/' + token);
           };
 
           service.signout = function(){
@@ -42,8 +42,8 @@ angular.module('Authentication')
               $window.sessionStorage.token = data.token;
               $window.sessionStorage.refreshToken = data.refreshToken;
               var tok = tokenDecoder.deToken();
-              $window.sessionStorage.username = tok.iss || {};
-              $window.sessionStorage.userAccountId = tok.uid || {};
+              $window.sessionStorage.username = tok.mail || {};
+              $window.sessionStorage.userAccountId = tok.sub || {};
               $window.sessionStorage.companyAccountId = tok.org || {};
               $window.sessionStorage.expiration = tok.exp || {};
               // Renew token
@@ -67,7 +67,7 @@ angular.module('Authentication')
             //TODO: Invalidate token
             try{
               var myCookie = $cookies.getObject("r_12fg");
-              $http.delete(configuration.apiUrl + '/login/remember/'+ myCookie.split(':')[0])
+              $http.delete(configuration.apiUrl + '/auth/login/remember/'+ myCookie.split(':')[0])
             } catch {
               console.log('Cookie was not cleared')
             }
@@ -79,7 +79,7 @@ angular.module('Authentication')
           service.wasCookie = function(){
             var myCookie = $cookies.getObject("r_12fg");
             if(myCookie){
-              $http.post(configuration.apiUrl + '/login/remember/', {cookie: myCookie})
+              $http.post(configuration.apiUrl + '/auth/login/remember/', {cookie: myCookie})
                 .then(
                     function successCallback(response){
                       if(!response.data.error){
@@ -98,7 +98,7 @@ angular.module('Authentication')
             };
 
           service.SetRememberMeCookie = function(){
-            $http.get(configuration.apiUrl + '/login/remember').then(
+            $http.get(configuration.apiUrl + '/auth/login/remember').then(
               function successCallback(response){
                 $cookies.remove("r_12fg");
                 $cookies.putObject("r_12fg", response.data.message);
