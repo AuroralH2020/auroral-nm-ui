@@ -16,31 +16,43 @@ angular.module('VicinityManagerApp.controllers').
     $scope.loadedPage = false;
     $scope.regisList = [];
     $scope.rev = false;
-    $scope.myOrderBy = 'companyName';
+    $scope.myOrderBy = '-date';
+    $scope.allItemsLoaded = false;
+    $scope.offset = 0
+
 
     init();
 
+    
     function init(){
-      registrationsAPIService.getAllCompany()
+      registrationsAPIService.getAllCompany($scope.offset)
       .then(function(response){
-        $scope.regisList = response.data.message.map(
-          (it) => { return {
-              ...it,
-              fullname: it.name + " " + it.surname,
-              date: new Date(it.created).toLocaleString()
-            }
-          }
-        );
-        // console.log($scope.regisList)
+        response.data.message.forEach(it => {
+          $scope.regisList.push({
+            ...it,
+            fullname: it.name + " " + it.surname,
+            date: new Date(it.created),
+            dateString: new Date(it.created).toLocaleString()
+          })
+        });
+        $scope.allItemsLoaded = response.data.message.length < 24;
         $scope.loadedPage = true;
+        console.log($scope.regisList)
       })
       .catch(errorCallback);
     }
 
 // Functions
+  $scope.loadMore = function(){
+    $scope.loaded = false;
+    $scope.offset += 24;
+    init();
+  };
 
   $scope.verifyAction = function(id){
     $scope.loadedPage = false;
+    $scope.regisList = []
+    $scope.offset = 0
     registrationsAPIService.putAdmin(id, { status: "pending" })
     .then(function(response){
       Notification.success("Verification mail was sent to the company!");
@@ -51,6 +63,8 @@ angular.module('VicinityManagerApp.controllers').
 
   $scope.resendAction = function(id){
     $scope.loadedPage = false;
+    $scope.regisList = []
+    $scope.offset = 0
     registrationsAPIService.putAdmin(id, { status: "resending" })
     .then(function(response){
       Notification.success("Verification mail was re-sent to the company!");
@@ -61,6 +75,8 @@ angular.module('VicinityManagerApp.controllers').
 
   $scope.autoVerifyAction = function(id){
     $scope.loadedPage = false;
+    $scope.regisList = []
+    $scope.offset = 0
     registrationsAPIService.putAdmin(id, { status: "masterVerification" })
     .then(function(response){
       Notification.success("Company was verified by admin!");
@@ -71,6 +87,8 @@ angular.module('VicinityManagerApp.controllers').
   
   $scope.declineAction = function(id){
     $scope.loadedPage = false;
+    $scope.regisList = []
+    $scope.offset = 0
   registrationsAPIService.putAdmin(id,{status: "declined" })
     .then(function(response){
       Notification.success("Company was rejected!");
@@ -88,8 +106,11 @@ angular.module('VicinityManagerApp.controllers').
     $scope.myOrderBy = x;
   };
 
-  $scope.onSort = function(order){
-    $scope.rev = order;
+  $scope.orderByMe = function(x) {
+    if($scope.myOrderBy === x){
+      $scope.rev=!($scope.rev);
+    }
+    $scope.myOrderBy = x;
   };
 
   function errorCallback(err){

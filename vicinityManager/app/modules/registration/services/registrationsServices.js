@@ -12,8 +12,8 @@ factory('registrationsAPIService', ['$http', 'configuration', function($http, co
     return $http.get(configuration.apiUrl +'/registration/');
   };
 
-   registrationsAPI.getAllCompany = function(){
-    return $http.get(configuration.apiUrl +'/registration/company');
+   registrationsAPI.getAllCompany = function(offset){
+    return $http.get(configuration.apiUrl +'/registration/company?offset=' + offset);
   };
 
   registrationsAPI.postOne = function(data) {
