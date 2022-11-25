@@ -23,7 +23,7 @@ angular.module('VicinityManagerApp', [
   'ngSanitize'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
-
+// Cache
 // ====== HOME VIEW =======
 
     $stateProvider
