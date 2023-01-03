@@ -42,9 +42,9 @@ angular.module('Authentication')
               $window.sessionStorage.token = data.token;
               $window.sessionStorage.refreshToken = data.refreshToken;
               var tok = tokenDecoder.deToken();
-              $window.sessionStorage.username = tok.mail || {};
+              $window.sessionStorage.username = tok.email || {};
               $window.sessionStorage.userAccountId = tok.sub || {};
-              $window.sessionStorage.companyAccountId = tok.org || {};
+              $window.sessionStorage.companyAccountId = tok.cid || {};
               $window.sessionStorage.expiration = tok.exp || {};
               // Renew token
               $timeout(service.refreshToken, 60000*60) // Refresh token every hour
