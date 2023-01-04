@@ -28,6 +28,7 @@ angular.module('VicinityManagerApp.controllers').
       $scope.newApiKeySelected = {
         type: undefined,
         name: undefined,
+        grantType: undefined,
         oid: {
           type: 'all',
         },
@@ -54,6 +55,7 @@ angular.module('VicinityManagerApp.controllers').
               return {
                 name: item.name,
                 keyid: item.keyid,
+                grantType: item.grantType[0],
                 ACL: item.ACL,
                 created: new Date(item.created).toLocaleTimeString() + ' ' + new Date(item.created).toLocaleDateString(),
               };
@@ -114,6 +116,7 @@ angular.module('VicinityManagerApp.controllers').
       $scope.closeAddNewKey = function () {
         $scope.newApiKeySelected.name = undefined
         $scope.newApiKeySelected.type = undefined
+        $scope.newApiKeySelected.grantType = undefined
         $scope.newApiKeySelected.oid.type = 'all'
         $scope.newApiKeySelected.agid.nodes = []
         $scope.availibleNodes = []
@@ -130,8 +133,13 @@ angular.module('VicinityManagerApp.controllers').
           Notification.error('Please select a filtering type for the new API key')
           return
         }
+        if ($scope.newApiKeySelected.grantType == undefined) {
+          Notification.error('Please select a grantType for the new API key')
+          return
+        }
         let api_key = {
           name: $scope.newApiKeySelected.name,
+          grantType: $scope.newApiKeySelected.grantType,
           ACL: {}
         }
         if ($scope.newApiKeySelected.type == 'cid') {

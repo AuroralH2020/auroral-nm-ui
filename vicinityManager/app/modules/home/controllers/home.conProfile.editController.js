@@ -104,6 +104,7 @@ function ($scope, $window, commonHelpers, $stateParams, tokenDecoder, contractAP
           const response = await contractAPIService.removeContractItem(ctid, oid)
           Notification.success(' Item removed')
         }
+        $scope.$parent.childHook()
       }
       init()
     } catch (err) {

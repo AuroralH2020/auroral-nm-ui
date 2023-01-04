@@ -16,6 +16,9 @@ angular
       configuration
     ) {
       $scope.locationPrefix = $location.path();
+      // hide modal
+      $('div#fixDiscoverabilityModal').hide();
+
 
       // Initialize variables and data
 
@@ -31,6 +34,7 @@ angular
       $scope.contract = {};
       $scope.accessLevelNew = 0;
       $scope.descriptionNew =''
+      $scope.nodesNonDiscoverable = []
       // Initialize controller
 
       $('.descriptionNormal').show();
@@ -63,6 +67,7 @@ angular
                 $scope.accepted = false;
               }
               getToken();
+              getNonDiscoverableNodes();
               $scope.loaded = true;
             } catch (err) {
               console.log(err);
@@ -96,8 +101,44 @@ angular
           }
         }
       }
-
+      function getNonDiscoverableNodes() {
+        contractAPIService.isDiscoverable($stateParams.contractId).then(function (response) {
+            $scope.nodesNonDiscoverable = response.data.message;
+        }).catch(function (err) {
+          if (err.status === 404) {
+            console.log(err);
+            Notification.error("Problem retrieving contract details");
+            $state.go("root.main.allContracts");
+          } else {
+            console.log(err);
+            Notification.error("Server error");
+          }
+        });
+      }
       /* MAIN FUNCTIONS */
+
+
+      // save modal - fix discoverability
+      $scope.saveModal = async function () {
+        try {
+          const data = await contractAPIService.makeDiscoverable($stateParams.contractId)
+          $('div#fixDiscoverabilityModal').hide();
+          Notification.success('All items are now discoverable')
+          initData();
+        } catch (err) {
+          Notification.error('Error fixing discoverability')
+          console.log(err)
+        }
+      };
+      // Open modal
+      $scope.openModal1 = async function(){
+          $('div#fixDiscoverabilityModal').show();
+      }
+
+      // Hide modal
+      $scope.closeModal = function () {
+        $('div#fixDiscoverabilityModal').hide();
+      };
 
       // Change status
 

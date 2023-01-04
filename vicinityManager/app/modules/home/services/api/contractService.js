@@ -52,5 +52,11 @@ factory('contractAPIService', ['$http', 'configuration', '$window', function($ht
   contractAPI.editContractItem = function(ctid, oid, payload){
     return $http.put(configuration.apiUrl + '/contract/' + ctid + '/item/' + oid, payload);
   };
+  contractAPI.isDiscoverable = function(ctid, oid, payload){
+    return $http.get(configuration.apiUrl + '/contract/' + ctid + '/nodes/is-discoverable');
+  };
+  contractAPI.makeDiscoverable = function(ctid, oid, payload){
+    return $http.put(configuration.apiUrl + '/contract/' + ctid + '/nodes/make-discoverable');
+  };
   return contractAPI;
 }]);

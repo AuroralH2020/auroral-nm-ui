@@ -18,12 +18,6 @@
               <h3 class="profile-username text-center" style="margin-top: 15px">{{contract.type}} contract</h3>
               <h5 data-toggle="tooltip" title="Click to copy" ng-click="copyToClipboard(contract.ctid,'CTID')" class="text-muted text-center" style="margin-top: 15px">CTID: {{contract.ctid}}</h5>
 
-              <!-- Enable/Disable device -->
-              <!-- <div style="margin-left: 10%; margin-right: 10%; margin-top: 10px; margin-bottom: 10px" ng-show="imDeviceOwner"> -->
-                <!-- <a ng-click="changeStatus()" class="btn btn-primary btn-block"><i class="fa fa-plus-square"></i><b> Enable device</b></a> -->
-                <!-- <a ng-click="changeStatus()" class="btn btn-default btn-block"><i class="fa fa-minus-square"></i><b> Disable device</b></a> -->
-              <!-- </div> -->
-
 
               <!-- Contract info -->
               <ul class="list-group list-group-unbordered">
@@ -40,11 +34,18 @@
                       <a ui-sref="root.main.companyProfile.items({companyAccountId: org.cid})">{{org.name}} - pending</a>
                     </div>
                   </li>
-                  
-
-
-                  <!-- Items -->
+                  <!-- Items discoverability   -->
                   <li class="list-group-item">
+                    <p>
+                      <strong>Items discoverability:</strong>
+                      <a ng-show="nodesNonDiscoverable.length > 0 " ng-click="openModal1()" class="pull-right btn-sm btn-danger">Fix</a>
+                      <p ng-show="nodesNonDiscoverable.length > 0 " class="text-muted"> Some items are not discoverable because you are not including nodes serving contracted items in partnership. </p>
+                      <p ng-show="nodesNonDiscoverable.length == 0 " class="text-muted"> All items in contract are discoverable </p>
+                  </li>
+
+                  <!-- Contract details -->
+                  <li class="list-group-item">
+                  </p>
                     <p>
                         <strong>Description:</strong>
                         <a ng-click="descriptionEdit()" class="descriptionNormal pull-right btn-sm btn-info edit_profile">Edit</a>
@@ -96,3 +97,32 @@
         </div>
       </div>
 </section>
+
+<!-- Modal fix discoverability -->
+<div id="fixDiscoverabilityModal" class="modal" >
+  <div class="modal-dialog" style="">
+    <div class="modal-content" style="height: 100%; ">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="closeModal()" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Fixing discoverability of items</h4>
+      </div>
+      <div class="modal-body" style="height: 100%;">
+        <i> You need to share these nodes to allow remote organisation discover your items:</i>
+        <ul ng-repeat="org in nodesNonDiscoverable">
+          <li ui-sref="root.main.companyProfile.items({companyAccountId: org.cid})">{{org.name}}
+            <ul ng-repeat="node in org.nodes">
+              <li>{{ node }}</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="modal-footer btn-block">
+          <button type="button" class="btn btn-danger pull-left" ng-click="closeModal()">Cancel</button>
+          <button type="button" class="btn btn-primary" ng-click="saveModal()">Share nodes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</div>
