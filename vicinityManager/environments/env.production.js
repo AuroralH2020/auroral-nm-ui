@@ -1,6 +1,6 @@
 this._env = {};
 this._env.apiUrl = "https://auroral.bavenir.eu/api/ui/v1";
-this._env.authUrl = "http://auroral.bavenir.eu/api/auth/v1";
+this._env.authUrl = "https://auroral.bavenir.eu/api/auth/v1";
 this._env.baseHref = "https://auroral.bavenir.eu";
 this._env.notificationTimeout = 30000;
 
