@@ -177,7 +177,7 @@ angular.module('VicinityManagerApp.controllers')
         }
       };
       
-      // Access Level
+      // Visibility Level
       $scope.saveNewAccess = async function() {
         if (Number($scope.accessLevelNew) !== 0) {
           try {
@@ -193,7 +193,7 @@ angular.module('VicinityManagerApp.controllers')
                   await itemsAPIService.putOne($scope.item.oid, {
                     accessLevel: Number($scope.accessLevelNew) - 1
                     })
-                    Notification.success("Access level updated");
+                    Notification.success("Visibility level updated");
                     initData();
                     
                 } catch (err) {
@@ -206,11 +206,11 @@ angular.module('VicinityManagerApp.controllers')
               })
               return
             }
-            // Changing access level
+            // Changing Visibility level
             await itemsAPIService.putOne($scope.item.oid, {
             accessLevel: Number($scope.accessLevelNew) - 1
             })
-            Notification.success("Access level updated");
+            Notification.success("Visibility level updated");
             initData();
           } catch (err) {
             if (err.status < 500) {

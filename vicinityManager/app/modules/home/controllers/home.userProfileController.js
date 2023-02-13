@@ -366,7 +366,7 @@ angular.module('VicinityManagerApp.controllers')
       };
 
       /*
-      ACCESS LEVEL
+      VISIBILITY LEVEL
       */
       $scope.saveNewAccess = function () {
         var lvl = Number($scope.accessLevelNew);
@@ -400,7 +400,7 @@ angular.module('VicinityManagerApp.controllers')
           )
           .catch(function (error) {
             console.log(error)
-            Notification.error("Problem saving access level");
+            Notification.error("Problem saving visibility level");
           });
       };
 
@@ -417,7 +417,7 @@ angular.module('VicinityManagerApp.controllers')
             ret = "Public profile";
             break;
           default:
-            ret = "Wrong access level";
+            ret = "Wrong visibility level";
             break;
         }
         return ret;

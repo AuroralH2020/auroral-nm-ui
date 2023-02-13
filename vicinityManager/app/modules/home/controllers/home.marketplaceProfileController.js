@@ -111,7 +111,7 @@ angular.module('VicinityManagerApp.controllers')
         }
       };
 
-      // Access Level
+      // Visibility Level
 
       $scope.saveNewAccess = async function() {
         if (Number($scope.accessLevelNew) !== 0) {
@@ -119,11 +119,11 @@ angular.module('VicinityManagerApp.controllers')
             await itemsAPIService.putOne($scope.item.oid, {
             accessLevel: Number($scope.accessLevelNew) - 1
             })
-            Notification.success("Access level updated");
+            Notification.success("Visibility level updated");
             initData();
           } catch (err) {
               if (err.status < 500) {
-                Notification.warning("User is unauthorized or access level too low...");
+                Notification.warning("User is unauthorized or bisibility level too low...");
                 $state.go("root.main.home");
               } else {
                 Notification.error("Server error");

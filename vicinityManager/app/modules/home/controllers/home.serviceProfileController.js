@@ -145,7 +145,7 @@ function ($scope, $window, $state, imageHelpers,  $stateParams, $location, token
 
 // HIDE && SHOW DOM =========================
 
-  //Access Level
+  //Visibility Level
 
   $scope.saveNewAccess = function () {
     if (Number($scope.accessLevelNew) !== 0){
@@ -159,16 +159,16 @@ function ($scope, $window, $state, imageHelpers,  $stateParams, $location, token
           .then(
             function successCallback(response){
               if(response.data.success){
-                Notification.success("Access level updated");
+                Notification.success("Visibility level updated");
               } else {
-                Notification.warning("User is unauthorized or access level too low...");
+                Notification.warning("User is unauthorized or visibility level too low...");
               }
               initData();
             }
           )
           .catch(function(err){
             console.log(err);
-            Notification.error("Error saving new access level");
+            Notification.error("Error saving new visibility level");
           });
         }
       };
