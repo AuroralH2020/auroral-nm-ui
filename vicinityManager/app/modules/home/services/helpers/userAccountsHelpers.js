@@ -16,8 +16,8 @@ factory('userAccountsHelpers', ['Notification', 'userAccountAPIService',
        return userAccountAPIService.acceptNeighbourRequest(friendId)
            .then(
              function successCallback(response){
-               if (response.error) {
-                   Notification.error("Partnership request acceptation failed :(");
+               if (response.data.error) {
+                   Notification.error("Partnership request acceptation failed");
                } else {
                    Notification.success("Partnership request accepted!");
                }
@@ -33,8 +33,8 @@ factory('userAccountsHelpers', ['Notification', 'userAccountAPIService',
        return userAccountAPIService.rejectNeighbourRequest(friendId)
            .then(
              function successCallback(response){
-               if (response.error) {
-                   Notification.error("Partnership request acceptation failed :(");
+               if (response.data.error) {
+                   Notification.error("Partnership request acceptation failed");
                } else {
                    Notification.success("Partnership request rejected!");
                }

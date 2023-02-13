@@ -62,7 +62,9 @@ angular.module('VicinityManagerApp.controllers')
       $scope.sendNeighbourRequest = function() {
         userAccountAPIService.sendNeighbourRequest($stateParams.companyAccountId)
           .then(function(response) {
-            Notification.success("Partnership request sent!");
+            if (response.status < 300) {
+              Notification.success("Partnership request sent!");
+            }
             onlyRefreshAccount();
           })
           .catch(errorCallback);
@@ -71,7 +73,9 @@ angular.module('VicinityManagerApp.controllers')
       $scope.acceptNeighbourRequest = function() {
         userAccountAPIService.acceptNeighbourRequest($stateParams.companyAccountId)
           .then(function(response) {
-            Notification.success("Partnership request accepted!");
+            if (response.status < 300) {
+              Notification.success("Partnership request accepted!")
+            }
             onlyRefreshAccount();
           })
           .catch(errorCallback);
@@ -80,7 +84,9 @@ angular.module('VicinityManagerApp.controllers')
       $scope.rejectNeighbourRequest = function() {
         userAccountAPIService.rejectNeighbourRequest($stateParams.companyAccountId)
           .then(function(response) {
-            Notification.success("Partnership request rejected!");
+            if (response.status < 300) {
+              Notification.success("Partnership request rejected!")
+            }
             onlyRefreshAccount();
           })
           .catch(errorCallback);
@@ -89,7 +95,9 @@ angular.module('VicinityManagerApp.controllers')
       $scope.cancelNeighbourRequest = function() {
         userAccountAPIService.cancelNeighbourRequest($stateParams.companyAccountId)
           .then(function(response) {
-            Notification.success("Partnership request canceled!");
+            if (response.status < 300) {
+              Notification.success("Partnership request canceled!")
+            }
             onlyRefreshAccount();
           })
           .catch(errorCallback);
@@ -97,7 +105,9 @@ angular.module('VicinityManagerApp.controllers')
       $scope.sendContractRequest = function() {
         contractAPIService.createContract([$stateParams.companyAccountId])
           .then(function(response) {
-            Notification.success("Contract request sent!");
+            if (response.status < 300) {
+              Notification.success("Contract request sent!");
+            }
             onlyRefreshAccount();
           })
           .catch(errorCallback);
@@ -108,7 +118,9 @@ angular.module('VicinityManagerApp.controllers')
         $scope.testFunction('Are you sure? May affect existing contracts.', async function () {
           userAccountAPIService.cancelNeighbourship($stateParams.companyAccountId)
             .then(function(response) {
-              Notification.success("Partnership canceled!");
+              if (response.status < 300) {
+                Notification.success("Partnership canceled!");
+              }
               onlyRefreshAccount();
             })
             .catch(errorCallback);
