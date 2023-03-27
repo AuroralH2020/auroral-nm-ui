@@ -184,7 +184,8 @@ angular.module('Authentication')
           } else if (response.status === 403 || response.status === 404) {
             $injector.get('Notification').warning(response.statusText + ': ' + response.data.error)
           } else {
-            $injector.get('Notification').error(response.statusText + ': ' + response.data.error)
+            // Handled somewhere else -> comment out
+            // $injector.get('Notification').error(response.statusText + ': ' + response.data.error)
           }
           return response;
         }
