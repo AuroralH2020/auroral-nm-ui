@@ -58,5 +58,8 @@ factory('contractAPIService', ['$http', 'configuration', '$window', function($ht
   contractAPI.makeDiscoverable = function(ctid, oid, payload){
     return $http.put(configuration.apiUrl + '/contract/' + ctid + '/nodes/make-discoverable');
   };
+  contractAPI.compareWithDLT = function(ctid){
+    return $http.get(configuration.apiUrl + '/contract/dltcheck/' + ctid);
+  }
   return contractAPI;
 }]);

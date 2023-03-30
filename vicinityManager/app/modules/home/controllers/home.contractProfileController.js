@@ -33,15 +33,17 @@ angular
       $scope.loaded = false;
       $scope.contract = {};
       $scope.accessLevelNew = 0;
-      $scope.descriptionNew =''
+      $scope.descriptionNew = ''
       $scope.nodesNonDiscoverable = []
+      $scope.comparison = undefined
+      $scope.dltLoaded = false
       // Initialize controller
 
       $('.descriptionNormal').show();
       $('.descriptionEdit').hide();
 
       initData();
-      
+
 
       // Listen for changes and broadcast to children
 
@@ -58,6 +60,7 @@ angular
             $scope.loaded = false;
             try {
               $scope.contract = response.data.message;
+              $scope.contract.createdDate = new Date($scope.contract.created).toLocaleString();
               $scope.isMyOrgContract = $window.sessionStorage.companyAccountId === $scope.contract.cid;
               if ($scope.contract.organisations.includes($window.sessionStorage.companyAccountId)) {
                 $scope.accepted = true;
@@ -103,7 +106,7 @@ angular
       }
       function getNonDiscoverableNodes() {
         contractAPIService.isDiscoverable($stateParams.contractId).then(function (response) {
-            $scope.nodesNonDiscoverable = response.data.message;
+          $scope.nodesNonDiscoverable = response.data.message;
         }).catch(function (err) {
           if (err.status === 404) {
             console.log(err);
@@ -119,7 +122,7 @@ angular
 
 
       // save modal - fix discoverability
-      $scope.saveModal = async function () {
+      $scope.saveModal1 = async function () {
         try {
           const data = await contractAPIService.makeDiscoverable($stateParams.contractId)
           $('div#fixDiscoverabilityModal').hide();
@@ -131,20 +134,51 @@ angular
         }
       };
       // Open modal
-      $scope.openModal1 = async function(){
-          $('div#fixDiscoverabilityModal').show();
+      $scope.openModal1 = async function () {
+        $('div#fixDiscoverabilityModal').show();
       }
 
       // Hide modal
-      $scope.closeModal = function () {
+      $scope.closeModal1 = function () {
         $('div#fixDiscoverabilityModal').hide();
+      };
+
+      // Open modal
+      $scope.openModal2 = async function () {
+        try {
+          $scope.dltLoaded = false
+          const data = await contractAPIService.compareWithDLT($stateParams.contractId)
+          $scope.dltLoaded = true
+          // console.log(data)
+          // if (data.status != '200') {
+          //   Notification.error('Error comparing with DLT')
+          //   return
+          // }
+          $scope.comparison = data.data.message;
+
+          $scope.comparison.mongo.created = $scope.comparison.mongo.created ?  new Date($scope.comparison.mongo.created).toLocaleDateString() : 'Not available';
+          $scope.comparison.mongo.lastUpdated = $scope.comparison.mongo.lastUpdated ? new Date($scope.comparison.mongo.lastUpdated).toLocaleDateString() : 'Not available';
+          // transform timestamp to date
+          if($scope.comparison.checks.contractInDlt) {
+            $scope.comparison.dlt.created = $scope.comparison.dlt.created ? new Date($scope.comparison.dlt.created).toLocaleDateString() : 'Not available';
+            $scope.comparison.dlt.lastUpdated = $scope.comparison.dlt.lastUpdated ? new Date($scope.comparison.dlt.lastUpdated).toLocaleDateString() : 'Not available';
+          }
+          $('div#dltCheckModal').show();
+        } catch (error) {
+          Notification.error('Error comparing with DLT')
+        }
+      }
+
+      // Hide modal
+      $scope.closeModal2 = function () {
+        $('div#dltCheckModal').hide();
       };
 
       // Change status
 
       $scope.answerRequest = async function (ctid, val) {
         try {
-          if(val) {
+          if (val) {
             await contractAPIService.acceptContractRequest(ctid)
             Notification.success("Contract request accepted");
             initData();
@@ -165,20 +199,20 @@ angular
       };
 
       // Leave contract
-      $scope.removeFromContract = async function(ctid) {
-          try {
-            await contractAPIService.removeOrgFromContract(ctid)
-            Notification.success('Contract leaved ');
-            $state.go("root.main.allContracts");
-          } catch (error) {
-            if (error.status < 500) {
-              Notification.warning(error.data.error);
-            } else {
-              console.log(error)
-              Notification.error("Server error");
-            }
+      $scope.removeFromContract = async function (ctid) {
+        try {
+          await contractAPIService.removeOrgFromContract(ctid)
+          Notification.success('Contract leaved ');
+          $state.go("root.main.allContracts");
+        } catch (error) {
+          if (error.status < 500) {
+            Notification.warning(error.data.error);
+          } else {
+            console.log(error)
+            Notification.error("Server error");
           }
         }
+      }
       // Copy
       $scope.copyToClipboard = function (oid, id = "ID") {
         navigator.clipboard.writeText(oid).then(
@@ -196,8 +230,8 @@ angular
         $('.descriptionEdit').show();
       }
       $scope.descriptionSave = async function () {
-        try{
-          await contractAPIService.updateContract($scope.contract.ctid, {description: $scope.descriptionNew})
+        try {
+          await contractAPIService.updateContract($scope.contract.ctid, { description: $scope.descriptionNew })
           Notification.success('Description updated')
           initData();
         } catch (err) {
@@ -207,7 +241,7 @@ angular
             console.log(error)
             Notification.error("Server error");
           }
-          
+
         }
         $('.descriptionNormal').show();
         $('.descriptionEdit').hide();

@@ -45,6 +45,7 @@ angular
             $scope.loaded = false;
             try {
               $scope.community = response.data.message;
+              $scope.community.createdDate = new Date($scope.community.created).toLocaleDateString();
               $scope.community.nodesNum = response.data.message.organisations.map((org) => org.nodes.length).reduce((a, b) => a + b)
               getToken();
               $scope.loaded = true;
