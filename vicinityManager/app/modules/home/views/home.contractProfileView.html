@@ -153,19 +153,18 @@
       <div ng-if="!dltLoaded" class="modal-body" style="height: 100%;">
         <span>Loading...</span>
       </div>
-      <div ng-if="dltLoaded" class="modal-body" style="height: 100%;">
-        <span>{{comparison.ctid}}</span>
-        <br>
+      <div ng-if="dltLoaded" class="modal-body" style="height: 100%; text-align: center;">
+        <div style="text-align: center;">{{comparison.ctid}}</div>
         <div style="margin-top: 16px;">
-          <div ng-if="comparison.checks.contractInDlt && comparison.checks.orgsMatch && comparison.checks.itemsMatch">
+          <div ng-if="comparison.checks.contractInDlt && comparison.checks.orgsMatch && comparison.checks.itemsMatch" style="text-align: center">
             <i class="fa fa-check fa-4x my-green" aria-hidden="true"></i>
-            <div  style="margin-top: 8px;">DLT and local state are synchronized</div>
+            <div  style="margin-top: 8px;" class="my-green">DLT and local state are synchronized</div>
           </div>
-          <div ng-if="!comparison.checks.contractInDlt || !comparison.checks.orgsMatch || !comparison.checks.itemsMatch">
+          <div ng-if="!comparison.checks.contractInDlt || !comparison.checks.orgsMatch || !comparison.checks.itemsMatch" style="text-align: center">
             <i class="fa fa-exclamation-triangle fa-4x my-yellow" aria-hidden="true"></i>
-            <div style="margin-top: 8px;">DLT and local state are not synchronized!</div>
+            <div style="margin-top: 8px;" class="my-yellow">DLT and local state are not synchronized!</div>
           </div>
-          <div style="display: flex; width: 120px; height: 24px;" ng-click="toggleResult()">
+          <div style="display: flex; justify-content: center; height: 24px; border: 1px solid grey; border-radius: 4px; margin-top: 16px; cursor: pointer" ng-click="toggleResult()">
             <div ng-if="!showDltResult">
               Show more information
             </div>
@@ -182,23 +181,29 @@
           <div ng-if="showDltResult">
             <div style="padding-top: 8px">
               <span> Registered:
-                <i class="fa fa-check" ng-if="comparison.checks.contractInDlt" aria-hidden="true"></i>
-                <i class="fa fa-times" ng-if="!comparison.checks.contractInDlt" aria-hidden="false"></i>
+                <i class="fa fa-check my-green" ng-if="comparison.checks.contractInDlt" aria-hidden="true"></i>
+                <span class="my-green"  ng-if="comparison.checks.contractInDlt" >synchronized</span>
+                <i class="fa fa-times my-red" ng-if="!comparison.checks.contractInDlt" aria-hidden="false"></i>
+                <span class="my-red"  ng-if="!comparison.checks.contractInDlt" >not synchronized!</span>
               </span>
             </div>
             <div>
               <span> Organisations:
                 <i class="fa fa-check" ng-if="comparison.checks.orgsMatch" aria-hidden="true"></i>
+                <span class="my-green"  ng-if="comparison.checks.orgsMatch" >synchronized</span>
                 <i class="fa fa-times" ng-if="!comparison.checks.orgsMatch" aria-hidden="false"></i>
+                <span class="my-red"  ng-if="!comparison.checks.orgsMatch" >not synchronized!</span>
               </span>
             </div>
             <div>
               <span> Items:
                 <i class="fa fa-check" ng-if="comparison.checks.itemsMatch" aria-hidden="true"></i>
+                <span class="my-green"  ng-if="comparison.checks.itemsMatch" >synchronized</span>
                 <i class="fa fa-times" ng-if="!comparison.checks.itemsMatch" aria-hidden="false"></i>
+                <span class="my-red"  ng-if="!comparison.checks.itemsMatch" >not synchronized!</span>
               </span>
             </div>
-            <table style="width: 80%;" >
+            <table style="width: 80%; opacity: 0.6; margin-top: 16px" >
               <tr style="border-spacing: 10x;">
                 <td></td>
                 <td>Local</td>
