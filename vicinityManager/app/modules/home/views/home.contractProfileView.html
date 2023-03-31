@@ -154,7 +154,7 @@
         <span>Loading...</span>
       </div>
       <div ng-if="dltLoaded" class="modal-body" style="height: 100%; text-align: center;">
-        <div style="text-align: center;">{{comparison.ctid}}</div>
+        <div style="text-align: center;">CTID: <span style="font-weight: bolder;">{{comparison.ctid}}</span></div>
         <div style="margin-top: 16px;">
           <div ng-if="comparison.checks.contractInDlt && comparison.checks.orgsMatch && comparison.checks.itemsMatch" style="text-align: center">
             <i class="fa fa-check fa-4x my-green" aria-hidden="true"></i>
@@ -165,11 +165,14 @@
             <div style="margin-top: 8px;" class="my-yellow">DLT and local state are not synchronized!</div>
           </div>
           <div style="display: flex; justify-content: center; height: 24px; border: 1px solid grey; border-radius: 4px; margin-top: 16px; cursor: pointer" ng-click="toggleResult()">
+            <div style="padding-right: 4px;">
+              <i class="fa fa-info" aria-hidden="true"></i>
+            </div>
             <div ng-if="!showDltResult">
-              Show more information
+              Show more info
             </div>
             <div ng-if="showDltResult">
-              Show less information
+              Show less info
             </div>
             <div ng-if="!showDltResult" style="padding-left: 4px;">
               <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -213,13 +216,13 @@
                 <td>Created:</td>
                 <td>{{comparison.mongo.created}}</td>
                 <td ng-if="comparison.dlt !== undefined">{{comparison.dlt.created}}</td>
-                <td ng-if="comparison.dlt == undefined"><i class="fa fa-times" aria-hidden="false"></td>
+                <td ng-if="comparison.dlt == undefined"><i class="fa fa-minus" aria-hidden="false"></td>
               </tr>
               <tr style="border-spacing: 10x;">
                 <td>Updated:</td>
                 <td>{{comparison.mongo.lastUpdated}}</td>
                 <td ng-if="comparison.dlt !== undefined">{{comparison.dlt.lastUpdated}}</td>
-                <td ng-if="comparison.dlt == undefined"><i class="fa fa-times" aria-hidden="false"></td>
+                <td ng-if="comparison.dlt == undefined"><i class="fa fa-minus" aria-hidden="false"></td>
               </tr>
             </table>
           </div>
