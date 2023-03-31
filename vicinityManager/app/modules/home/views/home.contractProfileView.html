@@ -143,7 +143,7 @@
   </div>
 </div>
 <div id="dltCheckModal" class="modal">
-  <div class="modal-dialog" style="">
+  <div class="modal-dialog">
     <div class="modal-content" style="height: 100%; ">
       <div class="modal-header">
         <button type="button" class="close" ng-click="closeModal2()" aria-label="Close">
@@ -156,43 +156,69 @@
       <div ng-if="dltLoaded" class="modal-body" style="height: 100%;">
         <span>{{comparison.ctid}}</span>
         <br>
-        <div>
-          <span> Registered:
-            <i class="fa fa-check" ng-if="comparison.checks.contractInDlt" aria-hidden="true"></i>
-            <i class="fa fa-times" ng-if="!comparison.checks.contractInDlt" aria-hidden="false"></i>
-          </span>
+        <div style="margin-top: 16px;">
+          <div ng-if="comparison.checks.contractInDlt && comparison.checks.orgsMatch && comparison.checks.itemsMatch">
+            <i class="fa fa-check fa-4x my-green" aria-hidden="true"></i>
+            <div  style="margin-top: 8px;">DLT and local state are synchronized</div>
+          </div>
+          <div ng-if="!comparison.checks.contractInDlt || !comparison.checks.orgsMatch || !comparison.checks.itemsMatch">
+            <i class="fa fa-exclamation-triangle fa-4x my-yellow" aria-hidden="true"></i>
+            <div style="margin-top: 8px;">DLT and local state are not synchronized!</div>
+          </div>
+          <div style="display: flex; width: 120px; height: 24px;" ng-click="toggleResult()">
+            <div ng-if="!showDltResult">
+              Show more information
+            </div>
+            <div ng-if="showDltResult">
+              Show less information
+            </div>
+            <div ng-if="!showDltResult" style="padding-left: 4px;">
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+            <div ng-if="showDltResult" style="padding-left: 4px;">
+              <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div ng-if="showDltResult">
+            <div style="padding-top: 8px">
+              <span> Registered:
+                <i class="fa fa-check" ng-if="comparison.checks.contractInDlt" aria-hidden="true"></i>
+                <i class="fa fa-times" ng-if="!comparison.checks.contractInDlt" aria-hidden="false"></i>
+              </span>
+            </div>
+            <div>
+              <span> Organisations:
+                <i class="fa fa-check" ng-if="comparison.checks.orgsMatch" aria-hidden="true"></i>
+                <i class="fa fa-times" ng-if="!comparison.checks.orgsMatch" aria-hidden="false"></i>
+              </span>
+            </div>
+            <div>
+              <span> Items:
+                <i class="fa fa-check" ng-if="comparison.checks.itemsMatch" aria-hidden="true"></i>
+                <i class="fa fa-times" ng-if="!comparison.checks.itemsMatch" aria-hidden="false"></i>
+              </span>
+            </div>
+            <table style="width: 80%;" >
+              <tr style="border-spacing: 10x;">
+                <td></td>
+                <td>Local</td>
+                <td>DLT</td>
+              </tr>
+              <tr style="border-spacing: 10x;">
+                <td>Created:</td>
+                <td>{{comparison.mongo.created}}</td>
+                <td ng-if="comparison.dlt !== undefined">{{comparison.dlt.created}}</td>
+                <td ng-if="comparison.dlt == undefined"><i class="fa fa-times" aria-hidden="false"></td>
+              </tr>
+              <tr style="border-spacing: 10x;">
+                <td>Updated:</td>
+                <td>{{comparison.mongo.lastUpdated}}</td>
+                <td ng-if="comparison.dlt !== undefined">{{comparison.dlt.lastUpdated}}</td>
+                <td ng-if="comparison.dlt == undefined"><i class="fa fa-times" aria-hidden="false"></td>
+              </tr>
+            </table>
+          </div>
         </div>
-        <div>
-          <span> Organisations:
-            <i class="fa fa-check" ng-if="comparison.checks.orgsMatch" aria-hidden="true"></i>
-            <i class="fa fa-times" ng-if="!comparison.checks.orgsMatch" aria-hidden="false"></i>
-          </span>
-        </div>
-        <div>
-          <span> Items:
-            <i class="fa fa-check" ng-if="comparison.checks.itemsMatch" aria-hidden="true"></i>
-            <i class="fa fa-times" ng-if="!comparison.checks.itemsMatch" aria-hidden="false"></i>
-          </span>
-        </div>
-        <table style="width: 80%;" >
-          <tr style="border-spacing: 10x;">
-            <td></td>
-            <td>Local</td>
-            <td>DLT</td>
-          </tr>
-          <tr style="border-spacing: 10x;">
-            <td>Created:</td>
-            <td>{{comparison.mongo.created}}</td>
-            <td ng-if="comparison.dlt !== undefined">{{comparison.dlt.created}}</td>
-            <td ng-if="comparison.dlt == undefined"><i class="fa fa-times" aria-hidden="false"></td>
-          </tr>
-          <tr style="border-spacing: 10x;">
-            <td>Updated:</td>
-            <td>{{comparison.mongo.lastUpdated}}</td>
-            <td ng-if="comparison.dlt !== undefined">{{comparison.dlt.lastUpdated}}</td>
-            <td ng-if="comparison.dlt == undefined"><i class="fa fa-times" aria-hidden="false"></td>
-          </tr>
-        </table>
 
         <!-- <div class="modal-footer btn-block">
           footer

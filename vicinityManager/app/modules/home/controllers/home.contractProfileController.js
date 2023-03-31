@@ -37,6 +37,7 @@ angular
       $scope.nodesNonDiscoverable = []
       $scope.comparison = undefined
       $scope.dltLoaded = false
+      $scope.showDltResult = false
       // Initialize controller
 
       $('.descriptionNormal').show();
@@ -249,6 +250,11 @@ angular
       $scope.descriptionCancel = async function () {
         $('.descriptionNormal').show();
         $('.descriptionEdit').hide();
+      }
+
+      // Toggle dlt result
+      $scope.toggleResult = async function () {
+        $scope.showDltResult = !$scope.showDltResult
       }
     }
   );
