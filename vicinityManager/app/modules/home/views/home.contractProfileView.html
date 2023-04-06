@@ -182,29 +182,40 @@
             </div>
           </div>
           <div ng-if="showDltResult">
-            <div style="padding-top: 8px">
-              <span> Registered:
-                <i class="fa fa-check my-green" ng-if="comparison.checks.contractInDlt" aria-hidden="true"></i>
-                <span class="my-green"  ng-if="comparison.checks.contractInDlt" >synchronized</span>
-                <i class="fa fa-times my-red" ng-if="!comparison.checks.contractInDlt" aria-hidden="false"></i>
-                <span class="my-red"  ng-if="!comparison.checks.contractInDlt" >not synchronized!</span>
-              </span>
-            </div>
-            <div>
-              <span> Organisations:
-                <i class="fa fa-check" ng-if="comparison.checks.orgsMatch" aria-hidden="true"></i>
-                <span class="my-green"  ng-if="comparison.checks.orgsMatch" >synchronized</span>
-                <i class="fa fa-times" ng-if="!comparison.checks.orgsMatch" aria-hidden="false"></i>
-                <span class="my-red"  ng-if="!comparison.checks.orgsMatch" >not synchronized!</span>
-              </span>
-            </div>
-            <div>
-              <span> Items:
-                <i class="fa fa-check" ng-if="comparison.checks.itemsMatch" aria-hidden="true"></i>
-                <span class="my-green"  ng-if="comparison.checks.itemsMatch" >synchronized</span>
-                <i class="fa fa-times" ng-if="!comparison.checks.itemsMatch" aria-hidden="false"></i>
-                <span class="my-red"  ng-if="!comparison.checks.itemsMatch" >not synchronized!</span>
-              </span>
+            <div style="padding-top: 8px; width: 208px">
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                <div>Registered:</div>
+                <div>
+                  <span>
+                    <i class="fa fa-check my-green" ng-if="comparison.checks.contractInDlt" aria-hidden="true"></i>
+                    <span class="my-green"  ng-if="comparison.checks.contractInDlt" >synchronized</span>
+                    <i class="fa fa-times my-red" ng-if="!comparison.checks.contractInDlt" aria-hidden="false"></i>
+                    <span class="my-red"  ng-if="!comparison.checks.contractInDlt" >not synchronized!</span>
+                  </span>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                <div>Organisations:</div>
+                <div>
+                  <span>
+                    <i class="fa fa-check my-green" ng-if="comparison.checks.orgsMatch" aria-hidden="true"></i>
+                    <span class="my-green"  ng-if="comparison.checks.orgsMatch" >synchronized</span>
+                    <i class="fa fa-times my-red" ng-if="!comparison.checks.orgsMatch" aria-hidden="false"></i>
+                    <span class="my-red"  ng-if="!comparison.checks.orgsMatch" >not synchronized!</span>
+                  </span>
+                </div>
+              </div>
+               <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                <div>Items:</div>
+                <div>
+                  <span>
+                    <i class="fa fa-check my-green" ng-if="comparison.checks.itemsMatch" aria-hidden="true"></i>
+                    <span class="my-green"  ng-if="comparison.checks.itemsMatch" >synchronized</span>
+                    <i class="fa fa-times my-red" ng-if="!comparison.checks.itemsMatch" aria-hidden="false"></i>
+                    <span class="my-red"  ng-if="!comparison.checks.itemsMatch" >not synchronized!</span>
+                  </span>
+                </div>
+              </div>
             </div>
             <table style="width: 80%; opacity: 0.6; margin-top: 16px" >
               <tr style="border-spacing: 10x;">
