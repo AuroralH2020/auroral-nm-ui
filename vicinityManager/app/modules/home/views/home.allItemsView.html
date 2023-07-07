@@ -134,7 +134,7 @@
             <tbody>
               <tr ng-repeat="it in items | orderBy:myOrderBy:rev">
                 <td class="col-sm-3">
-                  <a style="color: #000; z-index: -1" href="" ui-sref="root.main.itemProfile.description({itemId: it._id})">{{it.name}}</a>
+                  <a style="color: #000; z-index: -1" href="" ui-sref="root.main.itemProfile.description({itemId: it.oid})">{{it.name}}</a>
                 </td>
                 <td class="col-sm-1">
                   <span>{{it.type}}</span>
